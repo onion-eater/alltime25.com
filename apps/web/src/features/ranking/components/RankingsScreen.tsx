@@ -146,7 +146,6 @@ export function RankingsScreen({
             >
               Start over <ArrowIcon />
             </button>
-            <p className={styles.note}>Ties at the cutoff are included.</p>
           </aside>
         </div>
         <p

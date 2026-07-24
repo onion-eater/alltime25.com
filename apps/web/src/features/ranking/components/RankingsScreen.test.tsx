@@ -163,6 +163,19 @@ describe("RankingsScreen", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("does not repeat cutoff-tie methodology beneath the result", () => {
+    render(
+      <RankingsScreen
+        session={completedSession()}
+        onStartOver={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.queryByText("Ties at the cutoff are included."),
+    ).not.toBeInTheDocument();
+  });
+
   it("announces session operation status without hiding the result", () => {
     render(
       <RankingsScreen

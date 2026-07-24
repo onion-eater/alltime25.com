@@ -152,13 +152,6 @@
   opacity: 0.55;
 }
 
-.note {
-  margin: 0;
-  padding: 18px;
-  color: var(--color-muted);
-  font-size: 10px;
-}
-
 @media (max-width: 900px) {
   .content {
     grid-template-columns: 1fr;
@@ -171,8 +164,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .actions h2,
-  .note {
+  .actions h2 {
     display: none;
   }
 
