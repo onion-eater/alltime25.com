@@ -1,4 +1,4 @@
-# Blind 50 Repository Rules
+# AllTime 25 Repository Rules
 
 These rules are mandatory for every change in this repository.
 

@@ -1,1 +1,1 @@
-"""Pure Blind 50 domain models and rules."""
+"""Pure AllTime 25 domain models and rules."""

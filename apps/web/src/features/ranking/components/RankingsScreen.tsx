@@ -51,7 +51,7 @@ export function RankingsScreen({
     const text = rankingText(rows);
     if (navigator.share) {
       try {
-        await navigator.share({ title: "My Blind 50", text });
+        await navigator.share({ title: "My AllTime 25", text });
         setActionStatus("Shared.");
       } catch (error) {
         setActionStatus(

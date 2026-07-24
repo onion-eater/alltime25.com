@@ -1,1 +1,1 @@
-"""Blind 50 database revisions."""
+"""AllTime 25 database revisions."""

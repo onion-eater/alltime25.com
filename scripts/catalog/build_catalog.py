@@ -87,7 +87,7 @@ class CatalogBuildError(ValueError):
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Build one immutable licensed Blind 50 catalog."
+        description="Build one immutable licensed AllTime 25 catalog."
     )
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--catalog-id", required=True)
@@ -518,7 +518,7 @@ def read_image_bytes(record: dict[str, Any]) -> bytes:
         raise CatalogBuildError(
             "Every player needs a licensed HTTPS image URL or local file."
         )
-    headers = {"User-Agent": "Blind50CatalogBuilder/1.0"}
+    headers = {"User-Agent": "AllTime25CatalogBuilder/1.0"}
     api_key = os.environ.get("SPORTSDATAIO_API_KEY")
     if api_key:
         headers["Ocp-Apim-Subscription-Key"] = api_key

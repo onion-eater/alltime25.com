@@ -108,6 +108,35 @@ describe("RankingsScreen", () => {
     });
   });
 
+  it("uses the AllTime 25 title when sharing", async () => {
+    const user = userEvent.setup();
+    const originalShare = navigator.share;
+    const share = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: share,
+    });
+
+    try {
+      render(
+        <RankingsScreen
+          session={completedSession()}
+          onStartOver={vi.fn()}
+        />,
+      );
+      await user.click(screen.getByRole("button", { name: "Share" }));
+
+      expect(share).toHaveBeenCalledWith(
+        expect.objectContaining({ title: "My AllTime 25" }),
+      );
+    } finally {
+      Object.defineProperty(navigator, "share", {
+        configurable: true,
+        value: originalShare,
+      });
+    }
+  });
+
   it("does not offer a separate text export", () => {
     render(
       <RankingsScreen

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "blind50-api"
 version = "0.1.0"
-description = "Blind 50 ranking API"
+description = "AllTime 25 ranking API"
 requires-python = ">=3.12,<3.15"
 dependencies = [
   "alembic>=1.16,<2",

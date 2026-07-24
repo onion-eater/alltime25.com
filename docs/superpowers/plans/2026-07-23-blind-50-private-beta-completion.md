@@ -1,11 +1,11 @@
-# Blind 50 Private-Beta Completion Implementation Plan
+# AllTime 25 Private-Beta Completion Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use
 > `superpowers:subagent-driven-development` (recommended) or
 > `superpowers:executing-plans` to implement this plan task-by-task. Steps use
 > checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Finish Blind 50 as a private, production-like beta with an exact,
+**Goal:** Finish AllTime 25 as a private, production-like beta with an exact,
 anonymous top-50 ranking workflow, a centered comparison ledger, hardened
 persistence, a versioned 100-player catalog boundary, and one deployable
 React/FastAPI container.

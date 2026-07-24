@@ -1,11 +1,11 @@
-# Blind 50 Full-Stack Implementation Plan
+# AllTime 25 Full-Stack Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use
 > superpowers:subagent-driven-development (recommended) or
 > superpowers:executing-plans to implement this plan task-by-task. Steps use
 > checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the approved Blind 50 interface as a React application backed
+**Goal:** Build the approved AllTime 25 interface as a React application backed
 by a Python API that owns exact ranking, ties, undo, persistence, and canonical
 player data.
 

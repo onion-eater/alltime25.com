@@ -1,1 +1,1 @@
-"""Blind 50 API package."""
+"""AllTime 25 API package."""

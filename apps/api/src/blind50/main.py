@@ -42,7 +42,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         database.dispose()
 
     application = FastAPI(
-        title="Blind 50 API",
+        title="AllTime 25 API",
         version="0.1.0",
         lifespan=lifespan,
         docs_url=(

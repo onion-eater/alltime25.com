@@ -1,6 +1,6 @@
-# Blind 50
+# AllTime 25
 
-Blind 50 creates a personal NBA career ranking through anonymous statistical
+AllTime 25 creates a personal NBA career ranking through anonymous statistical
 comparisons. React renders the approved one-page experience; FastAPI owns the
 ranking algorithm, ties, undo, player catalog, and transactional persistence.
 PostgreSQL is used for the private beta; SQLite remains available for local

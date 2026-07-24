@@ -20,13 +20,13 @@ export function AppHeader({
     >
       <div className={styles.inner}>
         <button
-          aria-label="Blind 50"
+          aria-label="AllTime 25"
           className={styles.brand}
           onClick={onBrand}
           type="button"
         >
-          <span className={styles.mark}>50</span>
-          <span className={styles.name}>BLIND 50</span>
+          <span className={styles.mark}>25</span>
+          <span className={styles.name}>ALLTIME</span>
         </button>
         <nav
           aria-label="Main navigation"

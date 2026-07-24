@@ -1,7 +1,7 @@
 # Catalog release pipeline
 
 `build_catalog.py` turns a licensed, staged SportsDataIO export into one
-immutable Blind 50 catalog. It never runs in the web container.
+immutable AllTime 25 catalog. It never runs in the web container.
 
 The staged JSON must contain:
 

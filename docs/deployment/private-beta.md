@@ -1,6 +1,6 @@
 # Private beta deployment
 
-Blind 50 ships as one container. FastAPI serves the API, immutable player
+AllTime 25 ships as one container. FastAPI serves the API, immutable player
 assets, and the React application on one origin. PostgreSQL is external and
 managed.
 

@@ -1,4 +1,4 @@
-# Blind 50 Architecture
+# AllTime 25 Architecture
 
 ## Objective
 

@@ -1,8 +1,8 @@
-# Blind 50 Full-Stack Design
+# AllTime 25 Full-Stack Design
 
 ## Product
 
-Blind 50 builds a personal top-50 NBA career ranking from a curated pool of
+AllTime 25 builds a personal top-50 NBA career ranking from a curated pool of
 100 candidates. Identities remain hidden during comparisons. The result reveals
 names and player photos only after the ranking is complete.
 
