@@ -79,7 +79,6 @@ export function RankingsScreen({
       <div className={`page-shell ${styles.layout}`}>
         <header className={styles.header}>
           <div>
-            <p className={styles.eyebrow}>Your ranking</p>
             <h1>Your NBA top {session.target_size}.</h1>
             <p className={styles.summary}>
               {session.progress.votes} votes · {tieCount} ties · {rows.length} players

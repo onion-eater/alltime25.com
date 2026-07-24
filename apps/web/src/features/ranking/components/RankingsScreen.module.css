@@ -18,15 +18,6 @@
   border-bottom: var(--border-strong);
 }
 
-.eyebrow {
-  margin: 0 0 6px;
-  color: var(--color-muted);
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
 .header h1 {
   margin: 0;
   font-family: var(--font-display);
@@ -192,10 +183,6 @@
     grid-template-columns: 1fr;
     gap: 9px;
     padding: 12px 0 10px;
-  }
-
-  .eyebrow {
-    margin-bottom: 5px;
   }
 
   .header h1 {

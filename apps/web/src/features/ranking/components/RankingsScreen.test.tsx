@@ -176,6 +176,18 @@ describe("RankingsScreen", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("uses the result heading without a redundant ranking eyebrow", () => {
+    render(
+      <RankingsScreen
+        session={completedSession()}
+        onStartOver={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole("heading", { name: "Your NBA top 10." })).toBeVisible();
+    expect(screen.queryByText("Your ranking")).not.toBeInTheDocument();
+  });
+
   it("announces session operation status without hiding the result", () => {
     render(
       <RankingsScreen

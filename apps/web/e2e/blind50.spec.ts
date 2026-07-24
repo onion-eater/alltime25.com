@@ -275,7 +275,13 @@ async function finishWith(
   label: "Player A" | "Player B" | "Tie",
 ): Promise<void> {
   for (let vote = 0; vote < 1_000; vote += 1) {
-    if (await page.getByText("Your ranking", { exact: true }).isVisible()) return;
+    if (
+      await page
+        .getByRole("heading", { name: /Your NBA top \d+\./i })
+        .isVisible()
+    ) {
+      return;
+    }
     await castVote(page, label);
   }
   throw new Error("Ranking did not complete within 1,000 votes.");
