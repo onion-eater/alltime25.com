@@ -23,6 +23,9 @@ def ready(service: ServiceDependency) -> dict[str, str]:
         catalog = service.catalog_registry.current()
         if not catalog.all() or not catalog.assets_ready():
             raise RuntimeError("The current catalog is empty.")
+        for pool_size in (25, 50, 100):
+            if len(catalog.pool(pool_size)) != pool_size:
+                raise RuntimeError("The current catalog is missing a mode pool.")
     except Exception as error:
         raise HTTPException(
             status_code=503,

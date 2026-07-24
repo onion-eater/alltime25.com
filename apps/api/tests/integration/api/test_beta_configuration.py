@@ -42,3 +42,12 @@ async def test_interactive_docs_are_disabled_in_beta(
     response = await beta_client.get("/docs")
 
     assert response.status_code == 404
+
+
+async def test_readiness_rejects_the_development_catalog_without_mode_pools(
+    beta_client: AsyncClient,
+) -> None:
+    response = await beta_client.get("/api/v1/ready")
+
+    assert response.status_code == 503
+    assert response.json() == {"detail": "Service is not ready."}
