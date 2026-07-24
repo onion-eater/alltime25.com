@@ -3,6 +3,7 @@ from pathlib import Path
 from uuid import uuid4
 
 import pytest
+from scripts.testing.build_e2e_catalog import build_catalog
 from sqlalchemy import inspect
 
 from blind50.application.ports.session_repository import SessionNotFoundError
@@ -44,14 +45,16 @@ def test_migrate_database_builds_the_schema(tmp_path: Path) -> None:
 
 def test_cleanup_command_deletes_expired_sessions(tmp_path: Path) -> None:
     now = datetime(2026, 7, 23, 12, tzinfo=UTC)
+    catalog_root = tmp_path / "catalog"
+    build_catalog(catalog_root)
     settings = Settings(
         database_url=f"sqlite:///{tmp_path / 'cleanup.sqlite3'}",
-        catalog_root=CATALOG_ROOT,
+        catalog_root=catalog_root,
     )
     migrate_database(settings)
     database = Database(settings.database_url)
     service = RankingService(
-        JsonCatalogRegistry(CATALOG_ROOT),
+        JsonCatalogRegistry(catalog_root),
         SqlSessionRepository(database.session_factory),
         clock=lambda: now,
         shuffler=lambda _: None,

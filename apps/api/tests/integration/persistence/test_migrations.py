@@ -26,6 +26,11 @@ def test_upgrade_builds_transactional_schema_on_empty_database(
             connection.execute(
                 text("SELECT version_num FROM alembic_version")
             ).scalar_one()
-            == "20260723_0001"
+            == "20260724_0002"
         )
+    columns = {
+        column["name"]
+        for column in inspect(database.engine).get_columns("ranking_sessions")
+    }
+    assert {"preset", "identity_mode"} <= columns
     database.dispose()

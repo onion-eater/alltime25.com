@@ -5,12 +5,15 @@ from datetime import datetime
 from typing import Protocol
 
 from blind50.domain.ranking import RankingState, VoteOutcome
+from blind50.domain.ranking_mode import IdentityMode, RankingPreset
 
 
 @dataclass(frozen=True)
 class StoredRankingSession:
     id: str
     catalog_id: str
+    preset: RankingPreset
+    identity_mode: IdentityMode
     player_order: tuple[str, ...]
     state: RankingState
     version: int

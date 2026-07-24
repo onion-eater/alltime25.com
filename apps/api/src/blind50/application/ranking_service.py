@@ -23,6 +23,7 @@ from blind50.application.ports.session_repository import (
     StoredRankingSession,
 )
 from blind50.domain.ranking import VoteOutcome, start_ranking
+from blind50.domain.ranking_mode import IdentityMode, RankingPreset
 
 SESSION_RETENTION = timedelta(days=90)
 
@@ -41,18 +42,26 @@ class RankingService:
         self.shuffler = shuffler or SystemRandom().shuffle
         self.clock = clock or (lambda: datetime.now(UTC))
 
-    def create_session(self, operation_id: str) -> StoredRankingSession:
+    def create_session(
+        self,
+        operation_id: str,
+        *,
+        preset: RankingPreset = RankingPreset.TOP_25,
+        identity_mode: IdentityMode = IdentityMode.NORMAL,
+    ) -> StoredRankingSession:
         catalog = self.catalog_registry.current()
-        player_order = [player.id for player in catalog.all()]
+        player_order = [player.id for player in catalog.pool(preset.pool_size)]
         self.shuffler(player_order)
         state = start_ranking(
             tuple(player_order),
-            target_size=min(50, len(player_order)),
+            target_size=preset.target_size,
         )
         now = self.clock()
         session = StoredRankingSession(
             id=str(uuid4()),
             catalog_id=catalog.catalog_id,
+            preset=preset,
+            identity_mode=identity_mode,
             player_order=tuple(player_order),
             state=state,
             version=0,
@@ -64,7 +73,11 @@ class RankingService:
         return self.repository.create(
             session,
             operation_id=operation_id,
-            request_hash=self._request_hash("create"),
+            request_hash=self._request_hash(
+                "create",
+                preset=preset.value,
+                identity_mode=identity_mode.value,
+            ),
         )
 
     def get_session(self, session_id: str) -> StoredRankingSession:

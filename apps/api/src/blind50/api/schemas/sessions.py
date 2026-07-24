@@ -9,6 +9,7 @@ from blind50.application.ports.player_catalog import PlayerCatalog
 from blind50.application.ports.session_repository import StoredRankingSession
 from blind50.domain.player import CareerStats, Honors, PlayerResume
 from blind50.domain.ranking import VoteOutcome, current_comparison
+from blind50.domain.ranking_mode import IdentityMode, RankingPreset
 
 
 class CareerStatsResponse(BaseModel):
@@ -59,7 +60,7 @@ class HonorsResponse(BaseModel):
         )
 
 
-class AnonymousPlayerResponse(BaseModel):
+class ComparisonPlayerResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     label: str
@@ -71,11 +72,16 @@ class AnonymousPlayerResponse(BaseModel):
     honors: HonorsResponse
 
 
+class IdentifiedComparisonPlayerResponse(ComparisonPlayerResponse):
+    name: str
+    image_url: str
+
+
 class ComparisonResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
-    player_a: AnonymousPlayerResponse
-    player_b: AnonymousPlayerResponse
+    player_a: IdentifiedComparisonPlayerResponse | ComparisonPlayerResponse
+    player_b: IdentifiedComparisonPlayerResponse | ComparisonPlayerResponse
 
 
 class ProgressResponse(BaseModel):
@@ -113,6 +119,8 @@ class SessionResponse(BaseModel):
     version: int
     can_undo: bool
     catalog_id: str
+    preset: RankingPreset
+    identity_mode: IdentityMode
     progress: ProgressResponse
     comparison: ComparisonResponse | None
     ranking: tuple[RankingGroupResponse, ...] | None
@@ -122,6 +130,8 @@ class CreateSessionRequest(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     operation_id: UUID
+    preset: RankingPreset = RankingPreset.TOP_25
+    identity_mode: IdentityMode = IdentityMode.NORMAL
 
 
 class VoteRequest(BaseModel):
@@ -164,11 +174,13 @@ def build_session_response(
                 catalog.get(comparison.candidate_id),
                 label="Player A",
                 code=code_by_player_id[comparison.candidate_id],
+                reveal_identity=session.identity_mode is IdentityMode.NORMAL,
             ),
             player_b=_anonymous_player(
                 catalog.get(comparison.opponent_id),
                 label="Player B",
                 code=code_by_player_id[comparison.opponent_id],
+                reveal_identity=session.identity_mode is IdentityMode.NORMAL,
             ),
         )
 
@@ -197,6 +209,8 @@ def build_session_response(
         version=session.version,
         can_undo=session.can_undo,
         catalog_id=session.catalog_id,
+        preset=session.preset,
+        identity_mode=session.identity_mode,
         progress=ProgressResponse(
             processed=state.processed_count,
             total=state.pool_size,
@@ -214,10 +228,21 @@ def _anonymous_player(
     *,
     label: str,
     code: str,
-) -> AnonymousPlayerResponse:
-    return AnonymousPlayerResponse(
+    reveal_identity: bool,
+) -> ComparisonPlayerResponse | IdentifiedComparisonPlayerResponse:
+    response_type = (
+        IdentifiedComparisonPlayerResponse
+        if reveal_identity
+        else ComparisonPlayerResponse
+    )
+    return response_type(
         label=label,
         code=code,
+        **(
+            {"name": player.name, "image_url": player.image_path}
+            if reveal_identity
+            else {}
+        ),
         era=player.era,
         seasons=player.seasons,
         regular_season=CareerStatsResponse.from_domain(player.regular_season),

@@ -4,7 +4,7 @@ import type { components } from "@/shared/api/generated/schema";
 export type SessionResponse = components["schemas"]["SessionResponse"];
 export type ComparisonResponse = components["schemas"]["ComparisonResponse"];
 export type AnonymousPlayerResponse =
-  components["schemas"]["AnonymousPlayerResponse"];
+  components["schemas"]["ComparisonPlayerResponse"];
 export type CareerStatsResponse = components["schemas"]["CareerStatsResponse"];
 export type HonorsResponse = components["schemas"]["HonorsResponse"];
 export type RankingGroupResponse =

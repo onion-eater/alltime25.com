@@ -11,6 +11,7 @@ from uuid import uuid4
 import pytest
 from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient, Response
+from scripts.testing.build_e2e_catalog import CATALOG_ID, build_catalog
 from sqlalchemy import func, select, update
 
 from blind50.infrastructure.persistence.models import (
@@ -21,7 +22,6 @@ from blind50.infrastructure.persistence.models import (
 from blind50.infrastructure.settings import Settings
 from blind50.main import create_app
 
-CATALOG_ROOT = Path(__file__).resolve().parents[5] / "catalog"
 pytestmark = pytest.mark.anyio
 
 
@@ -47,9 +47,11 @@ def anyio_backend() -> str:
 
 @pytest.fixture
 async def client(tmp_path: Path) -> AsyncIterator[ApiTestClient]:
+    catalog_root = tmp_path / "catalog"
+    build_catalog(catalog_root)
     settings = Settings(
         database_url=f"sqlite:///{tmp_path / 'test.sqlite3'}",
-        catalog_root=CATALOG_ROOT,
+        catalog_root=catalog_root,
         allowed_origin="http://testserver",
     )
     application = create_app(settings)
@@ -72,10 +74,17 @@ async def create_session(
     client: ApiTestClient,
     *,
     create_operation_id: str | None = None,
+    preset: str | None = None,
+    identity_mode: str | None = None,
 ) -> dict[str, object]:
+    payload = {"operation_id": create_operation_id or operation_id()}
+    if preset is not None:
+        payload["preset"] = preset
+    if identity_mode is not None:
+        payload["identity_mode"] = identity_mode
     response = await client.post(
         "/api/v1/sessions",
-        json={"operation_id": create_operation_id or operation_id()},
+        json=payload,
     )
     assert response.status_code == 201
     return response.json()
@@ -174,27 +183,52 @@ async def test_allowed_origin_mutation_succeeds(client: ApiTestClient) -> None:
     assert response.status_code == 201
 
 
-async def test_create_session_returns_versioned_anonymous_comparison(
+async def test_create_session_defaults_to_top_25_normal(
     client: ApiTestClient,
 ) -> None:
     body = await create_session(client)
 
     assert body["status"] == "active"
-    assert body["target_size"] == 10
-    assert body["pool_size"] == 10
+    assert body["preset"] == "top_25"
+    assert body["identity_mode"] == "normal"
+    assert body["target_size"] == 25
+    assert body["pool_size"] == 50
     assert body["version"] == 0
     assert body["can_undo"] is False
-    assert body["catalog_id"] == "development-2024-06-18"
+    assert body["catalog_id"] == CATALOG_ID
     assert body["comparison"]["player_a"]["label"] == "Player A"
     assert body["comparison"]["player_b"]["label"] == "Player B"
+    assert body["comparison"]["player_a"]["name"]
+    assert body["comparison"]["player_a"]["image_url"].startswith("/assets/catalogs/")
     assert "three_pct" in body["comparison"]["player_a"]["regular_season"]
     assert "three_pct" in body["comparison"]["player_a"]["playoffs"]
 
 
-async def test_active_response_does_not_reveal_identity_fields(
+@pytest.mark.parametrize(
+    ("preset", "pool_size", "target_size"),
+    (
+        ("top_10", 25, 10),
+        ("top_25", 50, 25),
+        ("top_50", 100, 50),
+    ),
+)
+async def test_create_session_maps_each_preset_to_fixed_sizes(
+    client: ApiTestClient,
+    preset: str,
+    pool_size: int,
+    target_size: int,
+) -> None:
+    body = await create_session(client, preset=preset)
+
+    assert body["preset"] == preset
+    assert body["pool_size"] == pool_size
+    assert body["target_size"] == target_size
+
+
+async def test_blind_active_response_omits_identity_fields(
     client: ApiTestClient,
 ) -> None:
-    body = await create_session(client)
+    body = await create_session(client, identity_mode="blind")
 
     serialized = json.dumps(body["comparison"]).lower()
     for forbidden in (
@@ -207,6 +241,30 @@ async def test_active_response_does_not_reveal_identity_fields(
         "provider",
     ):
         assert forbidden not in serialized
+
+
+async def test_create_operation_id_cannot_be_reused_for_another_mode(
+    client: ApiTestClient,
+) -> None:
+    create_id = operation_id()
+    await create_session(
+        client,
+        create_operation_id=create_id,
+        preset="top_10",
+        identity_mode="blind",
+    )
+
+    conflict = await client.post(
+        "/api/v1/sessions",
+        json={
+            "operation_id": create_id,
+            "preset": "top_50",
+            "identity_mode": "normal",
+        },
+    )
+
+    assert conflict.status_code == 409
+    assert conflict.json()["code"] == "idempotency_conflict"
 
 
 async def test_create_is_idempotent(client: ApiTestClient) -> None:
@@ -394,7 +452,7 @@ async def test_completed_response_reveals_names_images_and_ranks(
 
     assert completed["status"] == "complete"
     assert completed["comparison"] is None
-    assert len(completed["ranking"]) == 10
+    assert len(completed["ranking"]) == 25
     first_player = completed["ranking"][0]["players"][0]
     assert first_player["name"]
     assert first_player["image_url"].startswith("/assets/catalogs/")

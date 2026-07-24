@@ -1,46 +1,6 @@
 {
   "components": {
     "schemas": {
-      "AnonymousPlayerResponse": {
-        "properties": {
-          "code": {
-            "title": "Code",
-            "type": "string"
-          },
-          "era": {
-            "title": "Era",
-            "type": "string"
-          },
-          "honors": {
-            "$ref": "#/components/schemas/HonorsResponse"
-          },
-          "label": {
-            "title": "Label",
-            "type": "string"
-          },
-          "playoffs": {
-            "$ref": "#/components/schemas/CareerStatsResponse"
-          },
-          "regular_season": {
-            "$ref": "#/components/schemas/CareerStatsResponse"
-          },
-          "seasons": {
-            "title": "Seasons",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "label",
-          "code",
-          "era",
-          "seasons",
-          "regular_season",
-          "playoffs",
-          "honors"
-        ],
-        "title": "AnonymousPlayerResponse",
-        "type": "object"
-      },
       "ApiErrorResponse": {
         "properties": {
           "code": {
@@ -180,13 +140,69 @@
         "title": "CareerStatsResponse",
         "type": "object"
       },
+      "ComparisonPlayerResponse": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "era": {
+            "title": "Era",
+            "type": "string"
+          },
+          "honors": {
+            "$ref": "#/components/schemas/HonorsResponse"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "playoffs": {
+            "$ref": "#/components/schemas/CareerStatsResponse"
+          },
+          "regular_season": {
+            "$ref": "#/components/schemas/CareerStatsResponse"
+          },
+          "seasons": {
+            "title": "Seasons",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "label",
+          "code",
+          "era",
+          "seasons",
+          "regular_season",
+          "playoffs",
+          "honors"
+        ],
+        "title": "ComparisonPlayerResponse",
+        "type": "object"
+      },
       "ComparisonResponse": {
         "properties": {
           "player_a": {
-            "$ref": "#/components/schemas/AnonymousPlayerResponse"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdentifiedComparisonPlayerResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ComparisonPlayerResponse"
+              }
+            ],
+            "title": "Player A"
           },
           "player_b": {
-            "$ref": "#/components/schemas/AnonymousPlayerResponse"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdentifiedComparisonPlayerResponse"
+              },
+              {
+                "$ref": "#/components/schemas/ComparisonPlayerResponse"
+              }
+            ],
+            "title": "Player B"
           }
         },
         "required": [
@@ -198,10 +214,18 @@
       },
       "CreateSessionRequest": {
         "properties": {
+          "identity_mode": {
+            "$ref": "#/components/schemas/IdentityMode",
+            "default": "normal"
+          },
           "operation_id": {
             "format": "uuid",
             "title": "Operation Id",
             "type": "string"
+          },
+          "preset": {
+            "$ref": "#/components/schemas/RankingPreset",
+            "default": "top_25"
           }
         },
         "required": [
@@ -270,6 +294,64 @@
         "title": "HonorsResponse",
         "type": "object"
       },
+      "IdentifiedComparisonPlayerResponse": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "era": {
+            "title": "Era",
+            "type": "string"
+          },
+          "honors": {
+            "$ref": "#/components/schemas/HonorsResponse"
+          },
+          "image_url": {
+            "title": "Image Url",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "playoffs": {
+            "$ref": "#/components/schemas/CareerStatsResponse"
+          },
+          "regular_season": {
+            "$ref": "#/components/schemas/CareerStatsResponse"
+          },
+          "seasons": {
+            "title": "Seasons",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "label",
+          "code",
+          "era",
+          "seasons",
+          "regular_season",
+          "playoffs",
+          "honors",
+          "name",
+          "image_url"
+        ],
+        "title": "IdentifiedComparisonPlayerResponse",
+        "type": "object"
+      },
+      "IdentityMode": {
+        "enum": [
+          "normal",
+          "blind"
+        ],
+        "title": "IdentityMode",
+        "type": "string"
+      },
       "ProgressResponse": {
         "properties": {
           "eliminated": {
@@ -324,6 +406,15 @@
         "title": "RankingGroupResponse",
         "type": "object"
       },
+      "RankingPreset": {
+        "enum": [
+          "top_10",
+          "top_25",
+          "top_50"
+        ],
+        "title": "RankingPreset",
+        "type": "string"
+      },
       "RevealedPlayerResponse": {
         "properties": {
           "era": {
@@ -371,9 +462,15 @@
             "title": "Id",
             "type": "string"
           },
+          "identity_mode": {
+            "$ref": "#/components/schemas/IdentityMode"
+          },
           "pool_size": {
             "title": "Pool Size",
             "type": "integer"
+          },
+          "preset": {
+            "$ref": "#/components/schemas/RankingPreset"
           },
           "progress": {
             "$ref": "#/components/schemas/ProgressResponse"
@@ -417,6 +514,8 @@
           "version",
           "can_undo",
           "catalog_id",
+          "preset",
+          "identity_mode",
           "progress",
           "comparison",
           "ranking"

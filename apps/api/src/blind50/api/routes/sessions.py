@@ -41,7 +41,11 @@ def create_session(
     service: ServiceDependency,
 ) -> SessionResponse | JSONResponse:
     try:
-        session = service.create_session(str(request.operation_id))
+        session = service.create_session(
+            str(request.operation_id),
+            preset=request.preset,
+            identity_mode=request.identity_mode,
+        )
     except IdempotencyConflictError as error:
         return _error(
             status.HTTP_409_CONFLICT,

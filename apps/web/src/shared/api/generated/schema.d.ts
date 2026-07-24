@@ -111,20 +111,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AnonymousPlayerResponse */
-        AnonymousPlayerResponse: {
-            /** Code */
-            code: string;
-            /** Era */
-            era: string;
-            honors: components["schemas"]["HonorsResponse"];
-            /** Label */
-            label: string;
-            playoffs: components["schemas"]["CareerStatsResponse"];
-            regular_season: components["schemas"]["CareerStatsResponse"];
-            /** Seasons */
-            seasons: number;
-        };
         /** ApiErrorResponse */
         ApiErrorResponse: {
             /** Code */
@@ -155,18 +141,38 @@ export interface components {
             /** Three Pct */
             three_pct: number | null;
         };
+        /** ComparisonPlayerResponse */
+        ComparisonPlayerResponse: {
+            /** Code */
+            code: string;
+            /** Era */
+            era: string;
+            honors: components["schemas"]["HonorsResponse"];
+            /** Label */
+            label: string;
+            playoffs: components["schemas"]["CareerStatsResponse"];
+            regular_season: components["schemas"]["CareerStatsResponse"];
+            /** Seasons */
+            seasons: number;
+        };
         /** ComparisonResponse */
         ComparisonResponse: {
-            player_a: components["schemas"]["AnonymousPlayerResponse"];
-            player_b: components["schemas"]["AnonymousPlayerResponse"];
+            /** Player A */
+            player_a: components["schemas"]["IdentifiedComparisonPlayerResponse"] | components["schemas"]["ComparisonPlayerResponse"];
+            /** Player B */
+            player_b: components["schemas"]["IdentifiedComparisonPlayerResponse"] | components["schemas"]["ComparisonPlayerResponse"];
         };
         /** CreateSessionRequest */
         CreateSessionRequest: {
+            /** @default normal */
+            identity_mode: components["schemas"]["IdentityMode"];
             /**
              * Operation Id
              * Format: uuid
              */
             operation_id: string;
+            /** @default top_25 */
+            preset: components["schemas"]["RankingPreset"];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -186,6 +192,29 @@ export interface components {
             /** Mvp */
             mvp: number;
         };
+        /** IdentifiedComparisonPlayerResponse */
+        IdentifiedComparisonPlayerResponse: {
+            /** Code */
+            code: string;
+            /** Era */
+            era: string;
+            honors: components["schemas"]["HonorsResponse"];
+            /** Image Url */
+            image_url: string;
+            /** Label */
+            label: string;
+            /** Name */
+            name: string;
+            playoffs: components["schemas"]["CareerStatsResponse"];
+            regular_season: components["schemas"]["CareerStatsResponse"];
+            /** Seasons */
+            seasons: number;
+        };
+        /**
+         * IdentityMode
+         * @enum {string}
+         */
+        IdentityMode: "normal" | "blind";
         /** ProgressResponse */
         ProgressResponse: {
             /** Eliminated */
@@ -206,6 +235,11 @@ export interface components {
             /** Rank */
             rank: number;
         };
+        /**
+         * RankingPreset
+         * @enum {string}
+         */
+        RankingPreset: "top_10" | "top_25" | "top_50";
         /** RevealedPlayerResponse */
         RevealedPlayerResponse: {
             /** Era */
@@ -224,8 +258,10 @@ export interface components {
             comparison: components["schemas"]["ComparisonResponse"] | null;
             /** Id */
             id: string;
+            identity_mode: components["schemas"]["IdentityMode"];
             /** Pool Size */
             pool_size: number;
+            preset: components["schemas"]["RankingPreset"];
             progress: components["schemas"]["ProgressResponse"];
             /** Ranking */
             ranking: components["schemas"]["RankingGroupResponse"][] | null;

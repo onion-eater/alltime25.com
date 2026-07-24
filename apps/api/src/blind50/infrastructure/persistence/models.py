@@ -23,6 +23,8 @@ class RankingSessionRecord(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     catalog_id: Mapped[str] = mapped_column(String(128), nullable=False)
+    preset: Mapped[str] = mapped_column(String(16), nullable=False)
+    identity_mode: Mapped[str] = mapped_column(String(16), nullable=False)
     player_order_json: Mapped[str] = mapped_column(Text, nullable=False)
     state_json: Mapped[str] = mapped_column(Text, nullable=False)
     state_schema_version: Mapped[int] = mapped_column(Integer, nullable=False)

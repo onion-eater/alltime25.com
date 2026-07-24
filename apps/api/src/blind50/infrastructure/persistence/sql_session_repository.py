@@ -23,6 +23,7 @@ from blind50.domain.ranking import (
     VoteOutcome,
     apply_vote,
 )
+from blind50.domain.ranking_mode import IdentityMode, RankingPreset
 from blind50.infrastructure.persistence.models import (
     RankingOperationRecord,
     RankingSessionRecord,
@@ -228,6 +229,8 @@ class SqlSessionRepository:
             result = StoredRankingSession(
                 id=record.id,
                 catalog_id=record.catalog_id,
+                preset=self._load_preset(record),
+                identity_mode=self._load_identity_mode(record),
                 player_order=self._load_player_order(record),
                 state=updated_state,
                 version=resulting_version,
@@ -340,6 +343,8 @@ class SqlSessionRepository:
             result = StoredRankingSession(
                 id=record.id,
                 catalog_id=record.catalog_id,
+                preset=self._load_preset(record),
+                identity_mode=self._load_identity_mode(record),
                 player_order=self._load_player_order(record),
                 state=restored_state,
                 version=resulting_version,
@@ -449,6 +454,8 @@ class SqlSessionRepository:
         return StoredRankingSession(
             id=record.id,
             catalog_id=record.catalog_id,
+            preset=self._load_preset(record),
+            identity_mode=self._load_identity_mode(record),
             player_order=self._load_player_order(record),
             state=state,
             version=operation.resulting_version,
@@ -477,6 +484,8 @@ class SqlSessionRepository:
         return StoredRankingSession(
             id=record.id,
             catalog_id=record.catalog_id,
+            preset=self._load_preset(record),
+            identity_mode=self._load_identity_mode(record),
             player_order=self._load_player_order(record),
             state=self._load_state(record.state_json, record.id),
             version=record.version,
@@ -535,6 +544,8 @@ class SqlSessionRepository:
         return RankingSessionRecord(
             id=session.id,
             catalog_id=session.catalog_id,
+            preset=session.preset.value,
+            identity_mode=session.identity_mode.value,
             player_order_json=json.dumps(
                 session.player_order,
                 separators=(",", ":"),
@@ -547,6 +558,20 @@ class SqlSessionRepository:
             updated_at=session.updated_at,
             expires_at=session.expires_at,
         )
+
+    @staticmethod
+    def _load_preset(record: RankingSessionRecord) -> RankingPreset:
+        try:
+            return RankingPreset(record.preset)
+        except ValueError as error:
+            raise CorruptSessionError(record.id) from error
+
+    @staticmethod
+    def _load_identity_mode(record: RankingSessionRecord) -> IdentityMode:
+        try:
+            return IdentityMode(record.identity_mode)
+        except ValueError as error:
+            raise CorruptSessionError(record.id) from error
 
     @staticmethod
     def _load_player_order(

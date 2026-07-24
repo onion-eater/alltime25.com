@@ -31,6 +31,8 @@ export function activeSession(): SessionResponse {
     version: 0,
     can_undo: true,
     catalog_id: "development-2024-06-18",
+    preset: "top_25",
+    identity_mode: "normal",
     progress: {
       processed: 4,
       total: 10,

@@ -9,6 +9,7 @@ from threading import Barrier
 from uuid import uuid4
 
 import pytest
+from scripts.testing.build_e2e_catalog import CATALOG_ID, build_catalog
 from sqlalchemy import event, func, select
 from sqlalchemy.exc import OperationalError
 
@@ -33,7 +34,6 @@ POSTGRES_URL = os.environ.get(
     "BLIND50_TEST_DATABASE_URL",
     "postgresql+psycopg://blind50:blind50@127.0.0.1:55432/blind50_test",
 )
-CATALOG_ROOT = Path(__file__).resolve().parents[5] / "catalog"
 
 
 class StubCatalogRegistry:
@@ -67,10 +67,15 @@ def postgres_database() -> Iterator[Database]:
 
 
 @pytest.fixture
-def postgres_service(postgres_database: Database) -> RankingService:
+def postgres_service(
+    postgres_database: Database,
+    tmp_path: Path,
+) -> RankingService:
+    catalog_root = tmp_path / "catalog"
+    build_catalog(catalog_root)
     catalog = JsonPlayerCatalog(
-        CATALOG_ROOT / "data" / "catalogs" / "development-2024-06-18" / "players.json",
-        CATALOG_ROOT / "assets" / "catalogs" / "development-2024-06-18" / "players",
+        catalog_root / "data" / "catalogs" / CATALOG_ID / "players.json",
+        catalog_root / "assets" / "catalogs" / CATALOG_ID / "players",
     )
     return RankingService(
         StubCatalogRegistry(catalog),
