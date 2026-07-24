@@ -152,6 +152,33 @@ test("comparison and dialogs pass automated accessibility checks", async ({
   expect(dialogResults.violations).toEqual([]);
 });
 
+test("tablet result actions fill the bar in equal columns", async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.goto("/");
+  await finishWith(page, "Player B");
+
+  const actionGeometry = await page
+    .getByRole("button", { name: "Share" })
+    .locator("..")
+    .evaluate((actions) => {
+      const buttons = Array.from(actions.querySelectorAll("button")).map(
+        (button) => button.getBoundingClientRect(),
+      );
+      const bounds = actions.getBoundingClientRect();
+      return {
+        leftGap: Math.abs(buttons[0].left - bounds.left),
+        rightGap: Math.abs(buttons.at(-1)!.right - bounds.right),
+        widthDifference: Math.abs(buttons[0].width - buttons[1].width),
+      };
+    });
+  expect(actionGeometry.leftGap).toBeLessThanOrEqual(2);
+  expect(actionGeometry.rightGap).toBeLessThanOrEqual(2);
+  expect(
+    Math.abs(actionGeometry.leftGap - actionGeometry.rightGap),
+  ).toBeLessThanOrEqual(1);
+  expect(actionGeometry.widthDifference).toBeLessThanOrEqual(1);
+});
+
 test("a full 100-player workflow survives recovery and cutoff ties", async ({
   context,
   page,
