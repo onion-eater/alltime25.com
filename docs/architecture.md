@@ -18,7 +18,9 @@ blind-50/
 ├── catalog/
 │   ├── data/
 │   │   ├── current.json
-│   │   └── catalogs/<catalog-id>/players.json
+│   │   └── catalogs/<catalog-id>/
+│   │       ├── players.json
+│   │       └── pools.json
 │   └── assets/catalogs/<catalog-id>/players/
 ├── contracts/
 │   └── openapi.json
@@ -198,6 +200,8 @@ the insertion. Undo restores the exact state before the latest vote.
 - Context: seasons, games, and prominent decade.
 - Missing historical statistics are `null` and render as `—`.
 - Every catalog has an `as_of` date and source notes.
+- Released catalogs contain fixed, nested 25-, 50-, and 100-player candidate
+  pools in `pools.json`.
 - `catalog/data/current.json` selects only new sessions; saved sessions retain
   their original immutable `catalog_id`.
 - Active-player data is never silently mixed across different cutoff dates.

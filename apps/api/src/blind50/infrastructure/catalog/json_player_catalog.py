@@ -14,6 +14,7 @@ class JsonPlayerCatalog:
         self.asset_directory = asset_directory
         self.catalog_id, self._players = self._load()
         self._by_id = {player.id: player for player in self._players}
+        self._pools = self._load_pools()
 
     def all(self) -> tuple[PlayerResume, ...]:
         return self._players
@@ -23,6 +24,13 @@ class JsonPlayerCatalog:
             return self._by_id[player_id]
         except KeyError as error:
             raise LookupError(player_id) from error
+
+    def pool(self, size: int) -> tuple[PlayerResume, ...]:
+        try:
+            player_ids = self._pools[size]
+        except KeyError as error:
+            raise LookupError(f"Catalog has no {size}-player pool.") from error
+        return tuple(self._by_id[player_id] for player_id in player_ids)
 
     def assets_ready(self) -> bool:
         return all(
@@ -49,6 +57,43 @@ class JsonPlayerCatalog:
         if any(player.as_of != catalog_as_of for player in players):
             raise ValueError("Every player must use the catalog as_of date.")
         return catalog_id, players
+
+    def _load_pools(self) -> dict[int, tuple[str, ...]]:
+        pools_path = self.catalog_path.with_name("pools.json")
+        if not pools_path.is_file():
+            return {len(self._players): tuple(self._by_id)}
+
+        payload = json.loads(pools_path.read_text(encoding="utf-8"))
+        if (
+            not isinstance(payload, dict)
+            or payload.get("catalog_id") != self.catalog_id
+        ):
+            raise ValueError("Candidate pool catalog ID must match players.json.")
+        records = payload.get("pools")
+        if not isinstance(records, dict) or set(records) != {"25", "50", "100"}:
+            raise ValueError("Candidate pools must define 25, 50, and 100.")
+
+        pools: dict[int, tuple[str, ...]] = {}
+        player_ids = set(self._by_id)
+        for size in (25, 50, 100):
+            values = records[str(size)]
+            if (
+                not isinstance(values, list)
+                or len(values) != size
+                or any(not isinstance(value, str) for value in values)
+                or len(set(values)) != size
+                or not set(values) <= player_ids
+            ):
+                raise ValueError(
+                    f"Candidate pool {size} must contain {size} known unique IDs."
+                )
+            pools[size] = tuple(values)
+
+        if set(pools[100]) != player_ids:
+            raise ValueError("Candidate pool 100 must contain every player.")
+        if not set(pools[25]) < set(pools[50]) < set(pools[100]):
+            raise ValueError("Candidate pools must be strictly nested.")
+        return pools
 
     def _parse_player(
         self,

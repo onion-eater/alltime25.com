@@ -181,6 +181,26 @@ def check_catalog(errors: list[str]) -> None:
                 f"{path.relative_to(ROOT)}: players.json must use "
                 "catalog/data/catalogs/<catalog-id>/players.json"
             )
+    for path in ROOT.rglob("pools.json"):
+        if any(part in IGNORED_PARTS for part in path.parts):
+            continue
+        try:
+            relative = path.relative_to(CATALOG)
+        except ValueError:
+            errors.append(
+                f"{path.relative_to(ROOT)}: candidate pools belong under catalog/"
+            )
+            continue
+        parts = relative.parts
+        if (
+            len(parts) != 4
+            or parts[0:2] != ("data", "catalogs")
+            or parts[3:] != ("pools.json",)
+        ):
+            errors.append(
+                f"{path.relative_to(ROOT)}: pools.json must use "
+                "catalog/data/catalogs/<catalog-id>/pools.json"
+            )
 
 
 def main() -> int:

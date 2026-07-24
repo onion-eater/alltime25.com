@@ -20,6 +20,7 @@ from PIL import Image, UnidentifiedImageError
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CATALOG_ROOT = REPOSITORY_ROOT / "catalog"
 PLAYER_POOL_PATH = Path(__file__).resolve().parent / "player_pool.json"
+CANDIDATE_POOLS_PATH = Path(__file__).resolve().parent / "candidate_pools.json"
 IMAGE_SIZE = (600, 800)
 REQUIRED_RIGHTS = (
     "historical_data_display",
@@ -106,9 +107,11 @@ def main() -> int:
     args = parse_args()
     payload = load_json(args.input)
     pool = load_json(PLAYER_POOL_PATH)
+    candidate_pools = load_json(CANDIDATE_POOLS_PATH)
     build_catalog(
         payload=payload,
         pool=pool,
+        candidate_pools=candidate_pools,
         catalog_root=args.catalog_root,
         catalog_id=args.catalog_id,
         as_of=args.as_of,
@@ -123,6 +126,7 @@ def build_catalog(
     *,
     payload: dict[str, Any],
     pool: dict[str, Any],
+    candidate_pools: dict[str, Any] | None = None,
     catalog_root: Path,
     catalog_id: str,
     as_of: str,
@@ -133,6 +137,10 @@ def build_catalog(
     validate_date(as_of)
     validate_rights(payload, license_reference)
     allowlist = validate_pool(pool)
+    published_pools = validate_candidate_pools(
+        candidate_pools or load_json(CANDIDATE_POOLS_PATH),
+        {player["id"] for player in allowlist},
+    )
     records = validate_coverage(payload, allowlist)
     destination = catalog_root / "data" / "catalogs" / catalog_id
     asset_destination = catalog_root / "assets" / "catalogs" / catalog_id / "players"
@@ -182,6 +190,14 @@ def build_catalog(
                 "players": normalized_players,
             },
         )
+        pools_path = temporary_data / "pools.json"
+        write_json(
+            pools_path,
+            {
+                "catalog_id": catalog_id,
+                "pools": published_pools,
+            },
+        )
         review_path = temporary_data / "review.csv"
         write_review_csv(review_path, review_rows)
         manifest = build_manifest(
@@ -190,6 +206,7 @@ def build_catalog(
             as_of=as_of,
             license_reference=license_reference,
             players_path=players_path,
+            pools_path=pools_path,
             review_path=review_path,
             asset_directory=temporary_assets,
         )
@@ -228,6 +245,41 @@ def validate_pool(pool: dict[str, Any]) -> list[dict[str, str]]:
     if sum(record.get("cohort") == "addition" for record in players) != 24:
         raise CatalogBuildError("The allowlist must contain 24 additions.")
     return players
+
+
+def validate_candidate_pools(
+    payload: dict[str, Any],
+    player_ids: set[str],
+) -> dict[str, list[str]]:
+    raw_pools = payload.get("pools")
+    if not isinstance(raw_pools, dict) or set(raw_pools) != {"25", "50", "100"}:
+        raise CatalogBuildError("Candidate pools must define 25, 50, and 100.")
+
+    pools: dict[str, list[str]] = {}
+    for size in (25, 50, 100):
+        key = str(size)
+        values = raw_pools[key]
+        if (
+            not isinstance(values, list)
+            or len(values) != size
+            or any(not isinstance(value, str) for value in values)
+            or len(set(values)) != size
+        ):
+            raise CatalogBuildError(
+                f"Candidate pool {size} must contain {size} unique player IDs."
+            )
+        unknown = set(values) - player_ids
+        if unknown:
+            raise CatalogBuildError(
+                f"Candidate pool {size} contains unknown IDs: {sorted(unknown)}."
+            )
+        pools[key] = values
+
+    if set(pools["100"]) != player_ids:
+        raise CatalogBuildError("Candidate pool 100 must contain every player.")
+    if not set(pools["25"]) < set(pools["50"]) < set(pools["100"]):
+        raise CatalogBuildError("Candidate pools must be strictly nested.")
+    return pools
 
 
 def validate_rights(
@@ -537,6 +589,7 @@ def build_manifest(
     as_of: str,
     license_reference: str,
     players_path: Path,
+    pools_path: Path,
     review_path: Path,
     asset_directory: Path,
 ) -> dict[str, Any]:
@@ -561,6 +614,7 @@ def build_manifest(
         "license_reference": license_reference,
         "hashes": {
             "players.json": sha256_file(players_path),
+            "pools.json": sha256_file(pools_path),
             "review.csv": sha256_file(review_path),
             "assets": assets,
         },
@@ -580,7 +634,7 @@ def verify_manifest(catalog_root: Path, catalog_id: str) -> None:
     if not isinstance(hashes, dict):
         raise CatalogBuildError("Manifest hashes are missing.")
 
-    for filename in ("players.json", "review.csv"):
+    for filename in ("players.json", "pools.json", "review.csv"):
         expected = hashes.get(filename)
         path = data_directory / filename
         if not isinstance(expected, str) or sha256_file(path) != expected:

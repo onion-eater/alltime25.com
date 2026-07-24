@@ -47,10 +47,13 @@ def player_record(player_id: str = "player-one") -> dict[str, Any]:
 def write_catalog(
     tmp_path: Path,
     players: list[dict[str, Any]],
+    pools: dict[str, list[str]] | None = None,
 ) -> tuple[Path, Path]:
     assets = tmp_path / "assets"
     assets.mkdir()
-    (assets / "player.jpg").write_bytes(b"development image")
+    for player in players:
+        image_name = Path(player["image_path"]).name
+        (assets / image_name).write_bytes(f"image:{image_name}".encode())
     catalog = tmp_path / "players.json"
     catalog.write_text(
         json.dumps(
@@ -62,6 +65,16 @@ def write_catalog(
         ),
         encoding="utf-8",
     )
+    if pools is not None:
+        (tmp_path / "pools.json").write_text(
+            json.dumps(
+                {
+                    "catalog_id": "test-2024-06-18",
+                    "pools": pools,
+                }
+            ),
+            encoding="utf-8",
+        )
     return catalog, assets
 
 
@@ -231,6 +244,52 @@ def test_catalog_rejects_missing_image(tmp_path: Path) -> None:
     player = player_record()
     player["image_path"] = "/assets/catalogs/test-2024-06-18/players/missing.jpg"
     catalog, assets = write_catalog(tmp_path, [player])
+    (assets / "missing.jpg").unlink()
 
     with pytest.raises(ValueError, match="missing image"):
+        JsonPlayerCatalog(catalog, assets)
+
+
+def test_catalog_loads_exact_nested_candidate_pools(tmp_path: Path) -> None:
+    players = []
+    for index in range(100):
+        player = player_record(f"player-{index:03d}")
+        player["name"] = f"Player {index:03d}"
+        player["image_path"] = (
+            f"/assets/catalogs/test-2024-06-18/players/player-{index:03d}.jpg"
+        )
+        players.append(player)
+    ids = [player["id"] for player in players]
+    catalog, assets = write_catalog(
+        tmp_path,
+        players,
+        pools={
+            "25": ids[:25],
+            "50": ids[:50],
+            "100": ids,
+        },
+    )
+
+    loaded = JsonPlayerCatalog(catalog, assets)
+
+    assert tuple(player.id for player in loaded.pool(25)) == tuple(ids[:25])
+    assert tuple(player.id for player in loaded.pool(50)) == tuple(ids[:50])
+    assert tuple(player.id for player in loaded.pool(100)) == tuple(ids)
+
+
+def test_catalog_rejects_candidate_pool_with_unknown_player(
+    tmp_path: Path,
+) -> None:
+    player = player_record()
+    catalog, assets = write_catalog(
+        tmp_path,
+        [player],
+        pools={
+            "25": [player["id"]] * 24 + ["unknown"],
+            "50": [player["id"]] * 50,
+            "100": [player["id"]] * 100,
+        },
+    )
+
+    with pytest.raises(ValueError, match="Candidate pool"):
         JsonPlayerCatalog(catalog, assets)

@@ -77,6 +77,22 @@ def build_catalog(output: Path) -> None:
         + "\n",
         encoding="utf-8",
     )
+    player_ids = [player["id"] for player in players]
+    (data_directory / "pools.json").write_text(
+        json.dumps(
+            {
+                "catalog_id": CATALOG_ID,
+                "pools": {
+                    "25": player_ids[:25],
+                    "50": player_ids[:50],
+                    "100": player_ids,
+                },
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     (resolved / "data" / "current.json").write_text(
         json.dumps({"catalog_id": CATALOG_ID}, indent=2) + "\n",
         encoding="utf-8",

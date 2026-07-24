@@ -6,12 +6,14 @@ from pathlib import Path
 import pytest
 from PIL import Image
 from scripts.catalog.build_catalog import (
+    CANDIDATE_POOLS_PATH,
     CatalogBuildError,
     build_catalog,
     load_json,
     per_game,
     percentage,
     prominent_era,
+    validate_candidate_pools,
     validate_pool,
     verify_manifest,
 )
@@ -27,6 +29,32 @@ def test_frozen_pool_has_exact_required_cohorts() -> None:
     assert len(players) == 100
     assert sum(player["cohort"] == "nba-75" for player in players) == 76
     assert sum(player["cohort"] == "addition" for player in players) == 24
+
+
+def test_candidate_pools_are_exact_and_nested() -> None:
+    player_pool = validate_pool(load_json(PLAYER_POOL_PATH))
+    pools = validate_candidate_pools(
+        load_json(CANDIDATE_POOLS_PATH),
+        {player["id"] for player in player_pool},
+    )
+
+    assert list(pools) == ["25", "50", "100"]
+    assert [len(pools[size]) for size in pools] == [25, 50, 100]
+    assert set(pools["25"]) < set(pools["50"]) < set(pools["100"])
+
+
+def test_candidate_pools_reject_non_nested_membership() -> None:
+    players = {f"player-{number}" for number in range(100)}
+    payload = {
+        "pools": {
+            "25": [f"player-{number}" for number in range(25)],
+            "50": [f"player-{number}" for number in range(24, 74)],
+            "100": sorted(players),
+        }
+    }
+
+    with pytest.raises(CatalogBuildError, match="nested"):
+        validate_candidate_pools(payload, players)
 
 
 def test_career_rates_are_calculated_from_totals() -> None:
@@ -137,6 +165,7 @@ def test_full_builder_publishes_exactly_one_hundred_hashed_assets(
         (data_directory / "review.csv").read_text(encoding="utf-8").splitlines()
     )
     assert manifest["player_count"] == 100
+    assert manifest["hashes"]["pools.json"]
     assert len(manifest["hashes"]["assets"]) == 100
     assert len(review_rows) == 101
     assert (
@@ -156,6 +185,15 @@ def test_full_builder_publishes_exactly_one_hundred_hashed_assets(
     assert json.loads(
         (catalog_root / "data" / "current.json").read_text(encoding="utf-8")
     ) == {"catalog_id": "beta-test-2025-26"}
+    published_pools = json.loads(
+        (data_directory / "pools.json").read_text(encoding="utf-8")
+    )
+    assert published_pools["catalog_id"] == "beta-test-2025-26"
+    assert [len(published_pools["pools"][size]) for size in ("25", "50", "100")] == [
+        25,
+        50,
+        100,
+    ]
 
     verify_manifest(catalog_root, "beta-test-2025-26")
     asset = next(

@@ -10,6 +10,7 @@ The staged JSON must contain:
 - written-rights confirmations for historical data display, local image
   caching, and coverage of all 100 players
 - exactly the 100 stable IDs in `player_pool.json`
+- the fixed nested mode pools in `candidate_pools.json`
 - regular-season and playoff career totals
 - regular-season season rows used to derive the prominent decade
 - NBA award-audit values and an official NBA source URL
@@ -30,8 +31,8 @@ uv run --project apps/api python scripts/catalog/build_catalog.py \
 URL needs the provider header. It is never copied into catalog output.
 
 The builder refuses to overwrite an existing catalog. Publication produces
-`players.json`, `manifest.json`, `review.csv`, and 100 local 600×800 WebP
-assets. The human-review CSV and award audit must be approved before
+`players.json`, `pools.json`, `manifest.json`, `review.csv`, and 100 local
+600×800 WebP assets. The human-review CSV and award audit must be approved before
 `--set-current` is used.
 
 The checked-in `development-2024-06-18` catalog is a 10-player development
