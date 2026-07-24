@@ -16,9 +16,13 @@ const VIEWPORTS = [
   { width: 701, height: 900 },
   { width: 768, height: 600 },
   { width: 768, height: 1024 },
+  { width: 810, height: 1080 },
+  { width: 820, height: 1180 },
+  { width: 834, height: 1194 },
   { width: 844, height: 390 },
   { width: 1024, height: 600 },
   { width: 1024, height: 768 },
+  { width: 1024, height: 1366 },
   { width: 1280, height: 720 },
   { width: 1366, height: 768 },
   { width: 1440, height: 900 },
@@ -152,6 +156,38 @@ test("comparison and dialogs pass automated accessibility checks", async ({
   expect(dialogResults.violations).toEqual([]);
 });
 
+test("all preset and identity combinations switch safely", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "Modes" })).toBeVisible();
+  await expect(page.locator("main img")).not.toHaveCount(0);
+
+  const combinations = [
+    ["Top 10", "Normal", 25, 10],
+    ["Top 10", "Blind", 25, 10],
+    ["Top 25", "Blind", 50, 25],
+    ["Top 25", "Normal", 50, 25],
+    ["Top 50", "Normal", 100, 50],
+    ["Top 50", "Blind", 100, 50],
+  ] as const;
+  for (const [preset, identity, poolSize, targetSize] of combinations) {
+    const response = await switchMode(page, preset, identity);
+    expect(response.pool_size).toBe(poolSize);
+    expect(response.target_size).toBe(targetSize);
+    expect(response.identity_mode).toBe(identity.toLowerCase());
+    if (identity === "Blind") {
+      await expect(page.locator("main img")).toHaveCount(0);
+      expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
+        "image",
+      );
+    } else {
+      await expect(page.locator("main img")).not.toHaveCount(0);
+    }
+  }
+});
+
 test("tablet result actions fill the bar in equal columns", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto("/");
@@ -185,6 +221,7 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
 }) => {
   test.setTimeout(180_000);
   await page.goto("/");
+  await switchMode(page, "Top 50", "Normal");
   await castVote(page, "Player A");
   await castVote(page, "Player B");
   await castVote(page, "Tie");
@@ -268,6 +305,27 @@ async function castVote(
     ),
     page.getByRole("button", { name: label, exact: true }).click(),
   ]);
+}
+
+async function switchMode(
+  page: Page,
+  preset: "Top 10" | "Top 25" | "Top 50",
+  identity: "Normal" | "Blind",
+): Promise<Record<string, unknown>> {
+  await page.getByRole("button", { name: "Modes" }).click();
+  const dialog = page.getByRole("dialog", { name: "Modes" });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole("radio", { name: preset }).check();
+  await dialog.getByRole("radio", { name: identity }).check();
+  const responsePromise = page.waitForResponse(
+    (response) =>
+      response.url().endsWith("/sessions") &&
+      response.request().method() === "POST",
+  );
+  await dialog.getByRole("button", { name: "Start new ranking" }).click();
+  const response = await responsePromise;
+  await expect(dialog).toBeHidden();
+  return response.json() as Promise<Record<string, unknown>>;
 }
 
 async function finishWith(

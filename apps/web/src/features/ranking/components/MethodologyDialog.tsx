@@ -4,12 +4,12 @@ import styles from "@/features/ranking/components/HelpDialog.module.css";
 import { useDialogFocus } from "@/shared/hooks/useDialogFocus";
 
 interface MethodologyDialogProps {
+  candidateCount?: number;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const methodology = [
-  "100 candidates",
   "NBA/BAA career stats",
   "Regular season + playoffs",
   "Raw, not era-adjusted",
@@ -19,6 +19,7 @@ const methodology = [
 ] as const;
 
 export function MethodologyDialog({
+  candidateCount = 50,
   isOpen,
   onClose,
 }: MethodologyDialogProps): React.JSX.Element | null {
@@ -55,6 +56,7 @@ export function MethodologyDialog({
           </button>
         </header>
         <ul className={styles.methodology}>
+          <li>{candidateCount} candidates</li>
           {methodology.map((item) => (
             <li key={item}>{item}</li>
           ))}

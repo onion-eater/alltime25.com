@@ -44,6 +44,9 @@ export function activeSession(): SessionResponse {
       player_a: {
         label: "Player A",
         code: "#042",
+        name: "Michael Jordan",
+        image_url:
+          "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
         era: "1990s",
         seasons: 15,
         regular_season: stats,
@@ -53,6 +56,9 @@ export function activeSession(): SessionResponse {
       player_b: {
         label: "Player B",
         code: "#077",
+        name: "LeBron James",
+        image_url:
+          "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
         era: "2010s",
         seasons: 21,
         regular_season: { ...stats, games: 1492, ppg: 27.1 },
@@ -61,6 +67,33 @@ export function activeSession(): SessionResponse {
       },
     },
     ranking: null,
+  };
+}
+
+export function blindSession(): SessionResponse {
+  const session = activeSession();
+  if (session.comparison === null) return session;
+  return {
+    ...session,
+    identity_mode: "blind",
+    comparison: {
+      player_a: anonymize(session.comparison.player_a),
+      player_b: anonymize(session.comparison.player_b),
+    },
+  };
+}
+
+function anonymize(
+  player: components["schemas"]["ComparisonResponse"]["player_a"],
+): components["schemas"]["ComparisonPlayerResponse"] {
+  return {
+    label: player.label,
+    code: player.code,
+    era: player.era,
+    seasons: player.seasons,
+    regular_season: player.regular_season,
+    playoffs: player.playoffs,
+    honors: player.honors,
   };
 }
 

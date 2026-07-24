@@ -44,6 +44,9 @@ export interface RankingSessionController {
   vote: (outcome: VoteOutcome) => Promise<void>;
   undo: () => Promise<void>;
   startOver: () => Promise<void>;
+  startNewRanking: (
+    selection: RankingSelection,
+  ) => Promise<boolean>;
   retry: () => void;
 }
 
@@ -315,36 +318,46 @@ export function useRankingSession(): RankingSessionController {
     );
   }, [runMutation]);
 
-  const startOver = useCallback(async (): Promise<void> => {
-    if (submittingRef.current) return;
-    const current = sessionRef.current;
-    submittingRef.current = true;
-    setIsSubmitting(true);
-    setError(null);
-    setStatusMessage("Starting");
-    try {
-      const created = await createSession(
-        current === null
-          ? storedSelection()
-          : selectionForSession(current),
-      );
-      adoptSession(created);
-      setStatusMessage("Saved");
-      if (current !== null) {
-        try {
-          await rankingApi.deleteSession(current.id);
-        } catch {
-          setStatusMessage("New ranking saved.");
+  const startNewRanking = useCallback(
+    async (selection: RankingSelection): Promise<boolean> => {
+      if (submittingRef.current) return false;
+      const current = sessionRef.current;
+      submittingRef.current = true;
+      setIsSubmitting(true);
+      setError(null);
+      setStatusMessage("Starting");
+      try {
+        const created = await createSession(selection);
+        adoptSession(created);
+        setStatusMessage("Saved");
+        if (current !== null) {
+          try {
+            await rankingApi.deleteSession(current.id);
+          } catch {
+            setStatusMessage("New ranking saved.");
+          }
         }
+        return true;
+      } catch (mutationError) {
+        setError(messageFor(mutationError));
+        setStatusMessage("Retry");
+        return false;
+      } finally {
+        submittingRef.current = false;
+        setIsSubmitting(false);
       }
-    } catch (mutationError) {
-      setError(messageFor(mutationError));
-      setStatusMessage("Retry");
-    } finally {
-      submittingRef.current = false;
-      setIsSubmitting(false);
-    }
-  }, [adoptSession, createSession]);
+    },
+    [adoptSession, createSession],
+  );
+
+  const startOver = useCallback(async (): Promise<void> => {
+    const current = sessionRef.current;
+    await startNewRanking(
+      current === null
+        ? storedSelection()
+        : selectionForSession(current),
+    );
+  }, [startNewRanking]);
 
   const retry = useCallback((): void => {
     setLoadAttempt((current) => current + 1);
@@ -359,6 +372,7 @@ export function useRankingSession(): RankingSessionController {
     vote,
     undo,
     startOver,
+    startNewRanking,
     retry,
   };
 }

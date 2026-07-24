@@ -1,5 +1,6 @@
 import type { AnonymousPlayerResponse } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/CompactComparisonMatrix.module.css";
+import { PlayerPortrait } from "@/features/ranking/components/PlayerPortrait";
 import type { ComparisonSection } from "@/features/ranking/model/comparisonRows";
 
 interface CompactComparisonMatrixProps {
@@ -19,12 +20,8 @@ export function CompactComparisonMatrix({
       data-testid="compact-comparison-matrix"
     >
       <header className={styles.players}>
-        <strong>
-          {playerA.label} <span>{playerA.code}</span>
-        </strong>
-        <strong>
-          {playerB.label} <span>{playerB.code}</span>
-        </strong>
+        <CompactPlayer player={playerA} />
+        <CompactPlayer player={playerB} />
       </header>
       <div className={styles.sections}>
         {sections.map((section) => (
@@ -51,4 +48,35 @@ export function CompactComparisonMatrix({
       </div>
     </div>
   );
+}
+
+function CompactPlayer({
+  player,
+}: {
+  player: AnonymousPlayerResponse;
+}): React.JSX.Element {
+  if ("name" in player && "image_url" in player) {
+    return (
+      <strong className={styles.identifiedPlayer}>
+        <span className="sr-only">{player.label}</span>
+        <PlayerPortrait
+          className={styles.portrait}
+          name={player.name}
+          src={player.image_url}
+        />
+        <span>{abbreviateName(player.name)}</span>
+      </strong>
+    );
+  }
+  return (
+    <strong>
+      {player.label} <span>{player.code}</span>
+    </strong>
+  );
+}
+
+function abbreviateName(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length < 2) return name;
+  return `${parts[0][0]}. ${parts.at(-1)}`;
 }

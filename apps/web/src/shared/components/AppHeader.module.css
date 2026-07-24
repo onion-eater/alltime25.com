@@ -82,6 +82,10 @@
     display: none;
   }
 
+  .modesButton {
+    display: block;
+  }
+
   .mark {
     width: 42px;
     height: 42px;

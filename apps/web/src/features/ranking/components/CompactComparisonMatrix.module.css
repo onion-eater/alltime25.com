@@ -28,6 +28,28 @@
   color: var(--color-muted);
 }
 
+.players .identifiedPlayer {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  padding-block: 2px;
+}
+
+.identifiedPlayer > span:last-child {
+  color: var(--color-ink);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.portrait {
+  width: 24px;
+  height: 32px;
+  object-fit: contain;
+  object-position: center;
+}
+
 .sections {
   min-height: 0;
   display: grid;

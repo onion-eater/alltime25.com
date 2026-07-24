@@ -207,6 +207,67 @@ describe("useRankingSession", () => {
     );
   });
 
+  it("switches modes by creating the replacement before deleting", async () => {
+    const replacement = {
+      ...activeSession(),
+      id: "session-2",
+      preset: "top_10" as const,
+      identity_mode: "blind" as const,
+    };
+    vi.mocked(rankingApi.createSession)
+      .mockResolvedValueOnce(activeSession())
+      .mockResolvedValueOnce(replacement);
+    vi.mocked(rankingApi.deleteSession).mockResolvedValue();
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+
+    let changed = false;
+    await act(async () => {
+      changed = await result.current.startNewRanking({
+        preset: "top_10",
+        identityMode: "blind",
+      });
+    });
+
+    expect(changed).toBe(true);
+    expect(result.current.session).toMatchObject({
+      id: "session-2",
+      preset: "top_10",
+      identity_mode: "blind",
+    });
+    expect(rankingApi.createSession).toHaveBeenNthCalledWith(
+      2,
+      MUTATION_ID,
+      { preset: "top_10", identityMode: "blind" },
+      undefined,
+    );
+    expect(
+      vi.mocked(rankingApi.createSession).mock.invocationCallOrder[1],
+    ).toBeLessThan(
+      vi.mocked(rankingApi.deleteSession).mock.invocationCallOrder[0],
+    );
+  });
+
+  it("keeps the current session when a mode change fails", async () => {
+    vi.mocked(rankingApi.createSession)
+      .mockResolvedValueOnce(activeSession())
+      .mockRejectedValueOnce(new Error("Offline"));
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+
+    let changed = true;
+    await act(async () => {
+      changed = await result.current.startNewRanking({
+        preset: "top_50",
+        identityMode: "blind",
+      });
+    });
+
+    expect(changed).toBe(false);
+    expect(result.current.session?.id).toBe("session-1");
+    expect(rankingApi.deleteSession).not.toHaveBeenCalled();
+  });
+
   it("does not crash when local storage is unavailable", async () => {
     const getItem = vi
       .spyOn(Storage.prototype, "getItem")

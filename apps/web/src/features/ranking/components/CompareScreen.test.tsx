@@ -7,7 +7,10 @@ import {
 import { describe, expect, it, vi } from "vitest";
 
 import { CompareScreen } from "@/features/ranking/components/CompareScreen";
-import { activeSession } from "@/test/sessionFixture";
+import {
+  activeSession,
+  blindSession,
+} from "@/test/sessionFixture";
 
 describe("CompareScreen", () => {
   it("maps the three buttons to backend vote outcomes", () => {
@@ -33,7 +36,7 @@ describe("CompareScreen", () => {
     ]);
   });
 
-  it("never renders revealed player names", () => {
+  it("renders symmetric player identities in normal mode", () => {
     render(
       <CompareScreen
         session={activeSession()}
@@ -43,7 +46,28 @@ describe("CompareScreen", () => {
       />,
     );
 
+    expect(screen.getAllByText("Michael Jordan").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("LeBron James").length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByRole("img", { name: /Michael Jordan/i }).length,
+    ).toBeGreaterThan(0);
+    expect(
+      screen.getAllByRole("img", { name: /LeBron James/i }).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("does not render player identities in blind mode", () => {
+    render(
+      <CompareScreen
+        session={blindSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
     expect(screen.queryByText("Michael Jordan")).not.toBeInTheDocument();
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
     expect(screen.getAllByText("Player A").length).toBeGreaterThan(0);
   });
 

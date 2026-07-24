@@ -10,6 +10,7 @@ describe("HelpDialog", () => {
 
     render(
       <HelpDialog
+        identityMode="blind"
         isOpen
         onClose={vi.fn()}
         onStart={onStart}

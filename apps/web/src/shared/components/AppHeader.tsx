@@ -4,6 +4,7 @@ interface AppHeaderProps {
   onBrand: () => void;
   onHelp: () => void;
   onMethodology: () => void;
+  onModes: () => void;
   onRanking: () => void;
 }
 
@@ -11,6 +12,7 @@ export function AppHeader({
   onBrand,
   onHelp,
   onMethodology,
+  onModes,
   onRanking,
 }: AppHeaderProps): React.JSX.Element {
   return (
@@ -32,6 +34,13 @@ export function AppHeader({
           aria-label="Main navigation"
           className={styles.navigation}
         >
+          <button
+            className={`${styles.navButton} ${styles.modesButton}`}
+            onClick={onModes}
+            type="button"
+          >
+            Modes
+          </button>
           <button
             className={styles.navButton}
             onClick={onRanking}

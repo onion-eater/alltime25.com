@@ -14,15 +14,24 @@ export function CenterComparisonLedger({
   playerB,
   sections,
 }: CenterComparisonLedgerProps): React.JSX.Element {
+  const identified =
+    "name" in playerA &&
+    "image_url" in playerA &&
+    "name" in playerB &&
+    "image_url" in playerB;
+
   return (
     <div
       className={styles.wrap}
       data-testid="center-comparison-ledger"
     >
-      <table className={styles.table}>
+      <table
+        className={styles.table}
+        data-identity-mode={identified ? "normal" : "blind"}
+      >
         <caption className="sr-only">
-          Anonymous NBA career comparison. Player A values are left and
-          Player B values are right.
+          {identified ? "NBA" : "Anonymous NBA"} career comparison.
+          Player A values are left and Player B values are right.
         </caption>
         <colgroup>
           <col className={styles.playerColumn} />

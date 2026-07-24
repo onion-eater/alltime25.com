@@ -1,5 +1,6 @@
 import { useRef } from "react";
 
+import type { IdentityMode } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/HelpDialog.module.css";
 import { useDialogFocus } from "@/shared/hooks/useDialogFocus";
 
@@ -7,16 +8,12 @@ interface HelpDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onStart: () => void;
+  identityMode?: IdentityMode;
   playerCount?: number;
 }
 
-const steps = [
-  "Compare blind résumés",
-  "Pick A, B, or tie",
-  "Reveal your ranking",
-] as const;
-
 export function HelpDialog({
+  identityMode = "normal",
   isOpen,
   onClose,
   onStart,
@@ -26,6 +23,14 @@ export function HelpDialog({
   const dialogRef = useDialogFocus(isOpen, onClose, closeButtonRef);
 
   if (!isOpen) return null;
+
+  const steps = [
+    identityMode === "blind"
+      ? "Compare blind résumés"
+      : "Compare player résumés",
+    "Pick A, B, or tie",
+    "Reveal your ranking",
+  ] as const;
 
   return (
     <div

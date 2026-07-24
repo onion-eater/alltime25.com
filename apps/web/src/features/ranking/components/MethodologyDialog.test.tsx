@@ -13,7 +13,7 @@ describe("MethodologyDialog", () => {
     );
 
     expect(screen.getByRole("dialog", { name: "Methodology" })).toBeInTheDocument();
-    expect(screen.getByText("100 candidates")).toBeInTheDocument();
+    expect(screen.getByText("50 candidates")).toBeInTheDocument();
     expect(screen.getByText("NBA/BAA career stats")).toBeInTheDocument();
     expect(screen.getByText("Regular season + playoffs")).toBeInTheDocument();
     expect(screen.getByText("Raw, not era-adjusted")).toBeInTheDocument();
