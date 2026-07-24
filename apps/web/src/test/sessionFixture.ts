@@ -138,6 +138,17 @@ export function completedSession(): SessionResponse {
           },
         ],
       },
+      ...Array.from({ length: 7 }, (_, index) => ({
+        rank: index + 4,
+        players: [
+          {
+            name: `Test Player ${index + 4}`,
+            era: "2000s",
+            image_url:
+              "/assets/catalogs/development-2024-06-18/players/birdla01.jpg",
+          },
+        ],
+      })),
     ],
   };
 }

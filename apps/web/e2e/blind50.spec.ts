@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { readFile } from "node:fs/promises";
 import {
   expect,
   test,
@@ -213,6 +214,26 @@ test("tablet result actions fill the bar in equal columns", async ({ page }) => 
     Math.abs(actionGeometry.leftGap - actionGeometry.rightGap),
   ).toBeLessThanOrEqual(1);
   expect(actionGeometry.widthDifference).toBeLessThanOrEqual(1);
+});
+
+test("share downloads a valid 1080 by 1350 PNG", async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.goto("/");
+  await switchMode(page, "Top 10", "Normal");
+  await finishWith(page, "Player B");
+
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Share" }).click();
+  const download = await downloadPromise;
+  const path = await download.path();
+  if (path === null) throw new Error("Missing ranking image download.");
+  const png = await readFile(path);
+
+  expect(download.suggestedFilename()).toBe("alltime25-top-10.png");
+  expect(png.subarray(1, 4).toString("ascii")).toBe("PNG");
+  expect(png.readUInt32BE(16)).toBe(1080);
+  expect(png.readUInt32BE(20)).toBe(1350);
+  await expect(page.getByRole("status")).toHaveText("Image downloaded.");
 });
 
 test("a full 100-player workflow survives recovery and cutoff ties", async ({

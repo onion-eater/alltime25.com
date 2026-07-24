@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
 
-import type {
-  RankingGroupResponse,
-  SessionResponse,
-} from "@/features/ranking/api/rankingApi";
+import type { SessionResponse } from "@/features/ranking/api/rankingApi";
 import { RankingRow } from "@/features/ranking/components/RankingRow";
 import styles from "@/features/ranking/components/RankingsScreen.module.css";
+import { flattenRanking } from "@/features/ranking/model/rankingRows";
+import { shareRankingImage } from "@/features/ranking/share/shareRankingImage";
 import { ArrowIcon } from "@/shared/components/ArrowIcon";
 
 const PAGE_SIZE = 10;
@@ -17,12 +16,6 @@ interface RankingsScreenProps {
   statusMessage?: string;
 }
 
-interface DisplayRow {
-  isTied: boolean;
-  player: RankingGroupResponse["players"][number];
-  rank: number;
-}
-
 export function RankingsScreen({
   isSubmitting = false,
   onStartOver,
@@ -31,6 +24,7 @@ export function RankingsScreen({
 }: RankingsScreenProps): React.JSX.Element {
   const [page, setPage] = useState(0);
   const [actionStatus, setActionStatus] = useState("");
+  const [isSharing, setIsSharing] = useState(false);
   const rows = useMemo(() => flattenRanking(session.ranking ?? []), [session]);
   const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
   const safePage = Math.min(page, pageCount - 1);
@@ -43,29 +37,20 @@ export function RankingsScreen({
   ).length;
 
   async function shareRanking(): Promise<void> {
-    const text = rankingText(rows);
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "My AllTime 25", text });
-        setActionStatus("Shared.");
-      } catch (error) {
-        setActionStatus(
-          error instanceof DOMException && error.name === "AbortError"
-            ? "Share cancelled."
-            : "Share failed.",
-        );
-      }
-      return;
-    }
-    if (!navigator.clipboard?.writeText) {
-      setActionStatus("Share unavailable.");
-      return;
-    }
+    if (isSharing || session.ranking === null) return;
+    setIsSharing(true);
+    setActionStatus("Creating image.");
     try {
-      await navigator.clipboard.writeText(text);
-      setActionStatus("Copied.");
+      setActionStatus(
+        await shareRankingImage(
+          session.ranking,
+          session.target_size,
+        ),
+      );
     } catch {
-      setActionStatus("Copy failed.");
+      setActionStatus("Share failed.");
+    } finally {
+      setIsSharing(false);
     }
   }
 
@@ -132,6 +117,7 @@ export function RankingsScreen({
             <h2>Your result</h2>
             <button
               className={styles.action}
+              disabled={isSharing}
               onClick={() => void shareRanking()}
               type="button"
             >
@@ -157,22 +143,4 @@ export function RankingsScreen({
       </div>
     </section>
   );
-}
-
-function flattenRanking(
-  groups: readonly RankingGroupResponse[],
-): DisplayRow[] {
-  return groups.flatMap((group) =>
-    group.players.map((player) => ({
-      isTied: group.players.length > 1,
-      player,
-      rank: group.rank,
-    })),
-  );
-}
-
-function rankingText(rows: readonly DisplayRow[]): string {
-  return rows
-    .map((row) => `${row.isTied ? "T-" : ""}${row.rank}. ${row.player.name}`)
-    .join("\n");
 }

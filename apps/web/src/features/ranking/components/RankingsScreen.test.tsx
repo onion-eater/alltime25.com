@@ -1,12 +1,28 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import {
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 
 import { RankingsScreen } from "@/features/ranking/components/RankingsScreen";
 import type { SessionResponse } from "@/features/ranking/api/rankingApi";
+import { shareRankingImage } from "@/features/ranking/share/shareRankingImage";
 import { completedSession } from "@/test/sessionFixture";
 
+vi.mock("@/features/ranking/share/shareRankingImage", () => ({
+  shareRankingImage: vi.fn(),
+}));
+
 describe("RankingsScreen", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+    vi.mocked(shareRankingImage).mockResolvedValue("Image downloaded.");
+  });
+
   it("reveals player images and preserves skipped ranks after a tie", () => {
     render(
       <RankingsScreen
@@ -76,18 +92,30 @@ describe("RankingsScreen", () => {
     expect(image).toHaveAttribute("src", "/player-fallback.svg");
   });
 
-  it("announces unavailable sharing without throwing", async () => {
+  it("generates and delivers an image for the nominal top N", async () => {
     const user = userEvent.setup();
-    const originalShare = navigator.share;
-    const originalClipboard = navigator.clipboard;
-    Object.defineProperty(navigator, "share", {
-      configurable: true,
-      value: undefined,
-    });
-    Object.defineProperty(navigator, "clipboard", {
-      configurable: true,
-      value: undefined,
-    });
+    const session = completedSession();
+
+    render(
+      <RankingsScreen
+        session={session}
+        onStartOver={vi.fn()}
+      />,
+    );
+    await user.click(screen.getByRole("button", { name: "Share" }));
+
+    expect(shareRankingImage).toHaveBeenCalledWith(
+      session.ranking,
+      session.target_size,
+    );
+    expect(screen.getByRole("status")).toHaveTextContent("Image downloaded.");
+  });
+
+  it("announces image generation failures without hiding the result", async () => {
+    const user = userEvent.setup();
+    vi.mocked(shareRankingImage).mockRejectedValue(
+      new Error("Canvas unavailable"),
+    );
 
     render(
       <RankingsScreen
@@ -97,44 +125,8 @@ describe("RankingsScreen", () => {
     );
     await user.click(screen.getByRole("button", { name: "Share" }));
 
-    expect(screen.getByRole("status")).toHaveTextContent("Share unavailable.");
-    Object.defineProperty(navigator, "share", {
-      configurable: true,
-      value: originalShare,
-    });
-    Object.defineProperty(navigator, "clipboard", {
-      configurable: true,
-      value: originalClipboard,
-    });
-  });
-
-  it("uses the AllTime 25 title when sharing", async () => {
-    const user = userEvent.setup();
-    const originalShare = navigator.share;
-    const share = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, "share", {
-      configurable: true,
-      value: share,
-    });
-
-    try {
-      render(
-        <RankingsScreen
-          session={completedSession()}
-          onStartOver={vi.fn()}
-        />,
-      );
-      await user.click(screen.getByRole("button", { name: "Share" }));
-
-      expect(share).toHaveBeenCalledWith(
-        expect.objectContaining({ title: "My AllTime 25" }),
-      );
-    } finally {
-      Object.defineProperty(navigator, "share", {
-        configurable: true,
-        value: originalShare,
-      });
-    }
+    expect(screen.getByRole("status")).toHaveTextContent("Share failed.");
+    expect(screen.getByText("Michael Jordan")).toBeInTheDocument();
   });
 
   it("does not offer a separate text export", () => {
