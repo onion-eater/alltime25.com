@@ -1,0 +1,391 @@
+{
+  "catalog_id": "development-2024-06-18",
+  "as_of": "2024-06-18",
+  "sources": [
+    "Manually assembled development fixture from publicly reported career totals.",
+    "Awards cross-checked against NBA historical award lists.",
+    "Every figure requires licensed-source verification before production."
+  ],
+  "players": [
+    {
+      "id": "jordan-michael",
+      "name": "Michael Jordan",
+      "era": "1990s",
+      "seasons": 15,
+      "regular_season": {
+        "games": 1072,
+        "ppg": 30.1,
+        "rpg": 6.2,
+        "apg": 5.3,
+        "spg": 2.3,
+        "bpg": 0.8,
+        "fg_pct": 49.7,
+        "three_pct": 32.7,
+        "ft_pct": 83.5
+      },
+      "playoffs": {
+        "games": 179,
+        "ppg": 33.4,
+        "rpg": 6.4,
+        "apg": 5.7,
+        "spg": 2.1,
+        "bpg": 0.9,
+        "fg_pct": 48.7,
+        "three_pct": 33.2,
+        "ft_pct": 82.8
+      },
+      "honors": {
+        "mvp": 5,
+        "all_nba": 11,
+        "dpoy": 1,
+        "championships": 6,
+        "finals_mvp": 6
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    },
+    {
+      "id": "james-lebron",
+      "name": "LeBron James",
+      "era": "2010s",
+      "seasons": 21,
+      "regular_season": {
+        "games": 1492,
+        "ppg": 27.1,
+        "rpg": 7.5,
+        "apg": 7.4,
+        "spg": 1.5,
+        "bpg": 0.7,
+        "fg_pct": 50.6,
+        "three_pct": 34.8,
+        "ft_pct": 73.6
+      },
+      "playoffs": {
+        "games": 287,
+        "ppg": 28.4,
+        "rpg": 9.0,
+        "apg": 7.2,
+        "spg": 1.7,
+        "bpg": 1.0,
+        "fg_pct": 49.7,
+        "three_pct": 33.2,
+        "ft_pct": 74.1
+      },
+      "honors": {
+        "mvp": 4,
+        "all_nba": 20,
+        "dpoy": 0,
+        "championships": 4,
+        "finals_mvp": 4
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Frozen through the 2023-24 season; verify before production."
+    },
+    {
+      "id": "abdul-jabbar-kareem",
+      "name": "Kareem Abdul-Jabbar",
+      "era": "1970s",
+      "seasons": 20,
+      "regular_season": {
+        "games": 1560,
+        "ppg": 24.6,
+        "rpg": 11.2,
+        "apg": 3.6,
+        "spg": 0.9,
+        "bpg": 2.6,
+        "fg_pct": 55.9,
+        "three_pct": 5.6,
+        "ft_pct": 72.1
+      },
+      "playoffs": {
+        "games": 237,
+        "ppg": 24.3,
+        "rpg": 10.5,
+        "apg": 3.2,
+        "spg": 1.0,
+        "bpg": 2.4,
+        "fg_pct": 53.3,
+        "three_pct": 0.0,
+        "ft_pct": 74.0
+      },
+      "honors": {
+        "mvp": 6,
+        "all_nba": 15,
+        "dpoy": 0,
+        "championships": 6,
+        "finals_mvp": 2
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; steals and blocks cover tracked seasons."
+    },
+    {
+      "id": "russell-bill",
+      "name": "Bill Russell",
+      "era": "1960s",
+      "seasons": 13,
+      "regular_season": {
+        "games": 963,
+        "ppg": 15.1,
+        "rpg": 22.5,
+        "apg": 4.3,
+        "spg": null,
+        "bpg": null,
+        "fg_pct": 44.0,
+        "three_pct": null,
+        "ft_pct": 56.1
+      },
+      "playoffs": {
+        "games": 165,
+        "ppg": 16.2,
+        "rpg": 24.9,
+        "apg": 4.7,
+        "spg": null,
+        "bpg": null,
+        "fg_pct": 43.0,
+        "three_pct": null,
+        "ft_pct": 60.3
+      },
+      "honors": {
+        "mvp": 5,
+        "all_nba": 11,
+        "dpoy": 0,
+        "championships": 11,
+        "finals_mvp": 0
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/russebi01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Steals, blocks, DPOY, and Finals MVP were unavailable in his era."
+    },
+    {
+      "id": "johnson-magic",
+      "name": "Magic Johnson",
+      "era": "1980s",
+      "seasons": 13,
+      "regular_season": {
+        "games": 906,
+        "ppg": 19.5,
+        "rpg": 7.2,
+        "apg": 11.2,
+        "spg": 1.9,
+        "bpg": 0.4,
+        "fg_pct": 52.0,
+        "three_pct": 30.3,
+        "ft_pct": 84.8
+      },
+      "playoffs": {
+        "games": 190,
+        "ppg": 19.5,
+        "rpg": 7.7,
+        "apg": 12.3,
+        "spg": 1.9,
+        "bpg": 0.3,
+        "fg_pct": 50.6,
+        "three_pct": 24.1,
+        "ft_pct": 83.8
+      },
+      "honors": {
+        "mvp": 3,
+        "all_nba": 10,
+        "dpoy": 0,
+        "championships": 5,
+        "finals_mvp": 3
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/johnsma02.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    },
+    {
+      "id": "chamberlain-wilt",
+      "name": "Wilt Chamberlain",
+      "era": "1960s",
+      "seasons": 14,
+      "regular_season": {
+        "games": 1045,
+        "ppg": 30.1,
+        "rpg": 22.9,
+        "apg": 4.4,
+        "spg": null,
+        "bpg": null,
+        "fg_pct": 54.0,
+        "three_pct": null,
+        "ft_pct": 51.1
+      },
+      "playoffs": {
+        "games": 160,
+        "ppg": 22.5,
+        "rpg": 24.5,
+        "apg": 4.2,
+        "spg": null,
+        "bpg": null,
+        "fg_pct": 52.2,
+        "three_pct": null,
+        "ft_pct": 46.5
+      },
+      "honors": {
+        "mvp": 4,
+        "all_nba": 10,
+        "dpoy": 0,
+        "championships": 2,
+        "finals_mvp": 1
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/chambwi01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Steals, blocks, and DPOY were unavailable in his era."
+    },
+    {
+      "id": "duncan-tim",
+      "name": "Tim Duncan",
+      "era": "2000s",
+      "seasons": 19,
+      "regular_season": {
+        "games": 1392,
+        "ppg": 19.0,
+        "rpg": 10.8,
+        "apg": 3.0,
+        "spg": 0.7,
+        "bpg": 2.2,
+        "fg_pct": 50.6,
+        "three_pct": 17.9,
+        "ft_pct": 69.6
+      },
+      "playoffs": {
+        "games": 251,
+        "ppg": 20.6,
+        "rpg": 11.4,
+        "apg": 3.0,
+        "spg": 0.7,
+        "bpg": 2.3,
+        "fg_pct": 50.1,
+        "three_pct": 14.3,
+        "ft_pct": 68.9
+      },
+      "honors": {
+        "mvp": 2,
+        "all_nba": 15,
+        "dpoy": 0,
+        "championships": 5,
+        "finals_mvp": 3
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/duncati01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    },
+    {
+      "id": "bird-larry",
+      "name": "Larry Bird",
+      "era": "1980s",
+      "seasons": 13,
+      "regular_season": {
+        "games": 897,
+        "ppg": 24.3,
+        "rpg": 10.0,
+        "apg": 6.3,
+        "spg": 1.7,
+        "bpg": 0.8,
+        "fg_pct": 49.6,
+        "three_pct": 37.6,
+        "ft_pct": 88.6
+      },
+      "playoffs": {
+        "games": 164,
+        "ppg": 23.8,
+        "rpg": 10.3,
+        "apg": 6.5,
+        "spg": 1.8,
+        "bpg": 0.9,
+        "fg_pct": 47.2,
+        "three_pct": 32.1,
+        "ft_pct": 89.0
+      },
+      "honors": {
+        "mvp": 3,
+        "all_nba": 10,
+        "dpoy": 0,
+        "championships": 3,
+        "finals_mvp": 2
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/birdla01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    },
+    {
+      "id": "oneal-shaquille",
+      "name": "Shaquille O’Neal",
+      "era": "2000s",
+      "seasons": 19,
+      "regular_season": {
+        "games": 1207,
+        "ppg": 23.7,
+        "rpg": 10.9,
+        "apg": 2.5,
+        "spg": 0.6,
+        "bpg": 2.3,
+        "fg_pct": 58.2,
+        "three_pct": 4.5,
+        "ft_pct": 52.7
+      },
+      "playoffs": {
+        "games": 216,
+        "ppg": 24.3,
+        "rpg": 11.6,
+        "apg": 2.7,
+        "spg": 0.5,
+        "bpg": 2.1,
+        "fg_pct": 56.3,
+        "three_pct": 0.0,
+        "ft_pct": 50.4
+      },
+      "honors": {
+        "mvp": 1,
+        "all_nba": 14,
+        "dpoy": 0,
+        "championships": 4,
+        "finals_mvp": 3
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/onealsh01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    },
+    {
+      "id": "bryant-kobe",
+      "name": "Kobe Bryant",
+      "era": "2000s",
+      "seasons": 20,
+      "regular_season": {
+        "games": 1346,
+        "ppg": 25.0,
+        "rpg": 5.2,
+        "apg": 4.7,
+        "spg": 1.4,
+        "bpg": 0.5,
+        "fg_pct": 44.7,
+        "three_pct": 32.9,
+        "ft_pct": 83.7
+      },
+      "playoffs": {
+        "games": 220,
+        "ppg": 25.6,
+        "rpg": 5.1,
+        "apg": 4.7,
+        "spg": 1.4,
+        "bpg": 0.7,
+        "fg_pct": 44.8,
+        "three_pct": 33.1,
+        "ft_pct": 81.6
+      },
+      "honors": {
+        "mvp": 1,
+        "all_nba": 15,
+        "dpoy": 0,
+        "championships": 5,
+        "finals_mvp": 2
+      },
+      "image_path": "/assets/catalogs/development-2024-06-18/players/bryanko01.jpg",
+      "as_of": "2024-06-18",
+      "source_note": "Development fixture; verify before production."
+    }
+  ]
+}

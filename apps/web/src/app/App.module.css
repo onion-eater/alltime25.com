@@ -1,0 +1,20 @@
+.app {
+  min-height: 100dvh;
+}
+
+.appContent {
+  min-height: 100dvh;
+}
+
+.viewport {
+  height: calc(100dvh - var(--header-height));
+  overflow: hidden;
+}
+
+@media (max-width: 500px) and (max-height: 300px) {
+  .viewport {
+    height: auto;
+    min-height: calc(100dvh - var(--header-height));
+    overflow: visible;
+  }
+}

@@ -1,0 +1,146 @@
+import {
+  fireEvent,
+  render,
+  screen,
+  within,
+} from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { CompareScreen } from "@/features/ranking/components/CompareScreen";
+import { activeSession } from "@/test/sessionFixture";
+
+describe("CompareScreen", () => {
+  it("maps the three buttons to backend vote outcomes", () => {
+    const onVote = vi.fn();
+
+    render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={onVote}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Player A" }));
+    fireEvent.click(screen.getByRole("button", { name: "Tie" }));
+    fireEvent.click(screen.getByRole("button", { name: "Player B" }));
+
+    expect(onVote.mock.calls).toEqual([
+      ["better"],
+      ["tie"],
+      ["worse"],
+    ]);
+  });
+
+  it("never renders revealed player names", () => {
+    render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByText("Michael Jordan")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Player A").length).toBeGreaterThan(0);
+  });
+
+  it("renders the four neutral ledger sections in order", () => {
+    render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+    const ledger = screen.getByTestId("center-comparison-ledger");
+    const content = ledger.textContent ?? "";
+
+    expect(content.indexOf("Career")).toBeLessThan(
+      content.indexOf("Regular Season"),
+    );
+    expect(content.indexOf("Regular Season")).toBeLessThan(
+      content.indexOf("Playoffs"),
+    );
+    expect(content.indexOf("Playoffs")).toBeLessThan(
+      content.indexOf("Honors"),
+    );
+    expect(within(ledger).getAllByText("3PT%")).toHaveLength(2);
+    const playerA = within(ledger).getByRole("columnheader", {
+      name: /Player A/,
+    });
+    const playerB = within(ledger).getByRole("columnheader", {
+      name: /Player B/,
+    });
+    expect(playerA.className).toBe(playerB.className);
+  });
+
+  it("keeps era and seasons out of the player headers", () => {
+    render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+    const ledger = screen.getByTestId("center-comparison-ledger");
+    const playerA = within(ledger).getByRole("columnheader", {
+      name: /Player A/,
+    });
+
+    expect(within(playerA).queryByText("1990s")).not.toBeInTheDocument();
+    expect(
+      within(playerA).queryByText(/15 seasons/i),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders era above seasons in the Career section", () => {
+    render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+    const career = screen
+      .getByTestId("center-comparison-ledger")
+      .querySelector("tbody");
+    if (career === null) throw new Error("Missing Career section");
+    const content = career.textContent ?? "";
+
+    expect(content).toContain("1990s");
+    expect(content).toContain("2010s");
+    expect(content.indexOf("Era")).toBeLessThan(
+      content.indexOf("Seasons"),
+    );
+  });
+
+  it("renders unavailable statistics and awards as em dashes", () => {
+    const session = activeSession();
+    if (session.comparison === null) throw new Error("Missing comparison");
+    session.comparison.player_a.regular_season.three_pct = null;
+    session.comparison.player_a.playoffs.three_pct = null;
+    session.comparison.player_a.honors.dpoy = null;
+    session.comparison.player_a.honors.finals_mvp = null;
+
+    render(
+      <CompareScreen
+        session={session}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
+    expect(
+      within(screen.getByTestId("center-comparison-ledger")).getAllByText(
+        "—",
+      ),
+    ).toHaveLength(4);
+  });
+});

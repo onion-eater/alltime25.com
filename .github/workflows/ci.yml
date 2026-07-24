@@ -1,0 +1,132 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: blind50_test
+          POSTGRES_USER: blind50
+          POSTGRES_PASSWORD: blind50
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U blind50 -d blind50_test"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      BLIND50_TEST_DATABASE_URL: postgresql+psycopg://blind50:blind50@127.0.0.1:55432/blind50_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --project apps/api --group dev --frozen
+      - run: uv run --project apps/api python scripts/check_architecture.py
+      - run: uv run --project apps/api ruff check apps/api/src apps/api/tests scripts
+      - run: uv run --project apps/api ruff format --check apps/api/src apps/api/tests scripts
+      - run: uv run --project apps/api python -m pytest apps/api/tests -W error
+
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: uv sync --project apps/api --group dev --frozen
+      - run: npm --prefix apps/web ci
+      - run: uv run --project apps/api python scripts/export_openapi.py
+      - run: npm --prefix apps/web run generate:api
+      - run: git diff --exit-code -- contracts/openapi.json apps/web/src/shared/api/generated/schema.d.ts
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm --prefix apps/web ci
+      - run: npm --prefix apps/web run check
+
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - run: uv sync --project apps/api --group dev --frozen
+      - name: Verify frozen pool, publication, and manifest tamper detection
+        run: uv run --project apps/api python -m pytest apps/api/tests/unit/infrastructure/test_catalog.py apps/api/tests/unit/scripts/test_catalog_builder.py
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: uv sync --project apps/api --group dev --frozen
+      - run: npm --prefix apps/web ci
+      - run: npx --prefix apps/web playwright install --with-deps chromium
+      - run: npm --prefix apps/web run test:e2e
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: blind50:ci
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm --prefix apps/web ci
+      - run: npm --prefix apps/web audit --audit-level=high
+      - run: uv export --project apps/api --no-dev --no-emit-project --format requirements-txt --output-file /tmp/blind50-requirements.txt
+      - run: uvx pip-audit -r /tmp/blind50-requirements.txt

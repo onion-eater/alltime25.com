@@ -1,0 +1,223 @@
+.screen {
+  height: 100%;
+  overflow: hidden;
+}
+
+.layout {
+  max-width: 860px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gameHead {
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  align-items: center;
+  gap: 24px;
+  padding: 10px 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.progressButton {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.progressTrack {
+  display: block;
+  height: 8px;
+  background: var(--color-track);
+  border: var(--border-line);
+}
+
+.progressFill {
+  display: block;
+  height: 100%;
+  background: var(--color-orange);
+  border-right: var(--border-line);
+}
+
+.voteBar {
+  display: grid;
+  grid-template-columns: 1fr 112px 1fr;
+  gap: 8px;
+  padding: 8px 0 5px;
+}
+
+.vote {
+  min-height: 50px;
+  border: var(--border-strong);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vote:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.primaryVote {
+  color: var(--color-surface);
+  background: var(--color-ink);
+}
+
+.primaryVote:hover:not(:disabled),
+.primaryVote:focus-visible {
+  color: var(--color-ink);
+  background: var(--color-yellow);
+}
+
+.tieVote {
+  background: var(--color-surface);
+}
+
+.tieVote:hover:not(:disabled),
+.tieVote:focus-visible {
+  background: var(--color-yellow);
+}
+
+.tools {
+  min-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-muted);
+  font-size: 9px;
+}
+
+.undo {
+  align-self: start;
+  min-width: 44px;
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.undo:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+@media (max-width: 560px) {
+  .gameHead {
+    min-height: 46px;
+    grid-template-columns: 1fr 104px;
+    gap: 10px;
+    padding: 5px 0;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .voteBar {
+    grid-template-columns: 1fr 76px 1fr;
+    gap: 5px;
+    padding-top: 5px;
+  }
+
+  .vote {
+    min-height: 44px;
+    font-size: 9px;
+  }
+}
+
+@media (max-height: 700px) {
+  .gameHead {
+    min-height: 42px;
+    padding: 3px 0;
+  }
+
+  .title {
+    font-size: 17px;
+  }
+
+  .progressLabel {
+    margin-bottom: 2px;
+    font-size: 7px;
+  }
+
+  .progressTrack {
+    height: 6px;
+  }
+
+  .voteBar {
+    padding: 4px 0 2px;
+  }
+
+  .vote {
+    min-height: 40px;
+    font-size: 8px;
+  }
+
+  .tools {
+    min-height: 16px;
+    font-size: 7px;
+  }
+
+  .undo {
+    min-height: 16px;
+    font-size: 7px;
+  }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .gameHead {
+    min-height: 28px;
+    grid-template-columns: 1fr min(140px, 30vw);
+    padding: 1px 0 3px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .voteBar {
+    padding-top: 3px;
+  }
+
+  .vote {
+    min-height: 34px;
+    font-size: 8px;
+  }
+
+  .tools,
+  .undo {
+    min-height: 12px;
+    font-size: 6px;
+  }
+}

@@ -1,0 +1,138 @@
+.backdrop {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: var(--color-overlay);
+}
+
+.dialog {
+  width: min(100%, 520px);
+  background: var(--color-surface);
+  border: var(--border-strong);
+}
+
+.header {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: var(--color-surface);
+  background: var(--color-navy);
+  border-bottom: var(--border-strong);
+}
+
+.header h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.close {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--color-surface);
+  background: transparent;
+  border: 1px solid var(--color-surface);
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.step {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  align-items: center;
+  border-bottom: var(--border-soft);
+}
+
+.number {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--color-orange);
+  border-right: var(--border-soft);
+  font-family: var(--font-display);
+  font-size: 25px;
+}
+
+.step strong {
+  padding: 0 20px;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.footer {
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+}
+
+.footer span {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.start {
+  min-width: 116px;
+  min-height: 54px;
+  color: var(--color-surface);
+  background: var(--color-ink);
+  border: var(--border-strong);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.methodology {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.methodology li {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: var(--border-soft);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.methodology li:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 560px) {
+  .header {
+    min-height: 58px;
+  }
+
+  .header h2 {
+    font-size: 20px;
+  }
+
+  .step {
+    min-height: 64px;
+  }
+
+  .footer {
+    min-height: 76px;
+  }
+}

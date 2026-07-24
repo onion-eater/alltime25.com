@@ -1,0 +1,1 @@
+"""Canonical player catalog adapter."""

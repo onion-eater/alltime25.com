@@ -1,0 +1,15 @@
+.git
+.github
+.hypothesis
+.playwright
+.pytest_cache
+.ruff_cache
+.venv
+**/.venv
+**/node_modules
+**/dist
+**/__pycache__
+*.sqlite3
+backups
+archive
+docs

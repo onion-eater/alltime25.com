@@ -1,0 +1,50 @@
+services:
+  postgres-test:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: blind50_test
+      POSTGRES_USER: blind50
+      POSTGRES_PASSWORD: blind50
+    ports:
+      - "127.0.0.1:55432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blind50 -d blind50_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  postgres-beta:
+    image: postgres:17-alpine
+    profiles: ["beta"]
+    environment:
+      POSTGRES_DB: blind50
+      POSTGRES_USER: blind50
+      POSTGRES_PASSWORD: blind50-local-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blind50 -d blind50"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - blind50-beta-data:/var/lib/postgresql/data
+
+  app:
+    profiles: ["beta"]
+    build:
+      context: .
+    environment:
+      BLIND50_ALLOWED_ORIGIN: http://127.0.0.1:8000
+      BLIND50_CURRENT_CATALOG_ID: development-2024-06-18
+      BLIND50_DATABASE_URL: postgresql+psycopg://blind50:blind50-local-only@postgres-beta:5432/blind50
+      BLIND50_ENVIRONMENT_NAME: beta
+      BLIND50_LOG_LEVEL: INFO
+    depends_on:
+      postgres-beta:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8000:8000"
+
+volumes:
+  blind50-beta-data:
