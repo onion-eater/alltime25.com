@@ -7,6 +7,7 @@ import {
 
 import {
   rankingApi,
+  type RankingSelection,
   type SessionResponse,
   type VoteOutcome,
 } from "@/features/ranking/api/rankingApi";
@@ -20,9 +21,19 @@ import {
 const SESSION_KEY = "blind50.session_id";
 const VERSION_KEY = "blind50.session_version";
 const PENDING_CREATE_KEY = "blind50.pending_create_operation";
+const SELECTION_KEY = "blind50.ranking_selection";
 const CHANNEL_NAME = "blind50-session";
 
-let volatilePendingCreateId: string | null = null;
+const DEFAULT_SELECTION: RankingSelection = {
+  preset: "top_25",
+  identityMode: "normal",
+};
+
+interface PendingCreate extends RankingSelection {
+  operationId: string;
+}
+
+let volatilePendingCreate: PendingCreate | null = null;
 
 export interface RankingSessionController {
   session: SessionResponse | null;
@@ -60,6 +71,10 @@ export function useRankingSession(): RankingSessionController {
       setSession(next);
       storageSet(SESSION_KEY, next.id);
       storageSet(VERSION_KEY, String(next.version));
+      storageSet(
+        SELECTION_KEY,
+        JSON.stringify(selectionForSession(next)),
+      );
       if (broadcast) {
         channelRef.current?.postMessage({
           id: next.id,
@@ -71,15 +86,19 @@ export function useRankingSession(): RankingSessionController {
   );
 
   const createSession = useCallback(
-    async (signal?: AbortSignal): Promise<SessionResponse> => {
-      const operationId =
-        storageGet(PENDING_CREATE_KEY) ??
-        volatilePendingCreateId ??
-        crypto.randomUUID();
-      volatilePendingCreateId = operationId;
-      storageSet(PENDING_CREATE_KEY, operationId);
-      const created = await rankingApi.createSession(operationId, signal);
-      volatilePendingCreateId = null;
+    async (
+      selection: RankingSelection,
+      signal?: AbortSignal,
+    ): Promise<SessionResponse> => {
+      const pending = pendingCreateFor(selection);
+      volatilePendingCreate = pending;
+      storageSet(PENDING_CREATE_KEY, JSON.stringify(pending));
+      const created = await rankingApi.createSession(
+        pending.operationId,
+        selection,
+        signal,
+      );
+      volatilePendingCreate = null;
       storageRemove(PENDING_CREATE_KEY);
       return created;
     },
@@ -112,7 +131,10 @@ export function useRankingSession(): RankingSessionController {
             }
             storageRemove(SESSION_KEY);
             storageRemove(VERSION_KEY);
-            loaded = await createSession(controller.signal);
+            loaded = await createSession(
+              storedSelection(),
+              controller.signal,
+            );
             setStatusMessage(
               loadError.status === 410
                 ? "Session expired. New ranking started."
@@ -120,7 +142,10 @@ export function useRankingSession(): RankingSessionController {
             );
           }
         } else {
-          loaded = await createSession(controller.signal);
+          loaded = await createSession(
+            storedSelection(),
+            controller.signal,
+          );
         }
         if (!cancelled) {
           adoptSession(loaded);
@@ -241,7 +266,9 @@ export function useRankingSession(): RankingSessionController {
           [404, 410].includes(mutationError.status)
         ) {
           try {
-            const replacement = await createSession();
+            const replacement = await createSession(
+              selectionForSession(current),
+            );
             adoptSession(replacement);
             setStatusMessage(
               mutationError.status === 410
@@ -296,7 +323,11 @@ export function useRankingSession(): RankingSessionController {
     setError(null);
     setStatusMessage("Starting");
     try {
-      const created = await createSession();
+      const created = await createSession(
+        current === null
+          ? storedSelection()
+          : selectionForSession(current),
+      );
       adoptSession(created);
       setStatusMessage("Saved");
       if (current !== null) {
@@ -334,4 +365,76 @@ export function useRankingSession(): RankingSessionController {
 
 function messageFor(error: unknown): string {
   return error instanceof Error ? error.message : "Something went wrong.";
+}
+
+function selectionForSession(
+  session: SessionResponse,
+): RankingSelection {
+  return {
+    preset: session.preset,
+    identityMode: session.identity_mode,
+  };
+}
+
+function storedSelection(): RankingSelection {
+  const stored = storageGet(SELECTION_KEY);
+  if (stored === null) return DEFAULT_SELECTION;
+  try {
+    const parsed: unknown = JSON.parse(stored);
+    return isSelection(parsed) ? parsed : DEFAULT_SELECTION;
+  } catch {
+    return DEFAULT_SELECTION;
+  }
+}
+
+function pendingCreateFor(
+  selection: RankingSelection,
+): PendingCreate {
+  const stored = parsePendingCreate(storageGet(PENDING_CREATE_KEY));
+  const reusable =
+    stored?.preset === selection.preset &&
+    stored.identityMode === selection.identityMode
+      ? stored
+      : volatilePendingCreate?.preset === selection.preset &&
+          volatilePendingCreate.identityMode === selection.identityMode
+        ? volatilePendingCreate
+        : null;
+  return (
+    reusable ?? {
+      ...selection,
+      operationId: crypto.randomUUID(),
+    }
+  );
+}
+
+function parsePendingCreate(value: string | null): PendingCreate | null {
+  if (value === null) return null;
+  try {
+    const parsed: unknown = JSON.parse(value);
+    if (
+      isSelection(parsed) &&
+      "operationId" in parsed &&
+      typeof parsed.operationId === "string"
+    ) {
+      return {
+        operationId: parsed.operationId,
+        preset: parsed.preset,
+        identityMode: parsed.identityMode,
+      };
+    }
+  } catch {
+    // A legacy operation ID cannot be safely reused without its mode.
+  }
+  return null;
+}
+
+function isSelection(value: unknown): value is RankingSelection {
+  if (typeof value !== "object" || value === null) return false;
+  const candidate = value as Partial<RankingSelection>;
+  return (
+    ["top_10", "top_25", "top_50"].includes(
+      candidate.preset ?? "",
+    ) &&
+    ["normal", "blind"].includes(candidate.identityMode ?? "")
+  );
 }

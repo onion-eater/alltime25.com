@@ -37,6 +37,7 @@ describe("useRankingSession", () => {
     });
     expect(rankingApi.createSession).toHaveBeenCalledWith(
       CREATE_ID,
+      { preset: "top_25", identityMode: "normal" },
       expect.any(AbortSignal),
     );
     expect(window.localStorage.getItem("blind50.session_id")).toBe("session-1");
@@ -108,10 +109,18 @@ describe("useRankingSession", () => {
 
   it("replaces an expired saved session", async () => {
     window.localStorage.setItem("blind50.session_id", "expired-session");
+    window.localStorage.setItem(
+      "blind50.ranking_selection",
+      JSON.stringify({ preset: "top_10", identityMode: "blind" }),
+    );
     vi.mocked(rankingApi.getSession).mockRejectedValue(
       new ApiError(410, "Expired.", "session_expired"),
     );
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
+    vi.mocked(rankingApi.createSession).mockResolvedValue({
+      ...activeSession(),
+      preset: "top_10",
+      identity_mode: "blind",
+    });
 
     const { result } = renderHook(() => useRankingSession());
 
@@ -119,6 +128,11 @@ describe("useRankingSession", () => {
       expect(result.current.session?.id).toBe("session-1");
     });
     expect(result.current.error).toBeNull();
+    expect(rankingApi.createSession).toHaveBeenCalledWith(
+      CREATE_ID,
+      { preset: "top_10", identityMode: "blind" },
+      expect.any(AbortSignal),
+    );
     expect(window.localStorage.getItem("blind50.session_id")).toBe("session-1");
   });
 
@@ -179,6 +193,12 @@ describe("useRankingSession", () => {
     });
 
     expect(result.current.session?.id).toBe("session-2");
+    expect(rankingApi.createSession).toHaveBeenNthCalledWith(
+      2,
+      MUTATION_ID,
+      { preset: "top_25", identityMode: "normal" },
+      undefined,
+    );
     expect(window.localStorage.getItem("blind50.session_id")).toBe("session-2");
     expect(
       vi.mocked(rankingApi.createSession).mock.invocationCallOrder[1],
@@ -223,5 +243,24 @@ describe("useRankingSession", () => {
       expect(result.current.session?.id).toBe("session-1");
     });
     expect(result.current.error).toBeNull();
+  });
+
+  it("keeps a failed create operation bound to its selected mode", async () => {
+    vi.mocked(rankingApi.createSession).mockRejectedValue(new Error("Offline"));
+
+    const { result } = renderHook(() => useRankingSession());
+
+    await waitFor(() => expect(result.current.error).toBe("Offline"));
+    expect(
+      JSON.parse(
+        window.localStorage.getItem(
+          "blind50.pending_create_operation",
+        ) ?? "{}",
+      ),
+    ).toEqual({
+      operationId: CREATE_ID,
+      preset: "top_25",
+      identityMode: "normal",
+    });
   });
 });

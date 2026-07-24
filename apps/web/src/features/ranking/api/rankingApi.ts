@@ -10,17 +10,29 @@ export type HonorsResponse = components["schemas"]["HonorsResponse"];
 export type RankingGroupResponse =
   components["schemas"]["RankingGroupResponse"];
 export type VoteOutcome = components["schemas"]["VoteOutcome"];
+export type RankingPreset = components["schemas"]["RankingPreset"];
+export type IdentityMode = components["schemas"]["IdentityMode"];
+
+export interface RankingSelection {
+  preset: RankingPreset;
+  identityMode: IdentityMode;
+}
 
 const sessionsPath = "/api/v1/sessions";
 
 export const rankingApi = {
   createSession(
     operationId: string,
+    selection: RankingSelection,
     signal?: AbortSignal,
   ): Promise<SessionResponse> {
     return requestJson<SessionResponse>(sessionsPath, {
       method: "POST",
-      body: JSON.stringify({ operation_id: operationId }),
+      body: JSON.stringify({
+        operation_id: operationId,
+        preset: selection.preset,
+        identity_mode: selection.identityMode,
+      }),
       signal,
     });
   },
