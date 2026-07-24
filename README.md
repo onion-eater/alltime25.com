@@ -1,10 +1,11 @@
 # AllTime 25
 
-AllTime 25 creates a personal NBA career ranking through anonymous statistical
-comparisons. React renders the approved one-page experience; FastAPI owns the
-ranking algorithm, ties, undo, player catalog, and transactional persistence.
-PostgreSQL is used for the private beta; SQLite remains available for local
-development and unit tests.
+AllTime 25 creates a personal NBA career ranking through statistical
+comparisons. New rankings use Top 25 / Normal mode; Top 10, Top 25, and Top 50
+can each be played with identities visible or hidden. React renders the
+one-page experience; FastAPI owns ranking behavior, ties, undo, player pools,
+identity disclosure, and transactional persistence. PostgreSQL is used for the
+private beta; SQLite remains available for local development and unit tests.
 
 ## Repository rules
 
@@ -74,8 +75,9 @@ private-beta release, backup, restore, cleanup, and rollback gates.
 
 ## Data status
 
-The checked-in catalog is a small, versioned development catalog used to
-exercise the complete product workflow. It is not the final production pool of
-100 players. A production release requires a permitted statistics source and
-licensed player imagery. The project does not scrape Sports Reference and does
-not hotlink player images.
+The checked-in catalog is a small, versioned development fixture. Browser tests
+build a deterministic, ignored 100-player catalog to exercise all six
+preset/identity combinations without presenting fixture data as production.
+The fixed Top 10, Top 25, and Top 50 presets require a licensed 100-player
+catalog before deployment. The project does not scrape Sports Reference or
+hotlink player images.

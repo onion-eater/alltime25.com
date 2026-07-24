@@ -20,7 +20,8 @@ blind-50/
 │   │   ├── current.json
 │   │   └── catalogs/<catalog-id>/
 │   │       ├── players.json
-│   │       └── pools.json
+│   │       ├── pools.json
+│   │       └── manifest.json
 │   └── assets/catalogs/<catalog-id>/players/
 ├── contracts/
 │   └── openapi.json
@@ -82,15 +83,18 @@ blind-50/
             ├── features/ranking/
             │   ├── api/rankingApi.ts
             │   ├── components/
+            │   │   ├── CenterComparisonLedger.tsx
+            │   │   ├── CompactComparisonMatrix.tsx
             │   │   ├── CompareScreen.tsx
-            │   │   ├── DesktopResumeCard.tsx
             │   │   ├── HelpDialog.tsx
-            │   │   ├── MobileComparisonTable.tsx
+            │   │   ├── MethodologyDialog.tsx
+            │   │   ├── ModesDialog.tsx
             │   │   ├── ProgressScreen.tsx
             │   │   ├── RankingRow.tsx
             │   │   └── RankingsScreen.tsx
             │   ├── hooks/useRankingSession.ts
-            │   └── styles/*.module.css
+            │   ├── model/
+            │   └── share/
             └── shared/
                 ├── api/
                 │   ├── client.ts
@@ -168,7 +172,8 @@ UI state; the Python API owns ranking state.
 ### App
 
 Composition only. `App.tsx` chooses which approved screen to render and owns the
-help-dialog visibility. It contains no copied screen markup or ranking math.
+single active Help, Methodology, or Modes dialog state. It contains no copied
+screen markup or ranking math.
 
 ## Canonical contract workflow
 
@@ -184,13 +189,15 @@ Handwritten client/server DTO duplication is prohibited.
 
 Rankings are ordered tie groups. A group consumes one displayed rank and its
 members share that rank. Later ranks skip the appropriate number of positions.
-If the group crossing rank 50 contains multiple players, every member is kept,
-so a completed “top 50” may contain more than 50 players.
+If the group crossing the selected target contains multiple players, every
+member is kept on the website, so a completed ranking can contain more than its
+nominal target.
 
 The current candidate is inserted with binary search over ordered groups. Once
-50 positions are occupied, a candidate first faces the cutoff group; a worse
-vote eliminates the candidate, while a better or tie vote continues or closes
-the insertion. Undo restores the exact state before the latest vote.
+the target number of positions is occupied, a candidate first faces the cutoff
+group; a worse vote eliminates the candidate, while a better or tie vote
+continues or closes the insertion. Undo restores the exact state before the
+latest vote.
 
 ## Data policy
 
@@ -202,6 +209,8 @@ the insertion. Undo restores the exact state before the latest vote.
 - Every catalog has an `as_of` date and source notes.
 - Released catalogs contain fixed, nested 25-, 50-, and 100-player candidate
   pools in `pools.json`.
+- Session presets map Top 10 to 25 candidates, Top 25 to 50 candidates, and Top
+  50 to 100 candidates.
 - `catalog/data/current.json` selects only new sessions; saved sessions retain
   their original immutable `catalog_id`.
 - Active-player data is never silently mixed across different cutoff dates.
@@ -218,5 +227,11 @@ the insertion. Undo restores the exact state before the latest vote.
 - Landscape viewports at or below 480px high use the compact comparison matrix
   fed by the same canonical stat-row model.
 - Active comparisons never shade, color, or otherwise imply a winning player.
+- Normal mode uses equal name and contained-portrait blocks above the two
+  neutral value columns. Blind mode omits identifying response fields and keeps
+  session-randomized player codes.
 - Ranking rows paginate in place.
+- Result sharing generates a 1080×1350 PNG. Top 10 uses one portrait column,
+  Top 25 uses two compact portrait columns, and Top 50 uses two text-only
+  columns.
 - No gradients, pills, rounded cards, decorative shadows, or invented copy.

@@ -192,6 +192,7 @@ test("all preset and identity combinations switch safely", async ({
 test("tablet result actions fill the bar in equal columns", async ({ page }) => {
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto("/");
+  await switchMode(page, "Top 10", "Normal");
   await finishWith(page, "Player B");
 
   const actionGeometry = await page
@@ -234,6 +235,34 @@ test("share downloads a valid 1080 by 1350 PNG", async ({ page }) => {
   expect(png.readUInt32BE(16)).toBe(1080);
   expect(png.readUInt32BE(20)).toBe(1350);
   await expect(page.getByRole("status")).toHaveText("Image downloaded.");
+});
+
+test("every blind preset completes and reveals its result", async ({ page }) => {
+  test.setTimeout(300_000);
+  await page.goto("/");
+
+  const presets = [
+    ["Top 10", 10],
+    ["Top 25", 25],
+    ["Top 50", 50],
+  ] as const;
+  for (const [preset, targetSize] of presets) {
+    const response = await switchMode(page, preset, "Blind");
+    expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
+      "name",
+    );
+    expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
+      "image",
+    );
+    await expect(page.locator("main img")).toHaveCount(0);
+
+    await finishWith(page, "Tie");
+
+    await expect(
+      page.getByRole("heading", { name: `Your NBA top ${targetSize}.` }),
+    ).toBeVisible();
+    expect(await page.locator("main img").count()).toBeGreaterThan(0);
+  }
 });
 
 test("a full 100-player workflow survives recovery and cutoff ties", async ({

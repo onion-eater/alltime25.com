@@ -1,6 +1,6 @@
 # Fidelity ledger
 
-Date: 2026-07-23
+Date: 2026-07-24
 
 ## Reference
 
@@ -16,22 +16,31 @@ from the repository until licensed images are available.
 
 | Fidelity point | Result |
 | --- | --- |
-| Visual language | Matches the accepted flat, editorial sports-game direction: warm white field, ink borders, navy panels, orange accent, yellow result highlight, and no gradients, decorative curves, or pill controls. |
-| Information hierarchy | The logo, single task heading, compact progress, comparison data, and three vote actions retain the accepted order. Ranking results retain the heading, completion state, list, and actions. |
-| Desktop comparison | Two bordered player cards use the accepted side-by-side layout, centered VS marker, compact stat grid, fixed bottom vote bar, and visible progress rail. |
-| Mobile comparison | The cards collapse into one shared-label comparison table. Both values remain visible in every row without duplicating labels, and the vote bar remains fully visible. |
-| Ranking result | Revealed player-image placeholders, ranks, names, eras, pagination strip, and result actions match the accepted composition. |
-| Responsive behavior | Verified at 1440 × 900 and 390 × 844. There is no horizontal overflow. At both sizes, `main` ends at the viewport edge and the 70 px footer starts immediately below it. |
-| Interaction | Verified first-run help, help reopen, Player A, Player B, Tie, Undo, persisted reload, completion, revealed names/image placeholders, review, share, export, and start over. |
-| Copy | No marketing copy was added above the fold. Labels are the accepted short forms. `Top 10`, `10 / 10`, and `1 / 10` are generated from the ten-player development fixture instead of falsely claiming the production 100-player pool is present. |
+| Visual language | Matches the accepted flat, editorial sports-game direction: warm white field, ink borders, navy panels, orange accent, and no gradients, decorative curves, pill controls, shadows, or first-place highlight. |
+| Information hierarchy | The logo, task heading, compact progress, centered comparison ledger, and three vote actions retain a direct scan path. Results use one heading, completion state, paginated list, and two actions. |
+| Normal comparison | Equal name and full-height contained-portrait blocks sit over equal value columns. Neither side receives visual priority. |
+| Blind comparison | Names and image keys are absent from active responses. Player A/B and session-randomized codes preserve the same neutral ledger geometry. |
+| Constrained landscape | One compact matrix keeps identity, statistics, and all three vote actions visible without reducing the statistical comparison. |
+| Ranking result | Ranks, names, eras, contained portraits, pagination, Share, and Start Over use the accepted composition. The two tablet actions split the bar evenly. |
+| Modes | One square-edged dialog offers Top 10, Top 25, or Top 50 and Normal or Blind. A replacement session is created before existing progress is removed. |
+| Share image | A deterministic 1080×1350 PNG matches the site style, preserves tie labels, includes exactly the nominal N players, and uses no special treatment for rank 1. |
+| Responsive behavior | Automated geometry covers the required phone, landscape, tablet, laptop, and desktop viewport matrix with overlap, clipping, overflow, centering, and action-width assertions. |
+| Interaction | Automated coverage includes Help, Methodology, all six mode combinations, Player A, Player B, Tie, Undo, persisted reload, tab conflict, completion, sharing, and Start Over. |
+| Copy | No marketing copy was added above the fold. Help and Methodology counts follow the selected mode. |
 
 ## Intentional deviations
 
-- The development catalog has 10 source-documented fixture players, not the final 100. The UI derives all totals from the catalog so it cannot misrepresent the available pool.
+- The checked-in development catalog has 10 source-documented fixture players,
+  not the licensed 100. End-to-end verification generates a deterministic,
+  ignored 100-player catalog with the real preset mappings.
 - The fixture statistics are frozen through the 2023–24 season. A licensed, reproducible production source must replace them before the 100-player launch.
 - Neutral development placeholders are stored locally in the canonical player asset directory. Production image usage and attribution must be resolved before launch.
 - The prototype-only preview navigation is not part of the application.
 
 ## Verification method
 
-The live React application was exercised against the live FastAPI and SQLite stack in the in-app browser. Its screenshot surface produced scaled mobile pixels, so Chrome DevTools Protocol was used only for accurate final pixel captures. The accepted concepts and final renders were then inspected at original resolution.
+The live React application is exercised against the live FastAPI and SQLite
+stack with Playwright and axe. Browser assertions inspect geometry at each
+required viewport, and the share test downloads the real PNG and verifies its
+signature and 1080×1350 dimensions. Generated normal-mode, Modes-dialog, and
+share-image captures are also inspected at original resolution.
