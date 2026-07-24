@@ -42,11 +42,6 @@ export function RankingsScreen({
     (group) => group.players.length > 1,
   ).length;
 
-  function reviewCloseCalls(): void {
-    const tiedIndex = rows.findIndex((row) => row.isTied);
-    if (tiedIndex >= 0) setPage(Math.floor(tiedIndex / PAGE_SIZE));
-  }
-
   async function shareRanking(): Promise<void> {
     const text = rankingText(rows);
     if (navigator.share) {
@@ -136,13 +131,6 @@ export function RankingsScreen({
 
           <aside className={styles.actions}>
             <h2>Your result</h2>
-            <button
-              className={styles.action}
-              onClick={reviewCloseCalls}
-              type="button"
-            >
-              Review close calls <ArrowIcon />
-            </button>
             <button
               className={styles.action}
               onClick={() => void shareRanking()}

@@ -150,6 +150,19 @@ describe("RankingsScreen", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("does not offer a close-calls review action", () => {
+    render(
+      <RankingsScreen
+        session={completedSession()}
+        onStartOver={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.queryByRole("button", { name: /Review close calls/i }),
+    ).not.toBeInTheDocument();
+  });
+
   it("announces session operation status without hiding the result", () => {
     render(
       <RankingsScreen
