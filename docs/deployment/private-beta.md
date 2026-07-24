@@ -40,7 +40,7 @@ uses `postgresql+psycopg://`.
 1. Verify the licensed catalog before building:
 
    ```bash
-   uv run --project apps/api python scripts/catalog/verify_catalog.py \
+   uv run --project apps/api python -m scripts.catalog.verify_catalog \
      --catalog-id <catalog-id>
    ```
 
