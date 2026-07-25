@@ -13,26 +13,26 @@ from scripts.testing.build_e2e_catalog import CATALOG_ID, build_catalog
 from sqlalchemy import event, func, select
 from sqlalchemy.exc import OperationalError
 
-from blind50.application.ports.session_repository import (
+from alltime25.application.ports.session_repository import (
     IdempotencyConflictError,
     StaleSessionError,
 )
-from blind50.application.ranking_service import RankingService
-from blind50.domain.ranking import VoteOutcome
-from blind50.infrastructure.catalog.json_player_catalog import JsonPlayerCatalog
-from blind50.infrastructure.persistence.database import Database
-from blind50.infrastructure.persistence.models import (
+from alltime25.application.ranking_service import RankingService
+from alltime25.domain.ranking import VoteOutcome
+from alltime25.infrastructure.catalog.json_player_catalog import JsonPlayerCatalog
+from alltime25.infrastructure.persistence.database import Database
+from alltime25.infrastructure.persistence.models import (
     RankingOperationRecord,
     RankingSessionRecord,
     RankingVoteRecord,
 )
-from blind50.infrastructure.persistence.sql_session_repository import (
+from alltime25.infrastructure.persistence.sql_session_repository import (
     SqlSessionRepository,
 )
 
 POSTGRES_URL = os.environ.get(
-    "BLIND50_TEST_DATABASE_URL",
-    "postgresql+psycopg://blind50:blind50@127.0.0.1:55432/blind50_test",
+    "ALLTIME25_TEST_DATABASE_URL",
+    "postgresql+psycopg://alltime25:alltime25@127.0.0.1:55432/alltime25_test",
 )
 
 

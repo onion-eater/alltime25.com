@@ -29,7 +29,7 @@ describe("App dialogs", () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
-    window.localStorage.setItem("blind50.help_seen", "1");
+    window.localStorage.setItem("alltime25.help_seen", "1");
     vi.mocked(useRankingSession).mockReturnValue({
       session: activeSession(),
       isLoading: false,
@@ -72,7 +72,7 @@ describe("App dialogs", () => {
   });
 
   it("remembers when the first-visit instructions are dismissed", () => {
-    window.localStorage.removeItem("blind50.help_seen");
+    window.localStorage.removeItem("alltime25.help_seen");
     const { unmount } = render(<App />);
 
     expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
@@ -80,7 +80,7 @@ describe("App dialogs", () => {
       screen.getByRole("button", { name: "Close instructions" }),
     );
 
-    expect(window.localStorage.getItem("blind50.help_seen")).toBe("1");
+    expect(window.localStorage.getItem("alltime25.help_seen")).toBe("1");
     unmount();
     render(<App />);
     expect(

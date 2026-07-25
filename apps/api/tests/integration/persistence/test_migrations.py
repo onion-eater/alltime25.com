@@ -4,7 +4,7 @@ from pathlib import Path
 
 from sqlalchemy import inspect, text
 
-from blind50.infrastructure.persistence.database import Database
+from alltime25.infrastructure.persistence.database import Database
 
 
 def test_upgrade_builds_transactional_schema_on_empty_database(

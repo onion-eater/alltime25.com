@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
-const apiOrigin = `http://127.0.0.1:${process.env.BLIND50_E2E_API_PORT ?? "8000"}`;
+const apiOrigin = `http://127.0.0.1:${process.env.ALLTIME25_E2E_API_PORT ?? "8000"}`;
 
 export default defineConfig({
   plugins: [react()],

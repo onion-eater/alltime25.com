@@ -10,7 +10,7 @@ OUTPUT = ROOT / "contracts" / "openapi.json"
 
 sys.path.insert(0, str(API_SOURCE))
 
-from blind50.main import create_app  # noqa: E402
+from alltime25.main import create_app  # noqa: E402
 
 
 def main() -> None:

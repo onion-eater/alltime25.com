@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from blind50.infrastructure.settings import Settings
-from blind50.main import create_app
+from alltime25.infrastructure.settings import Settings
+from alltime25.main import create_app
 
 CATALOG_ROOT = Path(__file__).resolve().parents[5] / "catalog"
 pytestmark = pytest.mark.anyio

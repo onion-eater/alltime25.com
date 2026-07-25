@@ -14,13 +14,13 @@ from httpx import ASGITransport, AsyncClient, Response
 from scripts.testing.build_e2e_catalog import CATALOG_ID, build_catalog
 from sqlalchemy import func, select, update
 
-from blind50.infrastructure.persistence.models import (
+from alltime25.infrastructure.persistence.models import (
     RankingOperationRecord,
     RankingSessionRecord,
     RankingVoteRecord,
 )
-from blind50.infrastructure.settings import Settings
-from blind50.main import create_app
+from alltime25.infrastructure.settings import Settings
+from alltime25.main import create_app
 
 pytestmark = pytest.mark.anyio
 

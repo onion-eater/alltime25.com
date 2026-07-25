@@ -22,6 +22,7 @@ apps/web/coverage/
 apps/web/playwright-report/
 
 # Internal design and implementation history
+archive/
 docs/design/
 docs/superpowers/
 docs/fidelity-ledger.md

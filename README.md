@@ -32,7 +32,7 @@ npm --prefix apps/web install
 API:
 
 ```bash
-uv run --project apps/api uvicorn blind50.main:app \
+uv run --project apps/api uvicorn alltime25.main:app \
   --app-dir apps/api/src --reload --port 8000
 ```
 

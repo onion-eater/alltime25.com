@@ -2,13 +2,13 @@ services:
   postgres-test:
     image: postgres:17-alpine
     environment:
-      POSTGRES_DB: blind50_test
-      POSTGRES_USER: blind50
-      POSTGRES_PASSWORD: blind50
+      POSTGRES_DB: alltime25_test
+      POSTGRES_USER: alltime25
+      POSTGRES_PASSWORD: alltime25
     ports:
       - "127.0.0.1:55432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U blind50 -d blind50_test"]
+      test: ["CMD-SHELL", "pg_isready -U alltime25 -d alltime25_test"]
       interval: 2s
       timeout: 3s
       retries: 20
@@ -19,27 +19,27 @@ services:
     image: postgres:17-alpine
     profiles: ["beta"]
     environment:
-      POSTGRES_DB: blind50
-      POSTGRES_USER: blind50
-      POSTGRES_PASSWORD: blind50-local-only
+      POSTGRES_DB: alltime25
+      POSTGRES_USER: alltime25
+      POSTGRES_PASSWORD: alltime25-local-only
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U blind50 -d blind50"]
+      test: ["CMD-SHELL", "pg_isready -U alltime25 -d alltime25"]
       interval: 2s
       timeout: 3s
       retries: 20
     volumes:
-      - blind50-beta-data:/var/lib/postgresql/data
+      - alltime25-beta-data:/var/lib/postgresql/data
 
   app:
     profiles: ["beta"]
     build:
       context: .
     environment:
-      BLIND50_ALLOWED_ORIGIN: http://127.0.0.1:8000
-      BLIND50_CURRENT_CATALOG_ID: nba-public-2025-26-r1
-      BLIND50_DATABASE_URL: postgresql+psycopg://blind50:blind50-local-only@postgres-beta:5432/blind50
-      BLIND50_ENVIRONMENT_NAME: beta
-      BLIND50_LOG_LEVEL: INFO
+      ALLTIME25_ALLOWED_ORIGIN: http://127.0.0.1:8000
+      ALLTIME25_CURRENT_CATALOG_ID: nba-public-2025-26-r1
+      ALLTIME25_DATABASE_URL: postgresql+psycopg://alltime25:alltime25-local-only@postgres-beta:5432/alltime25
+      ALLTIME25_ENVIRONMENT_NAME: beta
+      ALLTIME25_LOG_LEVEL: INFO
     depends_on:
       postgres-beta:
         condition: service_healthy
@@ -47,4 +47,4 @@ services:
       - "127.0.0.1:8000:8000"
 
 volumes:
-  blind50-beta-data:
+  alltime25-beta-data:

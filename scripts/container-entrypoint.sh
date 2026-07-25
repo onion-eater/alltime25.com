@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-python -m blind50.cli.migrate
-exec uvicorn blind50.main:app \
+python -m alltime25.cli.migrate
+exec uvicorn alltime25.main:app \
   --host 0.0.0.0 \
   --port 8000 \
   --workers 2 \

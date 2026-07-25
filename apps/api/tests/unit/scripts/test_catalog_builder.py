@@ -109,7 +109,7 @@ def test_full_builder_publishes_exactly_one_hundred_hashed_assets(
         }
         records.append(
             {
-                "blind50_id": expected["id"],
+                "alltime25_id": expected["id"],
                 "provider_id": f"provider-{index}",
                 "name": expected["name"],
                 "career_start_year": 2000,

@@ -15,7 +15,7 @@ import {
   storageSet,
 } from "@/shared/browser/safeStorage";
 
-const HELP_KEY = "blind50.help_seen";
+const HELP_KEY = "alltime25.help_seen";
 type OpenDialog = "help" | "restart" | null;
 type ReviewView = "progress" | "ranking" | null;
 

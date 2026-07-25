@@ -9,12 +9,9 @@ owns presentation and interaction only.
 ## Repository structure
 
 ```text
-blind-50/
+alltime25/
 ├── AGENTS.md
 ├── README.md
-├── archive/
-│   └── comparison-layouts/
-│       └── dual-resume-v1/
 ├── catalog/
 │   ├── data/
 │   │   ├── current.json
@@ -36,7 +33,7 @@ blind-50/
 └── apps/
     ├── api/
     │   ├── pyproject.toml
-    │   ├── src/blind50/
+    │   ├── src/alltime25/
     │   │   ├── main.py
     │   │   ├── api/
     │   │   │   ├── dependencies.py
@@ -105,10 +102,6 @@ blind-50/
 The tree is a boundary map, not a request to create empty placeholder files.
 Files are added when their responsibility is implemented.
 
-Inactive source is canonical under `archive/`. It exists for historical
-reference only and is outside application compilation, linting, testing, and
-bundling. Code under `apps/` must never import from `archive/`.
-
 ## Backend boundaries
 
 ### Domain
@@ -143,8 +136,8 @@ responses. Routes contain no ranking calculations.
 
 ### Composition roots
 
-`main.py` constructs the HTTP application. `blind50.cli.migrate` and
-`blind50.cli.cleanup` are isolated operational entrypoints. No feature,
+`main.py` constructs the HTTP application. `alltime25.cli.migrate` and
+`alltime25.cli.cleanup` are isolated operational entrypoints. No feature,
 domain, application, or API module may instantiate concrete repositories.
 
 ## Frontend boundaries

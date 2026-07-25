@@ -337,7 +337,7 @@ def build_player_record(
     )
     player_url = f"https://www.nba.com/stats/player/{provider_id}"
     return {
-        "blind50_id": expected["id"],
+        "alltime25_id": expected["id"],
         "provider_id": str(provider_id),
         "name": expected["name"],
         "career_start_year": career_start,

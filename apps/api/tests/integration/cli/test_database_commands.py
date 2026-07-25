@@ -6,18 +6,18 @@ import pytest
 from scripts.testing.build_e2e_catalog import build_catalog
 from sqlalchemy import inspect
 
-from blind50.application.ports.session_repository import SessionNotFoundError
-from blind50.application.ranking_service import RankingService
-from blind50.cli.cleanup import cleanup_expired_sessions
-from blind50.cli.migrate import migrate_database
-from blind50.infrastructure.catalog.json_catalog_registry import (
+from alltime25.application.ports.session_repository import SessionNotFoundError
+from alltime25.application.ranking_service import RankingService
+from alltime25.cli.cleanup import cleanup_expired_sessions
+from alltime25.cli.migrate import migrate_database
+from alltime25.infrastructure.catalog.json_catalog_registry import (
     JsonCatalogRegistry,
 )
-from blind50.infrastructure.persistence.database import Database
-from blind50.infrastructure.persistence.sql_session_repository import (
+from alltime25.infrastructure.persistence.database import Database
+from alltime25.infrastructure.persistence.sql_session_repository import (
     SqlSessionRepository,
 )
-from blind50.infrastructure.settings import Settings
+from alltime25.infrastructure.settings import Settings
 
 CATALOG_ROOT = Path(__file__).resolve().parents[5] / "catalog"
 

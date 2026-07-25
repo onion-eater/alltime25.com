@@ -27,11 +27,11 @@ COPY catalog/ ./catalog/
 COPY --from=web-build /build/apps/web/dist/ ./apps/web/dist/
 COPY scripts/container-entrypoint.sh ./scripts/container-entrypoint.sh
 
-RUN groupadd --system blind50 \
-    && useradd --system --gid blind50 --home-dir /app blind50 \
+RUN groupadd --system alltime25 \
+    && useradd --system --gid alltime25 --home-dir /app alltime25 \
     && chmod 0555 /app/scripts/container-entrypoint.sh
 
-USER blind50
+USER alltime25
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3)"]

@@ -6,9 +6,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BACKEND = ROOT / "apps" / "api" / "src" / "blind50"
+BACKEND = ROOT / "apps" / "api" / "src" / "alltime25"
 FRONTEND = ROOT / "apps" / "web" / "src"
-ARCHIVE = ROOT / "archive"
 CATALOG = ROOT / "catalog"
 IGNORED_PARTS = {
     ".git",
@@ -47,18 +46,18 @@ def check_backend(errors: list[str]) -> None:
             "fastapi",
             "pydantic",
             "sqlalchemy",
-            "blind50.api",
-            "blind50.application",
-            "blind50.infrastructure",
+            "alltime25.api",
+            "alltime25.application",
+            "alltime25.infrastructure",
         ),
         "application": (
             "fastapi",
             "sqlalchemy",
-            "blind50.api",
-            "blind50.infrastructure",
+            "alltime25.api",
+            "alltime25.infrastructure",
         ),
-        "infrastructure": ("blind50.api",),
-        "api": ("blind50.infrastructure",),
+        "infrastructure": ("alltime25.api",),
+        "api": ("alltime25.infrastructure",),
     }
 
     for path in BACKEND.rglob("*.py"):
@@ -75,11 +74,11 @@ def check_backend(errors: list[str]) -> None:
                 errors.append(f"{relative}: {layer} may not import {imported}")
             if (
                 layer == "domain"
-                and not imported.startswith("blind50.domain")
+                and not imported.startswith("alltime25.domain")
                 and imported.split(".", 1)[0] not in sys.stdlib_module_names
             ):
                 errors.append(
-                    f"{relative}: domain may only import stdlib or blind50.domain"
+                    f"{relative}: domain may only import stdlib or alltime25.domain"
                 )
 
 
@@ -114,11 +113,6 @@ def check_frontend(errors: list[str]) -> None:
         for specifier in IMPORT_RE.findall(source):
             resolved = resolve_frontend_import(path, specifier)
             if resolved is None:
-                continue
-            if resolved.is_relative_to(ARCHIVE):
-                errors.append(
-                    f"{path.relative_to(ROOT)}: active code may not import {specifier}"
-                )
                 continue
             try:
                 target_layer, target_feature = frontend_layer(resolved)

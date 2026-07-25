@@ -6,7 +6,7 @@ from itertools import cycle
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from blind50.domain.ranking import (
+from alltime25.domain.ranking import (
     RankingState,
     VoteOutcome,
     apply_vote,

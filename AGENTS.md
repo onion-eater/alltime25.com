@@ -4,7 +4,7 @@ These rules are mandatory for every change in this repository.
 
 ## Canonical ownership
 
-- `apps/api/src/blind50/domain/` owns ranking rules and domain models.
+- `apps/api/src/alltime25/domain/` owns ranking rules and domain models.
 - `catalog/data/current.json` selects the catalog for new sessions.
 - `catalog/data/catalogs/<catalog-id>/` is the only checked-in location for
   immutable player data, pool metadata, manifests, and human-review exports.

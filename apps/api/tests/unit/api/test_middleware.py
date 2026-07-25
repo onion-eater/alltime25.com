@@ -1,6 +1,6 @@
 import logging
 
-from blind50.api.middleware import (
+from alltime25.api.middleware import (
     configure_request_logging,
     redacted_request_path,
 )
@@ -20,7 +20,7 @@ def test_request_logging_preserves_non_session_paths() -> None:
 
 
 def test_request_logging_configures_a_runtime_stream_handler() -> None:
-    logger = logging.getLogger("blind50.test.request")
+    logger = logging.getLogger("alltime25.test.request")
     logger.handlers.clear()
 
     configure_request_logging("INFO", logger=logger)

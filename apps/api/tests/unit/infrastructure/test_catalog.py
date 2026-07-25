@@ -6,10 +6,10 @@ from typing import Any
 
 import pytest
 
-from blind50.infrastructure.catalog.json_catalog_registry import (
+from alltime25.infrastructure.catalog.json_catalog_registry import (
     JsonCatalogRegistry,
 )
-from blind50.infrastructure.catalog.json_player_catalog import JsonPlayerCatalog
+from alltime25.infrastructure.catalog.json_player_catalog import JsonPlayerCatalog
 
 
 def player_record(player_id: str = "player-one") -> dict[str, Any]:

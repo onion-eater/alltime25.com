@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from blind50.domain.ranking import (
+from alltime25.domain.ranking import (
     Comparison,
     RankGroup,
     RankingState,

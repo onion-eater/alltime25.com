@@ -40,15 +40,15 @@ describe("useRankingSession", () => {
       { preset: "top_25", identityMode: "normal" },
       expect.any(AbortSignal),
     );
-    expect(window.localStorage.getItem("blind50.session_id")).toBe("session-1");
-    expect(window.localStorage.getItem("blind50.session_version")).toBe("0");
+    expect(window.localStorage.getItem("alltime25.session_id")).toBe("session-1");
+    expect(window.localStorage.getItem("alltime25.session_version")).toBe("0");
     expect(
-      window.localStorage.getItem("blind50.pending_create_operation"),
+      window.localStorage.getItem("alltime25.pending_create_operation"),
     ).toBeNull();
   });
 
   it("restores a saved session without creating another one", async () => {
-    window.localStorage.setItem("blind50.session_id", "session-1");
+    window.localStorage.setItem("alltime25.session_id", "session-1");
     vi.mocked(rankingApi.getSession).mockResolvedValue(activeSession());
 
     const { result } = renderHook(() => useRankingSession());
@@ -108,9 +108,9 @@ describe("useRankingSession", () => {
   });
 
   it("replaces an expired saved session", async () => {
-    window.localStorage.setItem("blind50.session_id", "expired-session");
+    window.localStorage.setItem("alltime25.session_id", "expired-session");
     window.localStorage.setItem(
-      "blind50.ranking_selection",
+      "alltime25.ranking_selection",
       JSON.stringify({ preset: "top_10", identityMode: "blind" }),
     );
     vi.mocked(rankingApi.getSession).mockRejectedValue(
@@ -133,7 +133,7 @@ describe("useRankingSession", () => {
       { preset: "top_10", identityMode: "blind" },
       expect.any(AbortSignal),
     );
-    expect(window.localStorage.getItem("blind50.session_id")).toBe("session-1");
+    expect(window.localStorage.getItem("alltime25.session_id")).toBe("session-1");
   });
 
   it("ignores an idempotent response older than local state", async () => {
@@ -287,7 +287,7 @@ describe("useRankingSession", () => {
     expect(
       JSON.parse(
         window.localStorage.getItem(
-          "blind50.pending_create_operation",
+          "alltime25.pending_create_operation",
         ) ?? "{}",
       ),
     ).toEqual({

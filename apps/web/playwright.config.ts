@@ -1,7 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
-const apiPort = process.env.BLIND50_E2E_API_PORT ?? "8000";
-const webPort = process.env.BLIND50_E2E_WEB_PORT ?? "5173";
+const apiPort = process.env.ALLTIME25_E2E_API_PORT ?? "8000";
+const webPort = process.env.ALLTIME25_E2E_WEB_PORT ?? "5173";
 const webOrigin = `http://127.0.0.1:${webPort}`;
 
 export default defineConfig({
@@ -20,10 +20,10 @@ export default defineConfig({
   webServer: [
     {
       command:
-        "BLIND50_DATABASE_URL=sqlite:///./.playwright/e2e.sqlite3 " +
-        "BLIND50_CATALOG_ROOT=./.playwright/catalog " +
-        `BLIND50_ALLOWED_ORIGIN=${webOrigin} ` +
-        "apps/api/.venv/bin/python -m uvicorn blind50.main:app " +
+        "ALLTIME25_DATABASE_URL=sqlite:///./.playwright/e2e.sqlite3 " +
+        "ALLTIME25_CATALOG_ROOT=./.playwright/catalog " +
+        `ALLTIME25_ALLOWED_ORIGIN=${webOrigin} ` +
+        "apps/api/.venv/bin/python -m uvicorn alltime25.main:app " +
         `--app-dir apps/api/src --host 127.0.0.1 --port ${apiPort}`,
       cwd: "../..",
       reuseExistingServer: !process.env.CI,

@@ -12,7 +12,7 @@ Do not deploy the private beta until all of these are true:
   permitted for the deployment.
 - The selected catalog covers exactly the frozen 100-player pool.
 - `manifest.json`, `review.csv`, and all 100 image hashes pass review.
-- `BLIND50_CURRENT_CATALOG_ID` selects the reviewed release catalog rather than
+- `ALLTIME25_CURRENT_CATALOG_ID` selects the reviewed release catalog rather than
   a development or end-to-end fixture.
 - The edge password, rate limits, database backups, alerts, and restore test
   are active.
@@ -26,14 +26,14 @@ the application image or runtime environment.
 Set only these application variables:
 
 ```text
-BLIND50_DATABASE_URL
-BLIND50_CURRENT_CATALOG_ID
-BLIND50_ALLOWED_ORIGIN
-BLIND50_LOG_LEVEL
-BLIND50_ENVIRONMENT_NAME=beta
+ALLTIME25_DATABASE_URL
+ALLTIME25_CURRENT_CATALOG_ID
+ALLTIME25_ALLOWED_ORIGIN
+ALLTIME25_LOG_LEVEL
+ALLTIME25_ENVIRONMENT_NAME=beta
 ```
 
-`BLIND50_ALLOWED_ORIGIN` is the exact public HTTPS origin. The database URL
+`ALLTIME25_ALLOWED_ORIGIN` is the exact public HTTPS origin. The database URL
 uses `postgresql+psycopg://`.
 
 ## Deploy
@@ -48,14 +48,14 @@ uses `postgresql+psycopg://`.
 2. Build the immutable image:
 
    ```bash
-   docker build --pull -t blind50:<release> .
+   docker build --pull -t alltime25:<release> .
    ```
 
 3. Run database migrations as a one-off command using the release image:
 
    ```bash
    docker run --rm --entrypoint python <runtime-options> \
-     blind50:<release> -m blind50.cli.migrate
+     alltime25:<release> -m alltime25.cli.migrate
    ```
 
 4. Deploy two application workers from that exact image.
@@ -76,7 +76,7 @@ Run this once per day from the deployed image with the production database
 configuration:
 
 ```bash
-python -m blind50.cli.cleanup
+python -m alltime25.cli.cleanup
 ```
 
 The command deletes expired sessions and their related votes and operations in
@@ -93,7 +93,7 @@ Restore drill:
 
 1. Restore the latest backup into an isolated PostgreSQL instance.
 2. Point the same release image at the restored instance.
-3. Run `python -m blind50.cli.migrate`.
+3. Run `python -m alltime25.cli.migrate`.
 4. Verify readiness, aggregate session counts, one resumable session, and one
    completed result.
 5. Record recovery time, recovery point, release image, and operator.

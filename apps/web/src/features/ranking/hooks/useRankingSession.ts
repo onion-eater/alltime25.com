@@ -19,11 +19,11 @@ import {
   storageSet,
 } from "@/shared/browser/safeStorage";
 
-const SESSION_KEY = "blind50.session_id";
-const VERSION_KEY = "blind50.session_version";
-const PENDING_CREATE_KEY = "blind50.pending_create_operation";
-const SELECTION_KEY = "blind50.ranking_selection";
-const CHANNEL_NAME = "blind50-session";
+const SESSION_KEY = "alltime25.session_id";
+const VERSION_KEY = "alltime25.session_version";
+const PENDING_CREATE_KEY = "alltime25.pending_create_operation";
+const SELECTION_KEY = "alltime25.ranking_selection";
+const CHANNEL_NAME = "alltime25-session";
 
 interface PendingCreate extends RankingSelection {
   operationId: string;

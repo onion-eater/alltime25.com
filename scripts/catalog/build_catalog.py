@@ -150,7 +150,7 @@ def build_catalog(
             f"Catalog {catalog_id} already exists and is immutable."
         )
 
-    temporary_root = Path(tempfile.mkdtemp(prefix=f"blind50-{catalog_id}-"))
+    temporary_root = Path(tempfile.mkdtemp(prefix=f"alltime25-{catalog_id}-"))
     try:
         temporary_data = temporary_root / "data"
         temporary_assets = temporary_root / "players"
@@ -321,7 +321,7 @@ def validate_coverage(
     for record in records:
         if not isinstance(record, dict):
             raise CatalogBuildError("Every provider player must be an object.")
-        player_id = required_string(record, "blind50_id")
+        player_id = required_string(record, "alltime25_id")
         provider_id = required_string(record, "provider_id")
         if player_id in by_id:
             raise CatalogBuildError(f"Duplicate player ID: {player_id}.")

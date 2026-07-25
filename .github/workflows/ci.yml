@@ -15,18 +15,18 @@ jobs:
       postgres:
         image: postgres:17-alpine
         env:
-          POSTGRES_DB: blind50_test
-          POSTGRES_USER: blind50
-          POSTGRES_PASSWORD: blind50
+          POSTGRES_DB: alltime25_test
+          POSTGRES_USER: alltime25
+          POSTGRES_PASSWORD: alltime25
         ports:
           - 55432:5432
         options: >-
-          --health-cmd "pg_isready -U blind50 -d blind50_test"
+          --health-cmd "pg_isready -U alltime25 -d alltime25_test"
           --health-interval 2s
           --health-timeout 3s
           --health-retries 20
     env:
-      BLIND50_TEST_DATABASE_URL: postgresql+psycopg://blind50:blind50@127.0.0.1:55432/blind50_test
+      ALLTIME25_TEST_DATABASE_URL: postgresql+psycopg://alltime25:alltime25@127.0.0.1:55432/alltime25_test
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
@@ -109,7 +109,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: blind50:ci
+          tags: alltime25:ci
 
   security:
     runs-on: ubuntu-latest
@@ -128,5 +128,5 @@ jobs:
           cache-dependency-path: apps/web/package-lock.json
       - run: npm --prefix apps/web ci
       - run: npm --prefix apps/web audit --audit-level=high
-      - run: uv export --project apps/api --no-dev --no-emit-project --format requirements-txt --output-file /tmp/blind50-requirements.txt
-      - run: uvx pip-audit -r /tmp/blind50-requirements.txt
+      - run: uv export --project apps/api --no-dev --no-emit-project --format requirements-txt --output-file /tmp/alltime25-requirements.txt
+      - run: uvx pip-audit -r /tmp/alltime25-requirements.txt

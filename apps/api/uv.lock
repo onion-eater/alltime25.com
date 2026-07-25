@@ -59,7 +59,7 @@ wheels = [
 ]
 
 [[package]]
-name = "blind50-api"
+name = "alltime25-api"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
