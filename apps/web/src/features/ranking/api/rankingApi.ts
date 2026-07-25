@@ -9,6 +9,8 @@ export type CareerStatsResponse = components["schemas"]["CareerStatsResponse"];
 export type HonorsResponse = components["schemas"]["HonorsResponse"];
 export type RankingGroupResponse =
   components["schemas"]["RankingGroupResponse"];
+export type ActiveRankingGroupResponse =
+  components["schemas"]["ActiveRankingGroupResponse"];
 export type VoteOutcome = components["schemas"]["VoteOutcome"];
 export type RankingPreset = components["schemas"]["RankingPreset"];
 export type IdentityMode = components["schemas"]["IdentityMode"];

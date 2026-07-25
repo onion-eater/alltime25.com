@@ -39,7 +39,7 @@ export function AppHeader({
             onClick={onModes}
             type="button"
           >
-            Modes
+            Restart
           </button>
           <button
             className={styles.navButton}

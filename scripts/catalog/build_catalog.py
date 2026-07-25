@@ -27,6 +27,7 @@ REQUIRED_RIGHTS = (
     "local_image_caching",
     "all_player_coverage",
 )
+SUPPORTED_PROVIDERS = ("NBA.com", "SportsDataIO")
 COUNT_FIELDS = (
     "mvp",
     "all_nba",
@@ -165,6 +166,7 @@ def build_catalog(
                 expected=expected,
                 catalog_id=catalog_id,
                 as_of=as_of,
+                provider_name=required_string(payload, "provider"),
             )
             image_path = temporary_assets / f"{expected['id']}.webp"
             convert_image(record, image_path)
@@ -184,7 +186,7 @@ def build_catalog(
                 "catalog_id": catalog_id,
                 "as_of": as_of,
                 "sources": [
-                    "Licensed SportsDataIO staged export.",
+                    f"{required_string(payload, 'provider')} provider export.",
                     "Awards audited against official NBA records.",
                 ],
                 "players": normalized_players,
@@ -286,8 +288,11 @@ def validate_rights(
     payload: dict[str, Any],
     license_reference: str,
 ) -> None:
-    if payload.get("provider") != "SportsDataIO":
-        raise CatalogBuildError("The beta provider must be SportsDataIO.")
+    provider = payload.get("provider")
+    if provider not in SUPPORTED_PROVIDERS:
+        raise CatalogBuildError(
+            f"The provider must be one of {', '.join(SUPPORTED_PROVIDERS)}."
+        )
     for key in ("provider_version", "extracted_at"):
         if not required_string(payload, key):
             raise CatalogBuildError(f"Provider export needs {key}.")
@@ -338,6 +343,7 @@ def normalize_player(
     expected: dict[str, str],
     catalog_id: str,
     as_of: str,
+    provider_name: str,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if required_string(record, "name") != expected["name"]:
         raise CatalogBuildError(f"Name mismatch for {expected['id']}.")
@@ -381,7 +387,7 @@ def normalize_player(
         "image_path": image_url,
         "as_of": as_of,
         "source_note": (
-            f"SportsDataIO provider record; awards audited at {award_source}"
+            f"{provider_name} provider record; awards audited at {award_source}"
         ),
     }
     review = {
@@ -602,7 +608,7 @@ def build_manifest(
         "catalog_id": catalog_id,
         "as_of": as_of,
         "player_count": 100,
-        "provider": "SportsDataIO",
+        "provider": required_string(payload, "provider"),
         "provider_version": required_string(payload, "provider_version"),
         "provider_extracted_at": required_string(payload, "extracted_at"),
         "built_at": datetime.now(UTC).isoformat(),
@@ -661,7 +667,7 @@ def write_review_csv(
     rows: list[dict[str, Any]],
 ) -> None:
     with path.open("w", encoding="utf-8", newline="") as output:
-        writer = csv.DictWriter(output, fieldnames=REVIEW_FIELDS)
+        writer = csv.DictWriter(output, fieldnames=REVIEW_FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

@@ -1,11 +1,16 @@
-import type { RankingGroupResponse } from "@/features/ranking/api/rankingApi";
+import type {
+  ActiveRankingGroupResponse,
+  RankingGroupResponse,
+} from "@/features/ranking/api/rankingApi";
 import { PlayerPortrait } from "@/features/ranking/components/PlayerPortrait";
 import styles from "@/features/ranking/components/RankingRow.module.css";
 
-type RevealedPlayer = RankingGroupResponse["players"][number];
+type RankedPlayer =
+  | RankingGroupResponse["players"][number]
+  | ActiveRankingGroupResponse["players"][number];
 
 interface RankingRowProps {
-  player: RevealedPlayer;
+  player: RankedPlayer;
   rankLabel: string;
 }
 
@@ -13,6 +18,17 @@ export function RankingRow({
   player,
   rankLabel,
 }: RankingRowProps): React.JSX.Element {
+  if (!("name" in player)) {
+    return (
+      <div className={`${styles.row} ${styles.anonymousRow}`}>
+        <div className={styles.rank}>{rankLabel}</div>
+        <div className={styles.identity}>
+          <strong>{player.code}</strong>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.row}>
       <div className={styles.rank}>{rankLabel}</div>

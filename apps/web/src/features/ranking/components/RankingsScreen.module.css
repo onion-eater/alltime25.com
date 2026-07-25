@@ -45,6 +45,10 @@
   text-transform: uppercase;
 }
 
+.inProgress {
+  background: var(--color-navy);
+}
+
 .content {
   min-height: 0;
   display: grid;
@@ -58,49 +62,11 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border: var(--border-strong);
-}
-
-.pagination {
-  min-height: 46px;
-  display: grid;
-  grid-template-columns: 64px 1fr 64px;
-  border-top: var(--border-strong);
-}
-
-.pagination button {
-  display: grid;
-  place-items: center;
-  background: var(--color-track);
-  border: 0;
-  cursor: pointer;
-}
-
-.pagination button:first-child {
-  border-right: var(--border-soft);
-}
-
-.pagination button:last-child {
-  border-left: var(--border-soft);
-}
-
-.pagination button:disabled {
-  cursor: default;
-  opacity: 0.35;
-}
-
-.range {
-  display: grid;
-  place-items: center;
-  color: var(--color-muted);
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.range strong {
-  color: var(--color-orange);
+  scrollbar-color: var(--color-navy) var(--color-track);
+  scrollbar-gutter: stable;
 }
 
 .actions {
@@ -143,6 +109,19 @@
   opacity: 0.55;
 }
 
+.resumeAction {
+  min-height: 66px;
+  color: var(--color-surface);
+  background: var(--color-ink);
+  font-size: 12px;
+}
+
+.resumeAction:hover,
+.resumeAction:focus-visible {
+  color: var(--color-ink);
+  background: var(--color-yellow);
+}
+
 @media (max-width: 900px) {
   .content {
     grid-template-columns: 1fr;
@@ -153,6 +132,10 @@
   .actions {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resumeActions {
+    grid-template-columns: 1fr;
   }
 
   .actions h2 {
@@ -175,6 +158,11 @@
 
   .action svg {
     display: none;
+  }
+
+  .resumeAction {
+    min-height: 48px;
+    font-size: 10px;
   }
 }
 

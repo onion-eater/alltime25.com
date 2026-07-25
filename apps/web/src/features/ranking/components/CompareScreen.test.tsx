@@ -84,13 +84,13 @@ describe("CompareScreen", () => {
     const content = ledger.textContent ?? "";
 
     expect(content.indexOf("Career")).toBeLessThan(
+      content.indexOf("Honors"),
+    );
+    expect(content.indexOf("Honors")).toBeLessThan(
       content.indexOf("Regular Season"),
     );
     expect(content.indexOf("Regular Season")).toBeLessThan(
       content.indexOf("Playoffs"),
-    );
-    expect(content.indexOf("Playoffs")).toBeLessThan(
-      content.indexOf("Honors"),
     );
     expect(within(ledger).getAllByText("3PT%")).toHaveLength(2);
     const playerA = within(ledger).getByRole("columnheader", {

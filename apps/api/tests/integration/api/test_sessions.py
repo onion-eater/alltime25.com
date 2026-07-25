@@ -202,6 +202,13 @@ async def test_create_session_defaults_to_top_25_normal(
     assert body["comparison"]["player_a"]["image_url"].startswith("/assets/catalogs/")
     assert "three_pct" in body["comparison"]["player_a"]["regular_season"]
     assert "three_pct" in body["comparison"]["player_a"]["playoffs"]
+    assert body["ranking"] is None
+    assert len(body["ranking_preview"]) == 1
+    assert body["ranking_preview"][0]["rank"] == 1
+    assert body["ranking_preview"][0]["players"][0]["name"]
+    assert body["ranking_preview"][0]["players"][0]["image_url"].startswith(
+        "/assets/catalogs/"
+    )
 
 
 @pytest.mark.parametrize(
@@ -230,7 +237,12 @@ async def test_blind_active_response_omits_identity_fields(
 ) -> None:
     body = await create_session(client, identity_mode="blind")
 
-    serialized = json.dumps(body["comparison"]).lower()
+    serialized = json.dumps(
+        {
+            "comparison": body["comparison"],
+            "ranking_preview": body["ranking_preview"],
+        }
+    ).lower()
     for forbidden in (
         '"name"',
         '"id"',
@@ -241,6 +253,18 @@ async def test_blind_active_response_omits_identity_fields(
         "provider",
     ):
         assert forbidden not in serialized
+    assert body["ranking_preview"][0]["players"][0]["code"].startswith("#")
+
+
+async def test_active_ranking_preview_preserves_ties_and_skipped_ranks(
+    client: ApiTestClient,
+) -> None:
+    created = await create_session(client)
+    tied = (await vote(client, created, "tie")).json()
+
+    assert tied["ranking"] is None
+    assert tied["ranking_preview"][0]["rank"] == 1
+    assert len(tied["ranking_preview"][0]["players"]) == 2
 
 
 async def test_create_operation_id_cannot_be_reused_for_another_mode(
@@ -452,6 +476,7 @@ async def test_completed_response_reveals_names_images_and_ranks(
 
     assert completed["status"] == "complete"
     assert completed["comparison"] is None
+    assert completed["ranking_preview"] is None
     assert len(completed["ranking"]) == 25
     first_player = completed["ranking"][0]["players"][0]
     assert first_player["name"]

@@ -8,7 +8,11 @@ from pydantic import BaseModel, ConfigDict, Field
 from blind50.application.ports.player_catalog import PlayerCatalog
 from blind50.application.ports.session_repository import StoredRankingSession
 from blind50.domain.player import CareerStats, Honors, PlayerResume
-from blind50.domain.ranking import VoteOutcome, current_comparison
+from blind50.domain.ranking import (
+    VoteOutcome,
+    current_comparison,
+    visible_rank_groups,
+)
 from blind50.domain.ranking_mode import IdentityMode, RankingPreset
 
 
@@ -109,6 +113,28 @@ class RankingGroupResponse(BaseModel):
     players: tuple[RevealedPlayerResponse, ...]
 
 
+class AnonymousRankedPlayerResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    code: str
+
+
+class IdentifiedRankedPlayerResponse(AnonymousRankedPlayerResponse):
+    name: str
+    era: str
+    image_url: str
+
+
+class ActiveRankingGroupResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    rank: int
+    players: tuple[
+        IdentifiedRankedPlayerResponse | AnonymousRankedPlayerResponse,
+        ...,
+    ]
+
+
 class SessionResponse(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -123,6 +149,7 @@ class SessionResponse(BaseModel):
     identity_mode: IdentityMode
     progress: ProgressResponse
     comparison: ComparisonResponse | None
+    ranking_preview: tuple[ActiveRankingGroupResponse, ...] | None
     ranking: tuple[RankingGroupResponse, ...] | None
 
 
@@ -184,6 +211,7 @@ def build_session_response(
             ),
         )
 
+    ranking_preview = None
     ranking = None
     if state.is_complete:
         next_rank = 1
@@ -200,6 +228,27 @@ def build_session_response(
             )
             next_rank += len(group.player_ids)
         ranking = tuple(groups)
+    else:
+        next_rank = 1
+        preview_groups: list[ActiveRankingGroupResponse] = []
+        for group in visible_rank_groups(state):
+            preview_groups.append(
+                ActiveRankingGroupResponse(
+                    rank=next_rank,
+                    players=tuple(
+                        _ranked_player(
+                            catalog.get(player_id),
+                            code=code_by_player_id[player_id],
+                            reveal_identity=(
+                                session.identity_mode is IdentityMode.NORMAL
+                            ),
+                        )
+                        for player_id in group.player_ids
+                    ),
+                )
+            )
+            next_rank += len(group.player_ids)
+        ranking_preview = tuple(preview_groups)
 
     return SessionResponse(
         id=session.id,
@@ -219,6 +268,7 @@ def build_session_response(
             eliminated=state.eliminated_count,
         ),
         comparison=comparison_response,
+        ranking_preview=ranking_preview,
         ranking=ranking,
     )
 
@@ -253,6 +303,22 @@ def _anonymous_player(
 
 def _revealed_player(player: PlayerResume) -> RevealedPlayerResponse:
     return RevealedPlayerResponse(
+        name=player.name,
+        era=player.era,
+        image_url=player.image_path,
+    )
+
+
+def _ranked_player(
+    player: PlayerResume,
+    *,
+    code: str,
+    reveal_identity: bool,
+) -> AnonymousRankedPlayerResponse | IdentifiedRankedPlayerResponse:
+    if not reveal_identity:
+        return AnonymousRankedPlayerResponse(code=code)
+    return IdentifiedRankedPlayerResponse(
+        code=code,
         name=player.name,
         era=player.era,
         image_url=player.image_path,

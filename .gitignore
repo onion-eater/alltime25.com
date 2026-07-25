@@ -18,4 +18,5 @@ apps/web/coverage/
 *.tsbuildinfo
 .worktrees/
 .playwright/
+.catalog-cache/
 apps/web/playwright-report/

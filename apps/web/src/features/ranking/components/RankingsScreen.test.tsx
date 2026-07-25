@@ -57,8 +57,7 @@ describe("RankingsScreen", () => {
     expect(firstRow?.className).toBe(secondRow?.className);
   });
 
-  it("keeps a cutoff tie paginated and repeats the tied rank", async () => {
-    const user = userEvent.setup();
+  it("keeps a cutoff tie in one scrollable list and repeats the tied rank", () => {
     render(
       <RankingsScreen
         session={largeTieSession()}
@@ -66,16 +65,14 @@ describe("RankingsScreen", () => {
       />,
     );
 
-    expect(screen.getAllByText("T-1")).toHaveLength(10);
-    for (let page = 0; page < 5; page += 1) {
-      await user.click(
-        screen.getByRole("button", { name: "Next ranking page" }),
-      );
-    }
-
-    expect(screen.getByText("51–51")).toBeInTheDocument();
-    expect(screen.getByText("T-1")).toBeInTheDocument();
+    expect(screen.getAllByText("T-1")).toHaveLength(51);
     expect(screen.getByText("Željko Longname-Williams")).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: "Ranking list" }),
+    ).toHaveAttribute("tabindex", "0");
+    expect(
+      screen.queryByRole("button", { name: "Next ranking page" }),
+    ).not.toBeInTheDocument();
   });
 
   it("uses the neutral local portrait when an image fails", () => {

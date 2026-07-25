@@ -1,14 +1,18 @@
 .row {
-  min-height: 0;
+  min-height: 58px;
   display: grid;
   grid-template-columns: 72px 70px 1fr;
-  flex: 1;
+  flex: 0 0 58px;
   border-bottom: var(--border-soft);
   background: var(--color-surface);
 }
 
 .row:last-child {
   border-bottom: 0;
+}
+
+.anonymousRow {
+  grid-template-columns: 72px 1fr;
 }
 
 .rank {
@@ -55,7 +59,13 @@
 
 @media (max-width: 560px) {
   .row {
+    min-height: 52px;
     grid-template-columns: 54px 62px 1fr;
+    flex-basis: 52px;
+  }
+
+  .anonymousRow {
+    grid-template-columns: 54px 1fr;
   }
 
   .rank {

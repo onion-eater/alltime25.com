@@ -17,6 +17,7 @@ import {
 
 const HELP_KEY = "blind50.help_seen";
 type OpenDialog = "help" | "methodology" | "modes" | null;
+type ReviewView = "progress" | "ranking" | null;
 
 export function App(): React.JSX.Element {
   const {
@@ -34,7 +35,7 @@ export function App(): React.JSX.Element {
   const [openDialog, setOpenDialog] = useState<OpenDialog>(
     () => (storageGet(HELP_KEY) !== "1" ? "help" : null),
   );
-  const [showProgress, setShowProgress] = useState(false);
+  const [reviewView, setReviewView] = useState<ReviewView>(null);
 
   const closeDialog = useCallback(() => setOpenDialog(null), []);
 
@@ -44,11 +45,13 @@ export function App(): React.JSX.Element {
   }, []);
 
   function showMain(): void {
-    setShowProgress(false);
+    setReviewView(null);
   }
 
-  function showRankingOrProgress(): void {
-    setShowProgress(session?.status !== "complete");
+  function showRanking(): void {
+    if (session?.status !== "complete") {
+      setReviewView("ranking");
+    }
   }
 
   const hasOpenDialog = openDialog !== null;
@@ -77,11 +80,19 @@ export function App(): React.JSX.Element {
         statusMessage={statusMessage}
       />
     );
-  } else if (showProgress) {
+  } else if (reviewView === "progress") {
     content = (
       <ProgressScreen
         onResume={showMain}
         session={session}
+      />
+    );
+  } else if (reviewView === "ranking") {
+    content = (
+      <RankingsScreen
+        onResume={showMain}
+        session={session}
+        statusMessage={statusMessage}
       />
     );
   } else {
@@ -89,7 +100,7 @@ export function App(): React.JSX.Element {
       <CompareScreen
         isSubmitting={isSubmitting}
         statusMessage={statusMessage}
-        onShowProgress={() => setShowProgress(true)}
+        onShowProgress={() => setReviewView("progress")}
         onUndo={undo}
         onVote={vote}
         session={session}
@@ -109,7 +120,7 @@ export function App(): React.JSX.Element {
           onHelp={() => setOpenDialog("help")}
           onMethodology={() => setOpenDialog("methodology")}
           onModes={() => setOpenDialog("modes")}
-          onRanking={showRankingOrProgress}
+          onRanking={showRanking}
         />
         <main className={styles.viewport}>{content}</main>
         <Footer />
@@ -119,7 +130,6 @@ export function App(): React.JSX.Element {
         isOpen={openDialog === "help"}
         onClose={closeDialog}
         onStart={start}
-        playerCount={session?.pool_size}
       />
       <MethodologyDialog
         candidateCount={session?.pool_size}
@@ -135,7 +145,7 @@ export function App(): React.JSX.Element {
           const created = await startNewRanking(selection);
           if (created) {
             setOpenDialog(null);
-            setShowProgress(false);
+            setReviewView(null);
           }
         }}
       />

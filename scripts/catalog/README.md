@@ -1,7 +1,33 @@
 # Catalog release pipeline
 
-`build_catalog.py` turns a licensed, staged SportsDataIO export into one
-immutable AllTime 25 catalog. It never runs in the web container.
+The catalog scripts publish one immutable AllTime 25 catalog. They run only
+offline and never in the web container.
+
+## Public NBA.com import
+
+`fetch_public_nba_catalog.py` maps the frozen 100-player roster to NBA.com IDs,
+downloads official career and award data through `nba_api`, and stores local
+portraits instead of hotlinking them. NBA's CDN supplies 95 portraits. Five
+historical players whose CDN response is the generic silhouette use documented
+Wikimedia Commons replacements.
+
+Run from the repository root:
+
+```bash
+uv run --project apps/api python scripts/catalog/fetch_public_nba_catalog.py \
+  --catalog-id nba-public-2025-26 \
+  --as-of 2026-06-30 \
+  --license-reference "Project owner-approved public-source catalog." \
+  --set-current
+```
+
+Raw responses and downloaded source images remain in the ignored
+`.catalog-cache/` directory. Publication produces normalized JSON, a review
+CSV, a hash manifest, and 100 local 600×800 WebP portraits.
+
+## Staged provider import
+
+`build_catalog.py` also accepts a staged SportsDataIO export.
 
 The staged JSON must contain:
 
@@ -16,7 +42,7 @@ The staged JSON must contain:
 - NBA award-audit values and an official NBA source URL
 - either a licensed HTTPS `image_url` or a licensed local `image_file`
 
-Run from the repository root:
+Example:
 
 ```bash
 uv run --project apps/api python scripts/catalog/build_catalog.py \

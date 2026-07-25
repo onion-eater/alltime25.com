@@ -1,6 +1,47 @@
 {
   "components": {
     "schemas": {
+      "ActiveRankingGroupResponse": {
+        "properties": {
+          "players": {
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/IdentifiedRankedPlayerResponse"
+                },
+                {
+                  "$ref": "#/components/schemas/AnonymousRankedPlayerResponse"
+                }
+              ]
+            },
+            "title": "Players",
+            "type": "array"
+          },
+          "rank": {
+            "title": "Rank",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rank",
+          "players"
+        ],
+        "title": "ActiveRankingGroupResponse",
+        "type": "object"
+      },
+      "AnonymousRankedPlayerResponse": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "AnonymousRankedPlayerResponse",
+        "type": "object"
+      },
       "ApiErrorResponse": {
         "properties": {
           "code": {
@@ -344,6 +385,34 @@
         "title": "IdentifiedComparisonPlayerResponse",
         "type": "object"
       },
+      "IdentifiedRankedPlayerResponse": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "era": {
+            "title": "Era",
+            "type": "string"
+          },
+          "image_url": {
+            "title": "Image Url",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "era",
+          "image_url"
+        ],
+        "title": "IdentifiedRankedPlayerResponse",
+        "type": "object"
+      },
       "IdentityMode": {
         "enum": [
           "normal",
@@ -489,6 +558,20 @@
             ],
             "title": "Ranking"
           },
+          "ranking_preview": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ActiveRankingGroupResponse"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ranking Preview"
+          },
           "status": {
             "enum": [
               "active",
@@ -518,6 +601,7 @@
           "identity_mode",
           "progress",
           "comparison",
+          "ranking_preview",
           "ranking"
         ],
         "title": "SessionResponse",

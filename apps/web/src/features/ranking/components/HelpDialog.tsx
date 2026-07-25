@@ -9,7 +9,6 @@ interface HelpDialogProps {
   onClose: () => void;
   onStart: () => void;
   identityMode?: IdentityMode;
-  playerCount?: number;
 }
 
 export function HelpDialog({
@@ -17,7 +16,6 @@ export function HelpDialog({
   isOpen,
   onClose,
   onStart,
-  playerCount = 100,
 }: HelpDialogProps): React.JSX.Element | null {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useDialogFocus(isOpen, onClose, closeButtonRef);
@@ -69,7 +67,6 @@ export function HelpDialog({
           </div>
         ))}
         <footer className={styles.footer}>
-          <span>{playerCount} players · Auto-saves</span>
           <button
             className={styles.start}
             onClick={onStart}

@@ -75,9 +75,8 @@ private-beta release, backup, restore, cleanup, and rollback gates.
 
 ## Data status
 
-The checked-in catalog is a small, versioned development fixture. Browser tests
-build a deterministic, ignored 100-player catalog to exercise all six
-preset/identity combinations without presenting fixture data as production.
-The fixed Top 10, Top 25, and Top 50 presets require a licensed 100-player
-catalog before deployment. The project does not scrape Sports Reference or
-hotlink player images.
+The current checked-in development catalog contains the frozen 100-player pool,
+NBA.com career and award data through June 30, 2026, and 100 local portraits.
+Browser tests still build a deterministic catalog to exercise all six
+preset/identity combinations. The application does not scrape Sports Reference
+or hotlink player images.

@@ -74,16 +74,8 @@
   min-height: 90px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 18px 20px;
-}
-
-.footer span {
-  color: var(--color-muted);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
 .start {

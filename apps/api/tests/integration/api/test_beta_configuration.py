@@ -1,3 +1,4 @@
+import shutil
 from collections.abc import AsyncIterator
 from pathlib import Path
 
@@ -18,10 +19,23 @@ def anyio_backend() -> str:
 
 @pytest.fixture
 async def beta_client(tmp_path: Path) -> AsyncIterator[AsyncClient]:
+    catalog_root = tmp_path / "catalog"
+    shutil.copytree(
+        CATALOG_ROOT / "data" / "catalogs" / "development-2024-06-18",
+        catalog_root / "data" / "catalogs" / "development-2024-06-18",
+    )
+    shutil.copytree(
+        CATALOG_ROOT / "assets" / "catalogs" / "development-2024-06-18",
+        catalog_root / "assets" / "catalogs" / "development-2024-06-18",
+    )
+    (catalog_root / "data" / "current.json").write_text(
+        '{"catalog_id":"development-2024-06-18"}\n',
+        encoding="utf-8",
+    )
     app = create_app(
         Settings(
             database_url=f"sqlite:///{tmp_path / 'beta.sqlite3'}",
-            catalog_root=CATALOG_ROOT,
+            catalog_root=catalog_root,
             environment_name="beta",
             allowed_origin="https://beta.example",
         )

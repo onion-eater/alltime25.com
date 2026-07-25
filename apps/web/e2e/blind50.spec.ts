@@ -46,6 +46,12 @@ test("comparison stays clean and centered at every required viewport", async ({
     page.getByRole("button", { name: "AllTime 25" }),
   ).toContainText("25ALLTIME");
   await expect(page.getByTestId("comparison-heading")).toBeVisible();
+  expect(
+    await page
+      .getByTestId("center-comparison-ledger")
+      .locator("tbody > tr:first-child th")
+      .allTextContents(),
+  ).toEqual(["Career", "Honors", "Regular Season", "Playoffs"]);
 
   for (const viewport of VIEWPORTS) {
     await page.setViewportSize(viewport);
@@ -162,7 +168,7 @@ test("all preset and identity combinations switch safely", async ({
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  await expect(page.getByRole("button", { name: "Modes" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Restart" })).toBeVisible();
   await expect(page.locator("main img")).not.toHaveCount(0);
 
   const combinations = [
@@ -187,6 +193,43 @@ test("all preset and identity combinations switch safely", async ({
       await expect(page.locator("main img")).not.toHaveCount(0);
     }
   }
+});
+
+test("the current ranking can be reviewed and resumed safely", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "Ranking" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Your ranking so far." }),
+  ).toBeVisible();
+  await expect(page.locator("main img")).not.toHaveCount(0);
+  const resume = page.getByRole("button", { name: "Resume" });
+  await expect(resume).toHaveCSS("background-color", "rgb(16, 24, 32)");
+  expect(
+    await resume.evaluate((button) => button.getBoundingClientRect().height),
+  ).toBeGreaterThanOrEqual(48);
+  await resume.click();
+  await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+  await castVote(page, "Player A");
+  const undo = page.getByRole("button", { name: "Undo" });
+  await expect(undo).toBeEnabled();
+  await expect(undo).toHaveCSS("border-top-style", "solid");
+  expect(
+    await undo.evaluate((button) => button.getBoundingClientRect().height),
+  ).toBeGreaterThanOrEqual(24);
+
+  const blind = await switchMode(page, "Top 25", "Blind");
+  const preview = blind.ranking_preview as {
+    players: { code: string }[];
+  }[];
+  await page.getByRole("button", { name: "Ranking" }).click();
+  await expect(page.getByText(preview[0].players[0].code)).toBeVisible();
+  await expect(page.locator("main img")).toHaveCount(0);
+  expect(JSON.stringify(blind.ranking_preview).toLowerCase()).not.toContain(
+    "name",
+  );
 });
 
 test("tablet result actions fill the bar in equal columns", async ({ page }) => {
@@ -319,13 +362,25 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
   await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
 
   await finishWith(page, "Tie");
-  await expect(page.getByText("1–10 of 100")).toBeVisible();
-  await expect(page.getByText("T-1")).toHaveCount(10);
-  for (let pageNumber = 1; pageNumber < 10; pageNumber += 1) {
-    await page.getByRole("button", { name: "Next ranking page" }).click();
-  }
-  await expect(page.getByText("91–100 of 100")).toBeVisible();
-  await expect(page.getByText("T-1")).toHaveCount(10);
+  const rankingList = page.getByRole("region", { name: "Ranking list" });
+  await expect(
+    page.getByRole("button", { name: "Next ranking page" }),
+  ).toHaveCount(0);
+  const tiedRanks = page.getByText("T-1", { exact: true });
+  await expect(tiedRanks).toHaveCount(100);
+  const scrollMetrics = await rankingList.evaluate((list) => {
+    list.scrollTop = list.scrollHeight;
+    return {
+      clientHeight: list.clientHeight,
+      scrollHeight: list.scrollHeight,
+      scrollTop: list.scrollTop,
+    };
+  });
+  expect(scrollMetrics.scrollHeight).toBeGreaterThan(
+    scrollMetrics.clientHeight,
+  );
+  expect(scrollMetrics.scrollTop).toBeGreaterThan(0);
+  await expect(tiedRanks.last()).toBeVisible();
 
   const portrait = page.locator("img").first();
   await expect(portrait).toBeVisible();
@@ -362,8 +417,8 @@ async function switchMode(
   preset: "Top 10" | "Top 25" | "Top 50",
   identity: "Normal" | "Blind",
 ): Promise<Record<string, unknown>> {
-  await page.getByRole("button", { name: "Modes" }).click();
-  const dialog = page.getByRole("dialog", { name: "Modes" });
+  await page.getByRole("button", { name: "Restart" }).click();
+  const dialog = page.getByRole("dialog", { name: "Restart" });
   await expect(dialog).toBeVisible();
   await dialog.getByRole("radio", { name: preset }).check();
   await dialog.getByRole("radio", { name: identity }).check();
@@ -372,7 +427,7 @@ async function switchMode(
       response.url().endsWith("/sessions") &&
       response.request().method() === "POST",
   );
-  await dialog.getByRole("button", { name: "Start new ranking" }).click();
+  await dialog.getByRole("button", { name: "Restart ranking" }).click();
   const response = await responsePromise;
   await expect(dialog).toBeHidden();
   return response.json() as Promise<Record<string, unknown>>;

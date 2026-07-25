@@ -61,12 +61,6 @@ export function comparisonSections(
         },
       ],
     },
-    statsSection(
-      "Regular Season",
-      playerA.regular_season,
-      playerB.regular_season,
-    ),
-    statsSection("Playoffs", playerA.playoffs, playerB.playoffs),
     {
       label: "Honors",
       rows: HONORS.map(({ key, label }) => ({
@@ -75,6 +69,12 @@ export function comparisonSections(
         valueB: formatCount(playerB.honors[key]),
       })),
     },
+    statsSection(
+      "Regular Season",
+      playerA.regular_season,
+      playerB.regular_season,
+    ),
+    statsSection("Playoffs", playerA.playoffs, playerB.playoffs),
   ];
 }
 

@@ -26,7 +26,7 @@ describe("ModesDialog", () => {
     fireEvent.click(screen.getByRole("radio", { name: "Top 50" }));
     fireEvent.click(screen.getByRole("radio", { name: "Blind" }));
     fireEvent.click(
-      screen.getByRole("button", { name: "Start new ranking" }),
+      screen.getByRole("button", { name: "Restart ranking" }),
     );
 
     expect(onStart).toHaveBeenCalledWith({
@@ -35,7 +35,8 @@ describe("ModesDialog", () => {
     });
   });
 
-  it("does not restart when the selection is unchanged", () => {
+  it("restarts with the current selection when it is unchanged", () => {
+    const onStart = vi.fn();
     render(
       <ModesDialog
         currentSelection={{
@@ -45,12 +46,17 @@ describe("ModesDialog", () => {
         isOpen
         isSubmitting={false}
         onClose={vi.fn()}
-        onStart={vi.fn()}
+        onStart={onStart}
       />,
     );
 
-    expect(
-      screen.getByRole("button", { name: "Start new ranking" }),
-    ).toBeDisabled();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Restart ranking" }),
+    );
+
+    expect(onStart).toHaveBeenCalledWith({
+      preset: "top_25",
+      identityMode: "normal",
+    });
   });
 });

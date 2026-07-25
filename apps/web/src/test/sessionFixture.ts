@@ -66,6 +66,32 @@ export function activeSession(): SessionResponse {
         honors: { ...honors, mvp: 4, all_nba: 20 },
       },
     },
+    ranking_preview: [
+      {
+        rank: 1,
+        players: [
+          {
+            code: "#018",
+            name: "Kareem Abdul-Jabbar",
+            era: "1970s",
+            image_url:
+              "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
+          },
+        ],
+      },
+      {
+        rank: 2,
+        players: [
+          {
+            code: "#042",
+            name: "Michael Jordan",
+            era: "1990s",
+            image_url:
+              "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+          },
+        ],
+      },
+    ],
     ranking: null,
   };
 }
@@ -80,6 +106,10 @@ export function blindSession(): SessionResponse {
       player_a: anonymize(session.comparison.player_a),
       player_b: anonymize(session.comparison.player_b),
     },
+    ranking_preview: session.ranking_preview?.map((group) => ({
+      rank: group.rank,
+      players: group.players.map((player) => ({ code: player.code })),
+    })) ?? null,
   };
 }
 
@@ -109,6 +139,7 @@ export function completedSession(): SessionResponse {
       ties: 1,
       eliminated: 0,
     },
+    ranking_preview: null,
     ranking: [
       {
         rank: 1,

@@ -11,16 +11,21 @@ This fixture is not approved as the production data source. Every record carries
 the same `as_of` date so active and retired data are not silently mixed.
 Unavailable historical steals and blocks are stored as `null`.
 
-## Player image placeholders
+## Public NBA.com catalog
 
-The checked-in player image files contain the same neutral silhouette used by
-the application's fallback state. No real player headshots are distributed in
-this repository.
+`nba-public-2025-26` is the current 100-player development catalog, frozen
+through June 30, 2026. The offline importer uses NBA.com player IDs and official
+career-stat and award endpoints. It calculates career rates from totals and
+keeps regular-season and playoff records separate.
 
-Before a production release, replace the placeholders in the canonical asset
-directory with licensed images while keeping the stable player IDs and API
-paths. Ranking screenshots that previously embedded uncleared development
-headshots are intentionally excluded from the repository.
+The catalog includes local portraits. NBA's public CDN supplies 95 headshots.
+The CDN returns one generic silhouette for Jason Kidd, Patrick Ewing, Alex
+English, Lenny Wilkens, and Sidney Moncrief, so those five use locally stored
+Wikimedia Commons images. Each replacement's author, license, and source URL are
+recorded in `review.csv`. The application never hotlinks player images.
+
+The ignored `.catalog-cache/` directory contains the raw NBA responses and
+downloaded source images. It is import-only and is not distributed.
 
 ## Production requirements
 
@@ -39,8 +44,8 @@ nested 25-, 50-, and 100-player pools are canonical in
 them into `pools.json`. Top 10 uses the 25-player pool, Top 25 uses the
 50-player pool, and Top 50 uses the full 100-player pool.
 
-The licensed staged export, provider cache, API key, written license document,
-and local source paths are import-only material. They must remain outside the
-repository and container. Publication may contain only normalized catalog data,
-the public rights reference recorded by the manifest, review CSV, hashes, and
-licensed local WebP portraits.
+Provider caches, API keys, written license documents, and source paths are
+import-only material. They must remain outside the repository and container.
+Publication may contain only normalized catalog data, the public rights
+reference recorded by the manifest, review CSV, hashes, and local WebP
+portraits.

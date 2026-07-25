@@ -111,6 +111,18 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActiveRankingGroupResponse */
+        ActiveRankingGroupResponse: {
+            /** Players */
+            players: (components["schemas"]["IdentifiedRankedPlayerResponse"] | components["schemas"]["AnonymousRankedPlayerResponse"])[];
+            /** Rank */
+            rank: number;
+        };
+        /** AnonymousRankedPlayerResponse */
+        AnonymousRankedPlayerResponse: {
+            /** Code */
+            code: string;
+        };
         /** ApiErrorResponse */
         ApiErrorResponse: {
             /** Code */
@@ -210,6 +222,17 @@ export interface components {
             /** Seasons */
             seasons: number;
         };
+        /** IdentifiedRankedPlayerResponse */
+        IdentifiedRankedPlayerResponse: {
+            /** Code */
+            code: string;
+            /** Era */
+            era: string;
+            /** Image Url */
+            image_url: string;
+            /** Name */
+            name: string;
+        };
         /**
          * IdentityMode
          * @enum {string}
@@ -265,6 +288,8 @@ export interface components {
             progress: components["schemas"]["ProgressResponse"];
             /** Ranking */
             ranking: components["schemas"]["RankingGroupResponse"][] | null;
+            /** Ranking Preview */
+            ranking_preview: components["schemas"]["ActiveRankingGroupResponse"][] | null;
             /**
              * Status
              * @enum {string}

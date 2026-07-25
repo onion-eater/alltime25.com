@@ -7,7 +7,7 @@ export function Footer(): React.JSX.Element {
       data-testid="app-footer"
     >
       <span>AllTime 25</span>
-      <span>Development catalog · Data frozen 2024-06-18</span>
+      <span>NBA.com data · Frozen 2026-06-30</span>
     </footer>
   );
 }

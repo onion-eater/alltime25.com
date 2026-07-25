@@ -65,10 +65,6 @@ function OpenModesDialog({
   const [selection, setSelection] =
     useState<RankingSelection>(currentSelection);
 
-  const unchanged =
-    selection.preset === currentSelection.preset &&
-    selection.identityMode === currentSelection.identityMode;
-
   return (
     <div
       className={dialogStyles.backdrop}
@@ -78,16 +74,16 @@ function OpenModesDialog({
       role="presentation"
     >
       <section
-        aria-labelledby="modes-title"
+        aria-labelledby="restart-title"
         aria-modal="true"
         className={`${dialogStyles.dialog} ${styles.dialog}`}
         ref={dialogRef}
         role="dialog"
       >
         <header className={dialogStyles.header}>
-          <h2 id="modes-title">Modes</h2>
+          <h2 id="restart-title">Restart</h2>
           <button
-            aria-label="Close modes"
+            aria-label="Close restart"
             className={dialogStyles.close}
             onClick={onClose}
             ref={closeButtonRef}
@@ -125,11 +121,11 @@ function OpenModesDialog({
         <footer className={styles.footer}>
           <button
             className={styles.start}
-            disabled={isSubmitting || unchanged}
+            disabled={isSubmitting}
             onClick={() => void onStart(selection)}
             type="button"
           >
-            Start new ranking
+            Restart ranking
           </button>
         </footer>
       </section>
