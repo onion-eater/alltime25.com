@@ -20,3 +20,8 @@ apps/web/coverage/
 .playwright/
 .catalog-cache/
 apps/web/playwright-report/
+
+# Internal design and implementation history
+docs/design/
+docs/superpowers/
+docs/fidelity-ledger.md

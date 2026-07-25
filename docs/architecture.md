@@ -28,14 +28,8 @@ blind-50/
 ├── docs/
 │   ├── architecture.md
 │   ├── data-provenance.md
-│   ├── design/
-│   │   ├── README.md
-│   │   ├── concepts/
-│   │   ├── renders/
-│   │   └── source/
-│   └── superpowers/
-│       ├── plans/
-│       └── specs/
+│   └── deployment/
+│       └── private-beta.md
 ├── scripts/
 │   ├── check_architecture.py
 │   └── export_openapi.py
@@ -110,10 +104,6 @@ blind-50/
 
 The tree is a boundary map, not a request to create empty placeholder files.
 Files are added when their responsibility is implemented.
-
-Design references are canonical under `docs/design`: approved concepts belong
-in `concepts`, final implementation captures in `renders`, and editable
-prototype sources in `source`.
 
 Inactive source is canonical under `archive/`. It exists for historical
 reference only and is outside application compilation, linting, testing, and
