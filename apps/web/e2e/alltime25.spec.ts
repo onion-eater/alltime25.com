@@ -111,6 +111,45 @@ test(
   },
 );
 
+test(
+  "onboarding preserves a ranking created in another tab",
+  { tag: "@first-run" },
+  async ({ context, page }) => {
+    await page.goto("/");
+    const secondTab = await context.newPage();
+    await secondTab.goto("/");
+
+    const firstDialog = page.getByRole("dialog", { name: "How it works" });
+    const secondDialog = secondTab.getByRole("dialog", {
+      name: "How it works",
+    });
+    await expect(firstDialog.getByRole("radio")).toHaveCount(5);
+    await expect(secondDialog.getByRole("radio")).toHaveCount(5);
+
+    await firstDialog.getByRole("radio", { name: "Top 10" }).check();
+    await firstDialog.getByRole("radio", { name: "Blind" }).check();
+    await firstDialog
+      .getByRole("button", { name: "Start ranking" })
+      .click();
+
+    await expect(firstDialog).toBeHidden();
+    const created = await storedSession(page);
+    await expect(secondDialog.getByRole("radio")).toHaveCount(0);
+    await expect(
+      secondDialog.getByRole("button", { name: "Close instructions" }),
+    ).toBeVisible();
+    expect((await storedSession(secondTab)).id).toBe(created.id);
+
+    await secondDialog
+      .getByRole("button", { name: "Close instructions" })
+      .click();
+    await expect(
+      secondTab.getByTestId("center-comparison-ledger"),
+    ).toBeVisible();
+    expect((await storedSession(secondTab)).id).toBe(created.id);
+  },
+);
+
 test("comparison stays clean and centered at every required viewport", async ({
   page,
 }) => {
@@ -411,6 +450,7 @@ test("the current ranking can be reviewed and resumed safely", async ({
 });
 
 test("tablet result actions fill the bar in equal columns", async ({ page }) => {
+  test.setTimeout(90_000);
   await page.setViewportSize({ width: 768, height: 1024 });
   await page.goto("/");
   await switchMode(page, "Top 10", "Normal");

@@ -77,6 +77,17 @@ describe("App dialogs", () => {
     window.localStorage.removeItem("alltime25.help_seen");
     window.localStorage.removeItem(SESSION_STORAGE_KEY);
     startNewRanking.mockResolvedValue(true);
+    vi.mocked(useRankingSession).mockReturnValue({
+      session: null,
+      isLoading: false,
+      isSubmitting: false,
+      error: null,
+      statusMessage: "Choose a mode",
+      vote: vi.fn(),
+      undo: vi.fn(),
+      startNewRanking,
+      retry: vi.fn(),
+    });
     render(<App />);
 
     expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
@@ -115,6 +126,17 @@ describe("App dialogs", () => {
     window.localStorage.removeItem("alltime25.help_seen");
     window.localStorage.removeItem(SESSION_STORAGE_KEY);
     startNewRanking.mockResolvedValue(false);
+    vi.mocked(useRankingSession).mockReturnValue({
+      session: null,
+      isLoading: false,
+      isSubmitting: false,
+      error: null,
+      statusMessage: "Choose a mode",
+      vote: vi.fn(),
+      undo: vi.fn(),
+      startNewRanking,
+      retry: vi.fn(),
+    });
     render(<App />);
 
     fireEvent.click(screen.getByRole("radio", { name: "Top 50" }));
@@ -145,6 +167,44 @@ describe("App dialogs", () => {
       screen.getByRole("button", { name: "Close instructions" }),
     ).toBeVisible();
     expect(screen.queryAllByRole("radio")).toHaveLength(0);
+  });
+
+  it("preserves a ranking created in another tab during onboarding", () => {
+    window.localStorage.removeItem("alltime25.help_seen");
+    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    vi.mocked(useRankingSession).mockReturnValue({
+      session: null,
+      isLoading: false,
+      isSubmitting: false,
+      error: null,
+      statusMessage: "Choose a mode",
+      vote: vi.fn(),
+      undo: vi.fn(),
+      startNewRanking,
+      retry: vi.fn(),
+    });
+    const { rerender } = render(<App />);
+
+    expect(screen.queryAllByRole("radio")).toHaveLength(5);
+
+    vi.mocked(useRankingSession).mockReturnValue({
+      session: activeSession(),
+      isLoading: false,
+      isSubmitting: false,
+      error: null,
+      statusMessage: "Updated from another tab.",
+      vote: vi.fn(),
+      undo: vi.fn(),
+      startNewRanking,
+      retry: vi.fn(),
+    });
+    rerender(<App />);
+
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+    expect(
+      screen.getByRole("button", { name: "Close instructions" }),
+    ).toBeVisible();
+    expect(startNewRanking).not.toHaveBeenCalled();
   });
 
   it("defaults Restart to Top 25 and Normal", async () => {

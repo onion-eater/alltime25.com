@@ -45,6 +45,7 @@ export function App(): React.JSX.Element {
     () => (storageGet(HELP_KEY) !== "1" ? "help" : null),
   );
   const [reviewView, setReviewView] = useState<ReviewView>(null);
+  const isOnboarding = requiresOnboarding && session === null;
 
   const closeDialog = useCallback(() => setOpenDialog(null), []);
   const openRestartDialog = useCallback(
@@ -134,7 +135,7 @@ export function App(): React.JSX.Element {
         <main className={styles.viewport}>{content}</main>
         <Footer />
       </div>
-      {requiresOnboarding ? (
+      {isOnboarding ? (
         <HelpDialog
           error={error}
           isOpen={openDialog === "help"}
