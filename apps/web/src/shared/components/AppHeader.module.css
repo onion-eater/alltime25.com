@@ -39,6 +39,7 @@
 }
 
 .navButton {
+  position: relative;
   padding: 6px 0;
   color: var(--color-ink);
   background: transparent;
@@ -50,10 +51,23 @@
   text-transform: uppercase;
 }
 
-.navButton:focus-visible,
-.navButton[aria-current="page"] {
+.navButton:focus-visible {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.navButton::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: transparent;
+  content: "";
+}
+
+.navButton[aria-current="page"]::after {
+  background: var(--color-orange);
 }
 
 .help {
@@ -69,7 +83,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .navButton:hover {
+  .navButton:hover:not([aria-current="page"]) {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
