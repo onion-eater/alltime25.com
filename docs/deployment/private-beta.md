@@ -8,17 +8,18 @@ managed.
 
 Do not deploy the private beta until all of these are true:
 
-- SportsDataIO has confirmed historical-data display, image caching, and beta
-  display rights in writing.
-- The licensed import covers exactly the frozen 100-player pool.
+- The operator has confirmed in writing that the chosen data and image usage is
+  permitted for the deployment.
+- The selected catalog covers exactly the frozen 100-player pool.
 - `manifest.json`, `review.csv`, and all 100 image hashes pass review.
-- The selected catalog is not the checked-in development fixture.
+- `BLIND50_CURRENT_CATALOG_ID` selects the reviewed release catalog rather than
+  a development or end-to-end fixture.
 - The edge password, rate limits, database backups, alerts, and restore test
   are active.
 - Every CI job is green.
 
-The provider API key is import-only. It must never exist in the application
-image or runtime environment.
+Any provider or import credentials are import-only. They must never exist in
+the application image or runtime environment.
 
 ## Runtime configuration
 

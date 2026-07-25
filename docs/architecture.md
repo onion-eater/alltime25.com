@@ -87,11 +87,10 @@ blind-50/
             │   │   ├── CompactComparisonMatrix.tsx
             │   │   ├── CompareScreen.tsx
             │   │   ├── HelpDialog.tsx
-            │   │   ├── MethodologyDialog.tsx
-            │   │   ├── ModesDialog.tsx
             │   │   ├── ProgressScreen.tsx
             │   │   ├── RankingRow.tsx
-            │   │   └── RankingsScreen.tsx
+            │   │   ├── RankingsScreen.tsx
+            │   │   └── RestartDialog.tsx
             │   ├── hooks/useRankingSession.ts
             │   ├── model/
             │   └── share/
@@ -102,6 +101,7 @@ blind-50/
                 ├── components/
                 │   ├── AppHeader.tsx
                 │   ├── ArrowIcon.tsx
+                │   ├── Dialog.module.css
                 │   └── Footer.tsx
                 └── styles/
                     ├── global.css
@@ -172,8 +172,8 @@ UI state; the Python API owns ranking state.
 ### App
 
 Composition only. `App.tsx` chooses which approved screen to render and owns the
-single active Help, Methodology, or Modes dialog state. It contains no copied
-screen markup or ranking math.
+single active Help or Restart dialog state. It contains no copied screen markup
+or ranking math.
 
 ## Canonical contract workflow
 
@@ -230,8 +230,6 @@ latest vote.
 - Normal mode uses equal name and contained-portrait blocks above the two
   neutral value columns. Blind mode omits identifying response fields and keeps
   session-randomized player codes.
-- Ranking rows paginate in place.
-- Result sharing generates a 1080×1350 PNG. Top 10 uses one portrait column,
-  Top 25 uses two compact portrait columns, and Top 50 uses two text-only
-  columns.
+- Ranking rows scroll inside the fixed result viewport.
+- Result sharing generates a 1080×1350 text-only PNG.
 - No gradients, pills, rounded cards, decorative shadows, or invented copy.

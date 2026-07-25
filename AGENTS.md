@@ -5,10 +5,11 @@ These rules are mandatory for every change in this repository.
 ## Canonical ownership
 
 - `apps/api/src/blind50/domain/` owns ranking rules and domain models.
-- `apps/api/src/blind50/infrastructure/catalog/data/players.json` is the only
-  checked-in player-stat catalog.
-- `apps/api/src/blind50/infrastructure/catalog/assets/players/` is the only
-  checked-in player-image directory.
+- `catalog/data/current.json` selects the catalog for new sessions.
+- `catalog/data/catalogs/<catalog-id>/` is the only checked-in location for
+  immutable player data, pool metadata, manifests, and human-review exports.
+- `catalog/assets/catalogs/<catalog-id>/players/` is the only checked-in
+  player-image directory.
 - `contracts/openapi.json` is the canonical client/server contract.
 - `apps/web/src/shared/api/generated/` contains generated API types. Never edit
   those files by hand.
@@ -70,6 +71,6 @@ Run all checks before handoff:
 ```bash
 python3 scripts/check_architecture.py
 npm --prefix apps/web run check
-uv run --project apps/api python -m pytest
-uv run --project apps/api ruff check .
+apps/api/.venv/bin/python -m pytest
+apps/api/.venv/bin/ruff check .
 ```

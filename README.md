@@ -75,8 +75,8 @@ private-beta release, backup, restore, cleanup, and rollback gates.
 
 ## Data status
 
-The current checked-in development catalog contains the frozen 100-player pool,
-NBA.com career and award data through June 30, 2026, and 100 local portraits.
-Browser tests still build a deterministic catalog to exercise all six
-preset/identity combinations. The application does not scrape Sports Reference
-or hotlink player images.
+The current catalog is `nba-public-2025-26-r1`: a frozen 100-player pool with
+source-documented NBA.com career and award data through June 30, 2026, plus 100
+local portraits. Browser tests build a separate deterministic catalog to
+exercise all six preset/identity combinations. The application does not scrape
+Sports Reference or hotlink player images.
