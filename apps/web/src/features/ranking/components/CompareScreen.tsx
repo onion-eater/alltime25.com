@@ -55,10 +55,12 @@ export function CompareScreen({
               </span>
             </span>
             <span className={styles.progressTrack}>
-              <span
-                className={styles.progressFill}
-                style={{ width: `${progressPercent}%` }}
-              />
+              {progressPercent > 0 ? (
+                <span
+                  className={styles.progressFill}
+                  style={{ width: `${progressPercent}%` }}
+                />
+              ) : null}
             </span>
           </button>
         </header>

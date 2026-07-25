@@ -13,6 +13,27 @@ import {
 } from "@/test/sessionFixture";
 
 describe("CompareScreen", () => {
+  it("does not render a bordered fill when progress is zero", () => {
+    const session = activeSession();
+    session.progress = {
+      ...session.progress,
+      processed: 0,
+    };
+
+    const { container } = render(
+      <CompareScreen
+        session={session}
+        isSubmitting={false}
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
+    expect(
+      container.querySelector('span[style="width: 0%;"]'),
+    ).not.toBeInTheDocument();
+  });
+
   it("maps the three buttons to backend vote outcomes", () => {
     const onVote = vi.fn();
 

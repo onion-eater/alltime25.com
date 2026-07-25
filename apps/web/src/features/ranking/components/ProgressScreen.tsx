@@ -32,10 +32,12 @@ export function ProgressScreen({
             </h1>
           </header>
           <div className={styles.track}>
-            <span
-              className={styles.fill}
-              style={{ width: `${percent}%` }}
-            />
+            {percent > 0 ? (
+              <span
+                className={styles.fill}
+                style={{ width: `${percent}%` }}
+              />
+            ) : null}
           </div>
           <div className={styles.metrics}>
             <Metric

@@ -220,6 +220,51 @@ describe("useRankingSession", () => {
     );
   });
 
+  it("finishes restart without waiting for old-session cleanup", async () => {
+    const replacement = {
+      ...activeSession(),
+      id: "session-2",
+    };
+    let finishDelete: (() => void) | null = null;
+    vi.mocked(rankingApi.createSession)
+      .mockResolvedValueOnce(activeSession())
+      .mockResolvedValueOnce(replacement);
+    vi.mocked(rankingApi.deleteSession).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          finishDelete = resolve;
+        }),
+    );
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+
+    let restart!: Promise<boolean>;
+    act(() => {
+      restart = result.current.startNewRanking({
+        preset: "top_25",
+        identityMode: "normal",
+      });
+    });
+    await waitFor(() => {
+      expect(rankingApi.deleteSession).toHaveBeenCalledWith("session-1");
+    });
+
+    let restarted: boolean | undefined;
+    void restart.then((value) => {
+      restarted = value;
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(restarted).toBe(true);
+    expect(result.current.session?.id).toBe("session-2");
+    await act(async () => {
+      finishDelete?.();
+      await restart;
+    });
+  });
+
   it("keeps the current session when a mode change fails", async () => {
     vi.mocked(rankingApi.createSession)
       .mockResolvedValueOnce(activeSession())

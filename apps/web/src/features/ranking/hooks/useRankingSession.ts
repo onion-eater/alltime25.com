@@ -326,11 +326,7 @@ export function useRankingSession(): RankingSessionController {
         adoptSession(created);
         setStatusMessage("Saved");
         if (current !== null) {
-          try {
-            await rankingApi.deleteSession(current.id);
-          } catch {
-            setStatusMessage("New ranking saved.");
-          }
+          void rankingApi.deleteSession(current.id).catch(() => undefined);
         }
         return true;
       } catch (mutationError) {
