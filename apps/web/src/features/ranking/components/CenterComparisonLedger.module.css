@@ -125,6 +125,25 @@
   }
 }
 
+@media (max-height: 600px) {
+  .playerHeader {
+    height: 38px;
+    padding-block: 1px;
+  }
+
+  .table[data-identity-mode="normal"] .playerHeader {
+    height: 42px;
+  }
+
+  .sectionRow {
+    height: 11px;
+  }
+
+  .statRow {
+    height: 11px;
+  }
+}
+
 @media (max-height: 480px) and (orientation: landscape) {
   .wrap {
     display: none;
