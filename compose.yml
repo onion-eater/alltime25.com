@@ -36,7 +36,7 @@ services:
       context: .
     environment:
       BLIND50_ALLOWED_ORIGIN: http://127.0.0.1:8000
-      BLIND50_CURRENT_CATALOG_ID: development-2024-06-18
+      BLIND50_CURRENT_CATALOG_ID: nba-public-2025-26-r1
       BLIND50_DATABASE_URL: postgresql+psycopg://blind50:blind50-local-only@postgres-beta:5432/blind50
       BLIND50_ENVIRONMENT_NAME: beta
       BLIND50_LOG_LEVEL: INFO

@@ -66,7 +66,7 @@ PORTRAIT_FALLBACKS = {
             "https://commons.wikimedia.org/wiki/File:Lenny_Wilkens_1968_(cropped).jpeg"
         ),
     },
-    201607: {
+    121: {
         "filename": "Patrick Ewing ca. 1995 cropped.jpg",
         "license": (
             "Wikimedia Commons CC BY-SA 3.0; Seidenstud; cropped from the original; "
@@ -74,6 +74,9 @@ PORTRAIT_FALLBACKS = {
             "File:Patrick_Ewing_ca._1995_cropped.jpg"
         ),
     },
+}
+NBA_PLAYER_ID_OVERRIDES = {
+    "patrickewing": 121,
 }
 NBA_STAT_FIELDS = {
     "games": "GP",
@@ -203,10 +206,14 @@ def main() -> int:
 
 
 def player_index() -> dict[str, dict[str, Any]]:
-    return {
-        normalize_name(player["full_name"]): player
-        for player in nba_players.get_players()
+    provider_players = nba_players.get_players()
+    indexed_players = {
+        normalize_name(player["full_name"]): player for player in provider_players
     }
+    players_by_id = {int(player["id"]): player for player in provider_players}
+    for normalized_name, player_id in NBA_PLAYER_ID_OVERRIDES.items():
+        indexed_players[normalized_name] = players_by_id[player_id]
+    return indexed_players
 
 
 def normalize_name(value: str) -> str:

@@ -24,6 +24,12 @@ def test_static_nba_player_index_covers_the_frozen_pool() -> None:
     assert missing == []
 
 
+def test_static_nba_player_index_uses_hall_of_famer_patrick_ewing() -> None:
+    provider_players = player_index()
+
+    assert provider_players[normalize_name("Patrick Ewing")]["id"] == 121
+
+
 def test_traded_season_uses_the_total_row_once() -> None:
     rows = [
         season_row("2025-26", "LAC", games=44, points=900),

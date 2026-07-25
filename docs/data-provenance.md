@@ -13,10 +13,14 @@ Unavailable historical steals and blocks are stored as `null`.
 
 ## Public NBA.com catalog
 
-`nba-public-2025-26` is the current 100-player development catalog, frozen
+`nba-public-2025-26-r1` is the current 100-player release catalog, frozen
 through June 30, 2026. The offline importer uses NBA.com player IDs and official
 career-stat and award endpoints. It calculates career rates from totals and
 keeps regular-season and playoff records separate.
+
+Revision `r1` resolves NBA's duplicate Patrick Ewing name records to Hall of
+Famer Patrick Ewing (`121`) instead of Patrick Ewing Jr. (`201607`). The
+original immutable catalog remains available for sessions that started on it.
 
 The catalog includes local portraits. NBA's public CDN supplies 95 headshots.
 The CDN returns one generic silhouette for Jason Kidd, Patrick Ewing, Alex

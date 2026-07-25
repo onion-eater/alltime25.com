@@ -15,7 +15,7 @@ Run from the repository root:
 
 ```bash
 uv run --project apps/api python scripts/catalog/fetch_public_nba_catalog.py \
-  --catalog-id nba-public-2025-26 \
+  --catalog-id nba-public-2025-26-r2 \
   --as-of 2026-06-30 \
   --license-reference "Project owner-approved public-source catalog." \
   --set-current

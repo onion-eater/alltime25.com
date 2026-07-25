@@ -1,0 +1,3810 @@
+{
+  "as_of": "2026-06-30",
+  "catalog_id": "nba-public-2025-26-r1",
+  "players": [
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 15,
+        "championships": 6,
+        "dpoy": 0,
+        "finals_mvp": 2,
+        "mvp": 6
+      },
+      "id": "abdul-jabbar-kareem",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/abdul-jabbar-kareem.webp",
+      "name": "Kareem Abdul-Jabbar",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": null,
+        "fg_pct": 53.3,
+        "ft_pct": 74.0,
+        "games": 237,
+        "ppg": 24.3,
+        "rpg": 10.5,
+        "spg": null,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.6,
+        "bpg": null,
+        "fg_pct": 55.9,
+        "ft_pct": 72.1,
+        "games": 1560,
+        "ppg": 24.6,
+        "rpg": 11.2,
+        "spg": null,
+        "three_pct": 5.6
+      },
+      "seasons": 20,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76003/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "allen-ray",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/allen-ray.webp",
+      "name": "Ray Allen",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": 0.2,
+        "fg_pct": 44.3,
+        "ft_pct": 88.3,
+        "games": 171,
+        "ppg": 16.1,
+        "rpg": 3.8,
+        "spg": 1.0,
+        "three_pct": 40.1
+      },
+      "regular_season": {
+        "apg": 3.4,
+        "bpg": 0.2,
+        "fg_pct": 45.2,
+        "ft_pct": 89.4,
+        "games": 1300,
+        "ppg": 18.9,
+        "rpg": 4.1,
+        "spg": 1.1,
+        "three_pct": 40.0
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/951/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 9,
+        "championships": 1,
+        "dpoy": 1,
+        "finals_mvp": 1,
+        "mvp": 2
+      },
+      "id": "antetokounmpo-giannis",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/antetokounmpo-giannis.webp",
+      "name": "Giannis Antetokounmpo",
+      "playoffs": {
+        "apg": 5.3,
+        "bpg": 1.3,
+        "fg_pct": 53.2,
+        "ft_pct": 62.5,
+        "games": 84,
+        "ppg": 27.0,
+        "rpg": 12.2,
+        "spg": 1.0,
+        "three_pct": 25.9
+      },
+      "regular_season": {
+        "apg": 5.0,
+        "bpg": 1.2,
+        "fg_pct": 55.4,
+        "ft_pct": 69.1,
+        "games": 895,
+        "ppg": 24.1,
+        "rpg": 9.9,
+        "spg": 1.1,
+        "three_pct": 28.5
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203507/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "anthony-carmelo",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/anthony-carmelo.webp",
+      "name": "Carmelo Anthony",
+      "playoffs": {
+        "apg": 2.5,
+        "bpg": 0.3,
+        "fg_pct": 41.4,
+        "ft_pct": 82.6,
+        "games": 83,
+        "ppg": 23.1,
+        "rpg": 6.7,
+        "spg": 1.2,
+        "three_pct": 32.4
+      },
+      "regular_season": {
+        "apg": 2.7,
+        "bpg": 0.5,
+        "fg_pct": 44.7,
+        "ft_pct": 81.4,
+        "games": 1260,
+        "ppg": 22.5,
+        "rpg": 6.2,
+        "spg": 1.0,
+        "three_pct": 35.5
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2546/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "archibald-nate",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/archibald-nate.webp",
+      "name": "Nate Archibald",
+      "playoffs": {
+        "apg": 6.5,
+        "bpg": null,
+        "fg_pct": 42.3,
+        "ft_pct": 82.6,
+        "games": 47,
+        "ppg": 14.2,
+        "rpg": 1.6,
+        "spg": null,
+        "three_pct": 11.8
+      },
+      "regular_season": {
+        "apg": 7.4,
+        "bpg": null,
+        "fg_pct": 46.7,
+        "ft_pct": 81.0,
+        "games": 876,
+        "ppg": 18.8,
+        "rpg": 2.3,
+        "spg": null,
+        "three_pct": 22.4
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76054/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": null,
+        "mvp": 0
+      },
+      "id": "arizin-paul",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/arizin-paul.webp",
+      "name": "Paul Arizin",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": null,
+        "fg_pct": 41.1,
+        "ft_pct": 82.9,
+        "games": 49,
+        "ppg": 24.2,
+        "rpg": 8.2,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.3,
+        "bpg": null,
+        "fg_pct": 42.1,
+        "ft_pct": 81.0,
+        "games": 713,
+        "ppg": 22.8,
+        "rpg": 8.6,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76056/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "barkley-charles",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/barkley-charles.webp",
+      "name": "Charles Barkley",
+      "playoffs": {
+        "apg": 3.9,
+        "bpg": 0.9,
+        "fg_pct": 51.3,
+        "ft_pct": 71.7,
+        "games": 123,
+        "ppg": 23.0,
+        "rpg": 12.9,
+        "spg": 1.6,
+        "three_pct": 25.5
+      },
+      "regular_season": {
+        "apg": 3.9,
+        "bpg": 0.8,
+        "fg_pct": 54.1,
+        "ft_pct": 73.5,
+        "games": 1073,
+        "ppg": 22.1,
+        "rpg": 11.7,
+        "spg": 1.5,
+        "three_pct": 26.6
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/787/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "barry-rick",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/barry-rick.webp",
+      "name": "Rick Barry",
+      "playoffs": {
+        "apg": 4.6,
+        "bpg": null,
+        "fg_pct": 42.6,
+        "ft_pct": 87.5,
+        "games": 74,
+        "ppg": 24.8,
+        "rpg": 5.6,
+        "spg": null,
+        "three_pct": 25.0
+      },
+      "regular_season": {
+        "apg": 5.1,
+        "bpg": null,
+        "fg_pct": 44.9,
+        "ft_pct": 90.0,
+        "games": 794,
+        "ppg": 23.2,
+        "rpg": 6.5,
+        "spg": null,
+        "three_pct": 33.0
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600013/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 10,
+        "championships": 0,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "baylor-elgin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/baylor-elgin.webp",
+      "name": "Elgin Baylor",
+      "playoffs": {
+        "apg": 4.0,
+        "bpg": null,
+        "fg_pct": 43.9,
+        "ft_pct": 77.1,
+        "games": 134,
+        "ppg": 27.0,
+        "rpg": 12.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.3,
+        "bpg": null,
+        "fg_pct": 43.1,
+        "ft_pct": 78.0,
+        "games": 846,
+        "ppg": 27.4,
+        "rpg": 13.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76127/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 0,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "bing-dave",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bing-dave.webp",
+      "name": "Dave Bing",
+      "playoffs": {
+        "apg": 4.3,
+        "bpg": null,
+        "fg_pct": 42.3,
+        "ft_pct": 74.8,
+        "games": 31,
+        "ppg": 15.4,
+        "rpg": 2.7,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 6.0,
+        "bpg": null,
+        "fg_pct": 44.1,
+        "ft_pct": 77.5,
+        "games": 901,
+        "ppg": 20.3,
+        "rpg": 3.8,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 12,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76166/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 10,
+        "championships": 3,
+        "dpoy": 0,
+        "finals_mvp": 2,
+        "mvp": 3
+      },
+      "id": "bird-larry",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bird-larry.webp",
+      "name": "Larry Bird",
+      "playoffs": {
+        "apg": 6.5,
+        "bpg": 0.9,
+        "fg_pct": 47.2,
+        "ft_pct": 89.0,
+        "games": 164,
+        "ppg": 23.8,
+        "rpg": 10.3,
+        "spg": 1.8,
+        "three_pct": 32.1
+      },
+      "regular_season": {
+        "apg": 6.3,
+        "bpg": 0.8,
+        "fg_pct": 49.6,
+        "ft_pct": 88.6,
+        "games": 897,
+        "ppg": 24.3,
+        "rpg": 10.0,
+        "spg": 1.7,
+        "three_pct": 37.6
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1449/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 15,
+        "championships": 5,
+        "dpoy": 0,
+        "finals_mvp": 2,
+        "mvp": 1
+      },
+      "id": "bryant-kobe",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bryant-kobe.webp",
+      "name": "Kobe Bryant",
+      "playoffs": {
+        "apg": 4.7,
+        "bpg": 0.7,
+        "fg_pct": 44.8,
+        "ft_pct": 81.6,
+        "games": 220,
+        "ppg": 25.6,
+        "rpg": 5.1,
+        "spg": 1.4,
+        "three_pct": 33.1
+      },
+      "regular_season": {
+        "apg": 4.7,
+        "bpg": 0.5,
+        "fg_pct": 44.7,
+        "ft_pct": 83.7,
+        "games": 1346,
+        "ppg": 25.0,
+        "rpg": 5.2,
+        "spg": 1.4,
+        "three_pct": 32.9
+      },
+      "seasons": 20,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/977/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 10,
+        "championships": 2,
+        "dpoy": null,
+        "finals_mvp": 1,
+        "mvp": 4
+      },
+      "id": "chamberlain-wilt",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/chamberlain-wilt.webp",
+      "name": "Wilt Chamberlain",
+      "playoffs": {
+        "apg": 4.2,
+        "bpg": null,
+        "fg_pct": 52.2,
+        "ft_pct": 46.5,
+        "games": 160,
+        "ppg": 22.5,
+        "rpg": 24.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.4,
+        "bpg": null,
+        "fg_pct": 54.0,
+        "ft_pct": 51.1,
+        "games": 1045,
+        "ppg": 30.1,
+        "rpg": 22.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76375/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 6,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "cousy-bob",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cousy-bob.webp",
+      "name": "Bob Cousy",
+      "playoffs": {
+        "apg": 8.6,
+        "bpg": null,
+        "fg_pct": 34.2,
+        "ft_pct": 80.1,
+        "games": 109,
+        "ppg": 18.5,
+        "rpg": 5.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 7.5,
+        "bpg": null,
+        "fg_pct": 37.5,
+        "ft_pct": 80.3,
+        "games": 924,
+        "ppg": 18.4,
+        "rpg": 5.2,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600003/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "cowens-dave",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cowens-dave.webp",
+      "name": "Dave Cowens",
+      "playoffs": {
+        "apg": 3.7,
+        "bpg": null,
+        "fg_pct": 45.1,
+        "ft_pct": 74.4,
+        "games": 89,
+        "ppg": 18.9,
+        "rpg": 14.4,
+        "spg": null,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.8,
+        "bpg": null,
+        "fg_pct": 46.0,
+        "ft_pct": 78.3,
+        "games": 766,
+        "ppg": 17.6,
+        "rpg": 13.6,
+        "spg": null,
+        "three_pct": 7.1
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76462/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "cunningham-billy",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cunningham-billy.webp",
+      "name": "Billy Cunningham",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": null,
+        "fg_pct": 42.7,
+        "ft_pct": 68.6,
+        "games": 39,
+        "ppg": 19.4,
+        "rpg": 9.1,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.0,
+        "bpg": null,
+        "fg_pct": 44.6,
+        "ft_pct": 72.0,
+        "games": 654,
+        "ppg": 20.8,
+        "rpg": 10.1,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 9,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76487/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 2
+      },
+      "id": "curry-stephen",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/curry-stephen.webp",
+      "name": "Stephen Curry",
+      "playoffs": {
+        "apg": 6.1,
+        "bpg": 0.3,
+        "fg_pct": 45.4,
+        "ft_pct": 88.9,
+        "games": 155,
+        "ppg": 26.8,
+        "rpg": 5.3,
+        "spg": 1.5,
+        "three_pct": 39.7
+      },
+      "regular_season": {
+        "apg": 6.3,
+        "bpg": 0.3,
+        "fg_pct": 47.1,
+        "ft_pct": 91.2,
+        "games": 1069,
+        "ppg": 24.8,
+        "rpg": 4.7,
+        "spg": 1.5,
+        "three_pct": 42.2
+      },
+      "seasons": 17,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/201939/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "davis-anthony",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/davis-anthony.webp",
+      "name": "Anthony Davis",
+      "playoffs": {
+        "apg": 2.8,
+        "bpg": 2.1,
+        "fg_pct": 54.2,
+        "ft_pct": 84.0,
+        "games": 60,
+        "ppg": 26.1,
+        "rpg": 11.8,
+        "spg": 1.3,
+        "three_pct": 31.3
+      },
+      "regular_season": {
+        "apg": 2.6,
+        "bpg": 2.3,
+        "fg_pct": 52.2,
+        "ft_pct": 79.3,
+        "games": 807,
+        "ppg": 24.0,
+        "rpg": 10.7,
+        "spg": 1.3,
+        "three_pct": 29.5
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203076/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 1,
+        "championships": 2,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "debusschere-dave",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/debusschere-dave.webp",
+      "name": "Dave DeBusschere",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": null,
+        "fg_pct": 41.6,
+        "ft_pct": 69.8,
+        "games": 96,
+        "ppg": 16.0,
+        "rpg": 12.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.9,
+        "bpg": null,
+        "fg_pct": 43.2,
+        "ft_pct": 69.9,
+        "games": 875,
+        "ppg": 16.1,
+        "rpg": 11.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 12,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76545/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "drexler-clyde",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/drexler-clyde.webp",
+      "name": "Clyde Drexler",
+      "playoffs": {
+        "apg": 6.1,
+        "bpg": 0.7,
+        "fg_pct": 44.7,
+        "ft_pct": 78.7,
+        "games": 145,
+        "ppg": 20.4,
+        "rpg": 6.9,
+        "spg": 1.9,
+        "three_pct": 28.8
+      },
+      "regular_season": {
+        "apg": 5.6,
+        "bpg": 0.7,
+        "fg_pct": 47.2,
+        "ft_pct": 78.8,
+        "games": 1086,
+        "ppg": 20.4,
+        "rpg": 6.1,
+        "spg": 2.0,
+        "three_pct": 31.8
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/17/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 15,
+        "championships": 5,
+        "dpoy": 0,
+        "finals_mvp": 3,
+        "mvp": 2
+      },
+      "id": "duncan-tim",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/duncan-tim.webp",
+      "name": "Tim Duncan",
+      "playoffs": {
+        "apg": 3.0,
+        "bpg": 2.3,
+        "fg_pct": 50.1,
+        "ft_pct": 68.9,
+        "games": 251,
+        "ppg": 20.6,
+        "rpg": 11.4,
+        "spg": 0.7,
+        "three_pct": 14.3
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": 2.2,
+        "fg_pct": 50.6,
+        "ft_pct": 69.6,
+        "games": 1392,
+        "ppg": 19.0,
+        "rpg": 10.8,
+        "spg": 0.7,
+        "three_pct": 17.9
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1495/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 2,
+        "mvp": 1
+      },
+      "id": "durant-kevin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/durant-kevin.webp",
+      "name": "Kevin Durant",
+      "playoffs": {
+        "apg": 4.2,
+        "bpg": 1.2,
+        "fg_pct": 47.8,
+        "ft_pct": 86.8,
+        "games": 171,
+        "ppg": 29.3,
+        "rpg": 7.8,
+        "spg": 1.0,
+        "three_pct": 35.5
+      },
+      "regular_season": {
+        "apg": 4.4,
+        "bpg": 1.1,
+        "fg_pct": 50.3,
+        "ft_pct": 88.2,
+        "games": 1201,
+        "ppg": 27.1,
+        "rpg": 6.9,
+        "spg": 1.0,
+        "three_pct": 39.2
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/201142/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "erving-julius",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/erving-julius.webp",
+      "name": "Julius Erving",
+      "playoffs": {
+        "apg": 4.2,
+        "bpg": 1.7,
+        "fg_pct": 48.6,
+        "ft_pct": 77.9,
+        "games": 141,
+        "ppg": 21.9,
+        "rpg": 7.0,
+        "spg": 1.7,
+        "three_pct": 19.4
+      },
+      "regular_season": {
+        "apg": 3.9,
+        "bpg": 1.5,
+        "fg_pct": 50.7,
+        "ft_pct": 77.7,
+        "games": 836,
+        "ppg": 22.0,
+        "rpg": 6.7,
+        "spg": 1.8,
+        "three_pct": 26.1
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76681/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "ewing-patrick",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/ewing-patrick.webp",
+      "name": "Patrick Ewing",
+      "playoffs": {
+        "apg": 2.0,
+        "bpg": 2.2,
+        "fg_pct": 46.9,
+        "ft_pct": 71.8,
+        "games": 139,
+        "ppg": 20.2,
+        "rpg": 10.3,
+        "spg": 0.9,
+        "three_pct": 34.8
+      },
+      "regular_season": {
+        "apg": 1.9,
+        "bpg": 2.4,
+        "fg_pct": 50.4,
+        "ft_pct": 74.0,
+        "games": 1183,
+        "ppg": 21.0,
+        "rpg": 9.8,
+        "spg": 1.0,
+        "three_pct": 15.2
+      },
+      "seasons": 17,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/121/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 2,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "frazier-walt",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/frazier-walt.webp",
+      "name": "Walt Frazier",
+      "playoffs": {
+        "apg": 6.4,
+        "bpg": null,
+        "fg_pct": 51.1,
+        "ft_pct": 75.1,
+        "games": 93,
+        "ppg": 20.7,
+        "rpg": 7.2,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 6.1,
+        "bpg": null,
+        "fg_pct": 49.0,
+        "ft_pct": 78.6,
+        "games": 825,
+        "ppg": 18.9,
+        "rpg": 5.9,
+        "spg": null,
+        "three_pct": 0.0
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76750/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 9,
+        "championships": 1,
+        "dpoy": 1,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "garnett-kevin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/garnett-kevin.webp",
+      "name": "Kevin Garnett",
+      "playoffs": {
+        "apg": 3.3,
+        "bpg": 1.3,
+        "fg_pct": 47.8,
+        "ft_pct": 78.9,
+        "games": 143,
+        "ppg": 18.2,
+        "rpg": 10.7,
+        "spg": 1.2,
+        "three_pct": 27.3
+      },
+      "regular_season": {
+        "apg": 3.7,
+        "bpg": 1.4,
+        "fg_pct": 49.7,
+        "ft_pct": 78.9,
+        "games": 1462,
+        "ppg": 17.8,
+        "rpg": 10.0,
+        "spg": 1.3,
+        "three_pct": 27.5
+      },
+      "seasons": 21,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/708/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "gervin-george",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gervin-george.webp",
+      "name": "George Gervin",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": 0.9,
+        "fg_pct": 50.8,
+        "ft_pct": 82.1,
+        "games": 59,
+        "ppg": 27.0,
+        "rpg": 5.8,
+        "spg": 1.2,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 2.8,
+        "bpg": 0.8,
+        "fg_pct": 51.1,
+        "ft_pct": 84.4,
+        "games": 791,
+        "ppg": 26.2,
+        "rpg": 4.6,
+        "spg": 1.2,
+        "three_pct": 29.7
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76804/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "greer-hal",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/greer-hal.webp",
+      "name": "Hal Greer",
+      "playoffs": {
+        "apg": 4.3,
+        "bpg": null,
+        "fg_pct": 42.5,
+        "ft_pct": 81.2,
+        "games": 92,
+        "ppg": 20.4,
+        "rpg": 5.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.0,
+        "bpg": null,
+        "fg_pct": 45.2,
+        "ft_pct": 80.1,
+        "games": 1122,
+        "ppg": 19.2,
+        "rpg": 5.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76882/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 8,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "harden-james",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/harden-james.webp",
+      "name": "James Harden",
+      "playoffs": {
+        "apg": 6.4,
+        "bpg": 0.6,
+        "fg_pct": 42.4,
+        "ft_pct": 86.6,
+        "games": 191,
+        "ppg": 22.2,
+        "rpg": 5.4,
+        "spg": 1.6,
+        "three_pct": 33.7
+      },
+      "regular_season": {
+        "apg": 7.3,
+        "bpg": 0.6,
+        "fg_pct": 43.9,
+        "ft_pct": 86.3,
+        "games": 1221,
+        "ppg": 24.0,
+        "rpg": 5.6,
+        "spg": 1.5,
+        "three_pct": 36.4
+      },
+      "seasons": 17,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/201935/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 8,
+        "dpoy": null,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "havlicek-john",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/havlicek-john.webp",
+      "name": "John Havlicek",
+      "playoffs": {
+        "apg": 4.8,
+        "bpg": null,
+        "fg_pct": 43.6,
+        "ft_pct": 83.6,
+        "games": 172,
+        "ppg": 22.0,
+        "rpg": 6.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.8,
+        "bpg": null,
+        "fg_pct": 43.9,
+        "ft_pct": 81.5,
+        "games": 1270,
+        "ppg": 20.8,
+        "rpg": 6.3,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76970/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "hayes-elvin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/hayes-elvin.webp",
+      "name": "Elvin Hayes",
+      "playoffs": {
+        "apg": 1.9,
+        "bpg": null,
+        "fg_pct": 46.4,
+        "ft_pct": 65.2,
+        "games": 96,
+        "ppg": 22.9,
+        "rpg": 13.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 1.8,
+        "bpg": null,
+        "fg_pct": 45.2,
+        "ft_pct": 67.0,
+        "games": 1303,
+        "ppg": 21.0,
+        "rpg": 12.5,
+        "spg": null,
+        "three_pct": 14.7
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76979/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 21,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 4,
+        "mvp": 4
+      },
+      "id": "james-lebron",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/james-lebron.webp",
+      "name": "LeBron James",
+      "playoffs": {
+        "apg": 7.2,
+        "bpg": 1.0,
+        "fg_pct": 49.5,
+        "ft_pct": 74.1,
+        "games": 302,
+        "ppg": 28.2,
+        "rpg": 8.9,
+        "spg": 1.7,
+        "three_pct": 33.2
+      },
+      "regular_season": {
+        "apg": 7.4,
+        "bpg": 0.7,
+        "fg_pct": 50.7,
+        "ft_pct": 73.7,
+        "games": 1622,
+        "ppg": 26.8,
+        "rpg": 7.5,
+        "spg": 1.5,
+        "three_pct": 34.8
+      },
+      "seasons": 23,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2544/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 10,
+        "championships": 5,
+        "dpoy": 0,
+        "finals_mvp": 3,
+        "mvp": 3
+      },
+      "id": "johnson-magic",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/johnson-magic.webp",
+      "name": "Magic Johnson",
+      "playoffs": {
+        "apg": 12.3,
+        "bpg": 0.3,
+        "fg_pct": 50.6,
+        "ft_pct": 83.8,
+        "games": 190,
+        "ppg": 19.5,
+        "rpg": 7.7,
+        "spg": 1.9,
+        "three_pct": 24.1
+      },
+      "regular_season": {
+        "apg": 11.2,
+        "bpg": 0.4,
+        "fg_pct": 52.0,
+        "ft_pct": 84.8,
+        "games": 906,
+        "ppg": 19.5,
+        "rpg": 7.2,
+        "spg": 1.9,
+        "three_pct": 30.3
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77142/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 10,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "jones-sam",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jones-sam.webp",
+      "name": "Sam Jones",
+      "playoffs": {
+        "apg": 2.3,
+        "bpg": null,
+        "fg_pct": 44.7,
+        "ft_pct": 81.1,
+        "games": 154,
+        "ppg": 18.9,
+        "rpg": 4.7,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.5,
+        "bpg": null,
+        "fg_pct": 45.6,
+        "ft_pct": 80.3,
+        "games": 871,
+        "ppg": 17.7,
+        "rpg": 4.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 12,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77196/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 6,
+        "dpoy": 1,
+        "finals_mvp": 6,
+        "mvp": 5
+      },
+      "id": "jordan-michael",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jordan-michael.webp",
+      "name": "Michael Jordan",
+      "playoffs": {
+        "apg": 5.7,
+        "bpg": 0.9,
+        "fg_pct": 48.7,
+        "ft_pct": 82.8,
+        "games": 179,
+        "ppg": 33.4,
+        "rpg": 6.4,
+        "spg": 2.1,
+        "three_pct": 33.2
+      },
+      "regular_season": {
+        "apg": 5.3,
+        "bpg": 0.8,
+        "fg_pct": 49.7,
+        "ft_pct": 83.5,
+        "games": 1072,
+        "ppg": 30.1,
+        "rpg": 6.2,
+        "spg": 2.3,
+        "three_pct": 32.7
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/893/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "kidd-jason",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/kidd-jason.webp",
+      "name": "Jason Kidd",
+      "playoffs": {
+        "apg": 8.0,
+        "bpg": 0.3,
+        "fg_pct": 39.1,
+        "ft_pct": 78.1,
+        "games": 158,
+        "ppg": 12.9,
+        "rpg": 6.7,
+        "spg": 1.9,
+        "three_pct": 32.2
+      },
+      "regular_season": {
+        "apg": 8.7,
+        "bpg": 0.3,
+        "fg_pct": 40.0,
+        "ft_pct": 78.5,
+        "games": 1391,
+        "ppg": 12.6,
+        "rpg": 6.3,
+        "spg": 1.9,
+        "three_pct": 34.9
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/467/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "iverson-allen",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/iverson-allen.webp",
+      "name": "Allen Iverson",
+      "playoffs": {
+        "apg": 6.0,
+        "bpg": 0.2,
+        "fg_pct": 40.1,
+        "ft_pct": 76.4,
+        "games": 71,
+        "ppg": 29.7,
+        "rpg": 3.8,
+        "spg": 2.1,
+        "three_pct": 32.7
+      },
+      "regular_season": {
+        "apg": 6.2,
+        "bpg": 0.2,
+        "fg_pct": 42.5,
+        "ft_pct": 78.0,
+        "games": 914,
+        "ppg": 26.7,
+        "rpg": 3.7,
+        "spg": 2.2,
+        "three_pct": 31.3
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/947/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 2,
+        "dpoy": 2,
+        "finals_mvp": 2,
+        "mvp": 0
+      },
+      "id": "leonard-kawhi",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/leonard-kawhi.webp",
+      "name": "Kawhi Leonard",
+      "playoffs": {
+        "apg": 3.0,
+        "bpg": 0.7,
+        "fg_pct": 51.3,
+        "ft_pct": 84.1,
+        "games": 146,
+        "ppg": 21.5,
+        "rpg": 7.8,
+        "spg": 1.8,
+        "three_pct": 39.9
+      },
+      "regular_season": {
+        "apg": 3.1,
+        "bpg": 0.6,
+        "fg_pct": 49.9,
+        "ft_pct": 86.3,
+        "games": 798,
+        "ppg": 20.7,
+        "rpg": 6.4,
+        "spg": 1.7,
+        "three_pct": 39.1
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/202695/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "lillard-damian",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/lillard-damian.webp",
+      "name": "Damian Lillard",
+      "playoffs": {
+        "apg": 6.1,
+        "bpg": 0.3,
+        "fg_pct": 40.9,
+        "ft_pct": 89.3,
+        "games": 68,
+        "ppg": 25.2,
+        "rpg": 4.4,
+        "spg": 1.1,
+        "three_pct": 36.8
+      },
+      "regular_season": {
+        "apg": 6.7,
+        "bpg": 0.3,
+        "fg_pct": 43.9,
+        "ft_pct": 89.9,
+        "games": 900,
+        "ppg": 25.1,
+        "rpg": 4.3,
+        "spg": 1.0,
+        "three_pct": 37.1
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203081/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "lucas-jerry",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/lucas-jerry.webp",
+      "name": "Jerry Lucas",
+      "playoffs": {
+        "apg": 3.0,
+        "bpg": null,
+        "fg_pct": 46.7,
+        "ft_pct": 78.6,
+        "games": 72,
+        "ppg": 12.4,
+        "rpg": 10.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 3.3,
+        "bpg": null,
+        "fg_pct": 49.9,
+        "ft_pct": 78.3,
+        "games": 829,
+        "ppg": 17.0,
+        "rpg": 15.6,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77418/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 14,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 2
+      },
+      "id": "malone-karl",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/malone-karl.webp",
+      "name": "Karl Malone",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": 0.7,
+        "fg_pct": 46.3,
+        "ft_pct": 73.6,
+        "games": 193,
+        "ppg": 24.7,
+        "rpg": 10.7,
+        "spg": 1.3,
+        "three_pct": 16.2
+      },
+      "regular_season": {
+        "apg": 3.6,
+        "bpg": 0.8,
+        "fg_pct": 51.6,
+        "ft_pct": 74.2,
+        "games": 1476,
+        "ppg": 25.0,
+        "rpg": 10.1,
+        "spg": 1.4,
+        "three_pct": 27.4
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/252/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 8,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 3
+      },
+      "id": "malone-moses",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/malone-moses.webp",
+      "name": "Moses Malone",
+      "playoffs": {
+        "apg": 1.4,
+        "bpg": 1.6,
+        "fg_pct": 47.9,
+        "ft_pct": 76.2,
+        "games": 94,
+        "ppg": 22.1,
+        "rpg": 13.8,
+        "spg": 0.9,
+        "three_pct": 14.3
+      },
+      "regular_season": {
+        "apg": 1.4,
+        "bpg": 1.3,
+        "fg_pct": 49.1,
+        "ft_pct": 76.9,
+        "games": 1329,
+        "ppg": 20.6,
+        "rpg": 12.2,
+        "spg": 0.8,
+        "three_pct": 10.0
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77449/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 0,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "maravich-pete",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/maravich-pete.webp",
+      "name": "Pete Maravich",
+      "playoffs": {
+        "apg": 3.8,
+        "bpg": null,
+        "fg_pct": 42.3,
+        "ft_pct": 78.4,
+        "games": 26,
+        "ppg": 18.7,
+        "rpg": 3.7,
+        "spg": null,
+        "three_pct": 33.3
+      },
+      "regular_season": {
+        "apg": 5.4,
+        "bpg": null,
+        "fg_pct": 44.1,
+        "ft_pct": 82.0,
+        "games": 658,
+        "ppg": 24.2,
+        "rpg": 4.2,
+        "spg": null,
+        "three_pct": 66.7
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77459/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "mcadoo-bob",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mcadoo-bob.webp",
+      "name": "Bob McAdoo",
+      "playoffs": {
+        "apg": 1.4,
+        "bpg": null,
+        "fg_pct": 49.1,
+        "ft_pct": 72.4,
+        "games": 94,
+        "ppg": 18.3,
+        "rpg": 7.6,
+        "spg": null,
+        "three_pct": 25.0
+      },
+      "regular_season": {
+        "apg": 2.3,
+        "bpg": null,
+        "fg_pct": 50.3,
+        "ft_pct": 75.4,
+        "games": 852,
+        "ppg": 22.1,
+        "rpg": 9.4,
+        "spg": null,
+        "three_pct": 8.1
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77498/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 1,
+        "championships": 3,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "mchale-kevin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mchale-kevin.webp",
+      "name": "Kevin McHale",
+      "playoffs": {
+        "apg": 1.6,
+        "bpg": 1.7,
+        "fg_pct": 56.1,
+        "ft_pct": 78.8,
+        "games": 169,
+        "ppg": 18.8,
+        "rpg": 7.4,
+        "spg": 0.4,
+        "three_pct": 38.1
+      },
+      "regular_season": {
+        "apg": 1.7,
+        "bpg": 1.7,
+        "fg_pct": 55.4,
+        "ft_pct": 79.8,
+        "games": 971,
+        "ppg": 17.9,
+        "rpg": 7.3,
+        "spg": 0.4,
+        "three_pct": 26.1
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1450/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 5,
+        "dpoy": null,
+        "finals_mvp": null,
+        "mvp": 0
+      },
+      "id": "mikan-george",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mikan-george.webp",
+      "name": "George Mikan",
+      "playoffs": {
+        "apg": 2.2,
+        "bpg": null,
+        "fg_pct": 40.4,
+        "ft_pct": 78.6,
+        "games": 70,
+        "ppg": 24.0,
+        "rpg": 9.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.8,
+        "bpg": null,
+        "fg_pct": 40.4,
+        "ft_pct": 78.2,
+        "games": 439,
+        "ppg": 23.1,
+        "rpg": 9.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 7,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600012/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "miller-reggie",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/miller-reggie.webp",
+      "name": "Reggie Miller",
+      "playoffs": {
+        "apg": 2.5,
+        "bpg": 0.2,
+        "fg_pct": 44.9,
+        "ft_pct": 89.3,
+        "games": 144,
+        "ppg": 20.6,
+        "rpg": 2.9,
+        "spg": 1.0,
+        "three_pct": 39.0
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": 0.2,
+        "fg_pct": 47.1,
+        "ft_pct": 88.8,
+        "games": 1389,
+        "ppg": 18.2,
+        "rpg": 3.0,
+        "spg": 1.1,
+        "three_pct": 39.5
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/397/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 1,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "monroe-earl",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/monroe-earl.webp",
+      "name": "Earl Monroe",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": null,
+        "fg_pct": 43.9,
+        "ft_pct": 79.1,
+        "games": 82,
+        "ppg": 17.9,
+        "rpg": 3.2,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 3.9,
+        "bpg": null,
+        "fg_pct": 46.4,
+        "ft_pct": 80.7,
+        "games": 926,
+        "ppg": 18.8,
+        "rpg": 3.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600006/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 2
+      },
+      "id": "nash-steve",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/nash-steve.webp",
+      "name": "Steve Nash",
+      "playoffs": {
+        "apg": 8.8,
+        "bpg": 0.1,
+        "fg_pct": 47.3,
+        "ft_pct": 90.0,
+        "games": 120,
+        "ppg": 17.3,
+        "rpg": 3.5,
+        "spg": 0.6,
+        "three_pct": 40.6
+      },
+      "regular_season": {
+        "apg": 8.5,
+        "bpg": 0.1,
+        "fg_pct": 49.0,
+        "ft_pct": 90.4,
+        "games": 1217,
+        "ppg": 14.3,
+        "rpg": 3.0,
+        "spg": 0.7,
+        "three_pct": 42.8
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/959/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 1
+      },
+      "id": "nowitzki-dirk",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/nowitzki-dirk.webp",
+      "name": "Dirk Nowitzki",
+      "playoffs": {
+        "apg": 2.5,
+        "bpg": 0.9,
+        "fg_pct": 46.2,
+        "ft_pct": 89.2,
+        "games": 145,
+        "ppg": 25.3,
+        "rpg": 10.0,
+        "spg": 1.0,
+        "three_pct": 36.5
+      },
+      "regular_season": {
+        "apg": 2.4,
+        "bpg": 0.8,
+        "fg_pct": 47.1,
+        "ft_pct": 87.9,
+        "games": 1522,
+        "ppg": 20.7,
+        "rpg": 7.5,
+        "spg": 0.8,
+        "three_pct": 38.0
+      },
+      "seasons": 21,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1717/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 14,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 3,
+        "mvp": 1
+      },
+      "id": "oneal-shaquille",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/oneal-shaquille.webp",
+      "name": "Shaquille O’Neal",
+      "playoffs": {
+        "apg": 2.7,
+        "bpg": 2.1,
+        "fg_pct": 56.3,
+        "ft_pct": 50.4,
+        "games": 216,
+        "ppg": 24.3,
+        "rpg": 11.6,
+        "spg": 0.5,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.5,
+        "bpg": 2.3,
+        "fg_pct": 58.2,
+        "ft_pct": 52.7,
+        "games": 1207,
+        "ppg": 23.7,
+        "rpg": 10.9,
+        "spg": 0.6,
+        "three_pct": 4.5
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/406/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 2,
+        "dpoy": 2,
+        "finals_mvp": 2,
+        "mvp": 1
+      },
+      "id": "olajuwon-hakeem",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/olajuwon-hakeem.webp",
+      "name": "Hakeem Olajuwon",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": 3.3,
+        "fg_pct": 52.8,
+        "ft_pct": 71.9,
+        "games": 145,
+        "ppg": 25.9,
+        "rpg": 11.2,
+        "spg": 1.7,
+        "three_pct": 22.2
+      },
+      "regular_season": {
+        "apg": 2.5,
+        "bpg": 3.1,
+        "fg_pct": 51.2,
+        "ft_pct": 71.2,
+        "games": 1238,
+        "ppg": 21.8,
+        "rpg": 11.1,
+        "spg": 1.7,
+        "three_pct": 20.2
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/165/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "parish-robert",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/parish-robert.webp",
+      "name": "Robert Parish",
+      "playoffs": {
+        "apg": 1.3,
+        "bpg": 1.7,
+        "fg_pct": 50.6,
+        "ft_pct": 72.2,
+        "games": 184,
+        "ppg": 15.3,
+        "rpg": 9.6,
+        "spg": 0.8,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 1.4,
+        "bpg": 1.5,
+        "fg_pct": 53.7,
+        "ft_pct": 72.1,
+        "games": 1611,
+        "ppg": 14.5,
+        "rpg": 9.1,
+        "spg": 0.8,
+        "three_pct": 0.0
+      },
+      "seasons": 21,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/305/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "paul-chris",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/paul-chris.webp",
+      "name": "Chris Paul",
+      "playoffs": {
+        "apg": 8.3,
+        "bpg": 0.2,
+        "fg_pct": 48.4,
+        "ft_pct": 85.4,
+        "games": 149,
+        "ppg": 20.0,
+        "rpg": 4.9,
+        "spg": 1.9,
+        "three_pct": 37.3
+      },
+      "regular_season": {
+        "apg": 9.2,
+        "bpg": 0.2,
+        "fg_pct": 46.9,
+        "ft_pct": 87.0,
+        "games": 1370,
+        "ppg": 16.8,
+        "rpg": 4.4,
+        "spg": 2.0,
+        "three_pct": 37.0
+      },
+      "seasons": 21,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/101108/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 9,
+        "championships": 1,
+        "dpoy": 1,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "payton-gary",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/payton-gary.webp",
+      "name": "Gary Payton",
+      "playoffs": {
+        "apg": 5.3,
+        "bpg": 0.2,
+        "fg_pct": 44.1,
+        "ft_pct": 70.6,
+        "games": 154,
+        "ppg": 14.0,
+        "rpg": 3.7,
+        "spg": 1.4,
+        "three_pct": 31.5
+      },
+      "regular_season": {
+        "apg": 6.7,
+        "bpg": 0.2,
+        "fg_pct": 46.6,
+        "ft_pct": 72.9,
+        "games": 1335,
+        "ppg": 16.3,
+        "rpg": 3.9,
+        "spg": 1.8,
+        "three_pct": 31.7
+      },
+      "seasons": 17,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/56/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": null,
+        "mvp": 2
+      },
+      "id": "pettit-bob",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pettit-bob.webp",
+      "name": "Bob Pettit",
+      "playoffs": {
+        "apg": 2.7,
+        "bpg": null,
+        "fg_pct": 41.8,
+        "ft_pct": 77.4,
+        "games": 88,
+        "ppg": 25.5,
+        "rpg": 14.8,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": null,
+        "fg_pct": 43.6,
+        "ft_pct": 76.1,
+        "games": 792,
+        "ppg": 26.4,
+        "rpg": 16.2,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77847/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "pierce-paul",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pierce-paul.webp",
+      "name": "Paul Pierce",
+      "playoffs": {
+        "apg": 3.4,
+        "bpg": 0.6,
+        "fg_pct": 42.3,
+        "ft_pct": 83.0,
+        "games": 170,
+        "ppg": 18.7,
+        "rpg": 5.8,
+        "spg": 1.2,
+        "three_pct": 35.5
+      },
+      "regular_season": {
+        "apg": 3.5,
+        "bpg": 0.6,
+        "fg_pct": 44.5,
+        "ft_pct": 80.6,
+        "games": 1343,
+        "ppg": 19.7,
+        "rpg": 5.6,
+        "spg": 1.3,
+        "three_pct": 36.8
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1718/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 6,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "pippen-scottie",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pippen-scottie.webp",
+      "name": "Scottie Pippen",
+      "playoffs": {
+        "apg": 5.0,
+        "bpg": 0.9,
+        "fg_pct": 44.4,
+        "ft_pct": 72.4,
+        "games": 208,
+        "ppg": 17.5,
+        "rpg": 7.6,
+        "spg": 1.9,
+        "three_pct": 30.3
+      },
+      "regular_season": {
+        "apg": 5.2,
+        "bpg": 0.8,
+        "fg_pct": 47.3,
+        "ft_pct": 70.4,
+        "games": 1178,
+        "ppg": 16.1,
+        "rpg": 6.4,
+        "spg": 2.0,
+        "three_pct": 32.6
+      },
+      "seasons": 17,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/937/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 2,
+        "dpoy": null,
+        "finals_mvp": 2,
+        "mvp": 1
+      },
+      "id": "reed-willis",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/reed-willis.webp",
+      "name": "Willis Reed",
+      "playoffs": {
+        "apg": 1.9,
+        "bpg": null,
+        "fg_pct": 47.4,
+        "ft_pct": 76.5,
+        "games": 78,
+        "ppg": 17.4,
+        "rpg": 10.3,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 1.8,
+        "bpg": null,
+        "fg_pct": 47.6,
+        "ft_pct": 74.7,
+        "games": 650,
+        "ppg": 18.7,
+        "rpg": 12.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77929/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "robertson-oscar",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/robertson-oscar.webp",
+      "name": "Oscar Robertson",
+      "playoffs": {
+        "apg": 8.9,
+        "bpg": null,
+        "fg_pct": 46.0,
+        "ft_pct": 85.5,
+        "games": 86,
+        "ppg": 22.2,
+        "rpg": 6.7,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 9.5,
+        "bpg": null,
+        "fg_pct": 48.5,
+        "ft_pct": 83.8,
+        "games": 1040,
+        "ppg": 25.7,
+        "rpg": 7.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600015/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 10,
+        "championships": 2,
+        "dpoy": 1,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "robinson-david",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/robinson-david.webp",
+      "name": "David Robinson",
+      "playoffs": {
+        "apg": 2.3,
+        "bpg": 2.5,
+        "fg_pct": 47.9,
+        "ft_pct": 70.8,
+        "games": 123,
+        "ppg": 18.1,
+        "rpg": 10.6,
+        "spg": 1.2,
+        "three_pct": 10.0
+      },
+      "regular_season": {
+        "apg": 2.5,
+        "bpg": 3.0,
+        "fg_pct": 51.8,
+        "ft_pct": 73.6,
+        "games": 987,
+        "ppg": 21.1,
+        "rpg": 10.6,
+        "spg": 1.4,
+        "three_pct": 25.0
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/764/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 5,
+        "dpoy": 2,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "rodman-dennis",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/rodman-dennis.webp",
+      "name": "Dennis Rodman",
+      "playoffs": {
+        "apg": 1.2,
+        "bpg": 0.6,
+        "fg_pct": 49.0,
+        "ft_pct": 54.0,
+        "games": 169,
+        "ppg": 6.4,
+        "rpg": 9.9,
+        "spg": 0.6,
+        "three_pct": 14.9
+      },
+      "regular_season": {
+        "apg": 1.8,
+        "bpg": 0.6,
+        "fg_pct": 52.1,
+        "ft_pct": 58.4,
+        "games": 911,
+        "ppg": 7.3,
+        "rpg": 13.1,
+        "spg": 0.7,
+        "three_pct": 23.1
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/23/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 11,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 5
+      },
+      "id": "russell-bill",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/russell-bill.webp",
+      "name": "Bill Russell",
+      "playoffs": {
+        "apg": 4.7,
+        "bpg": null,
+        "fg_pct": 43.0,
+        "ft_pct": 60.3,
+        "games": 165,
+        "ppg": 16.2,
+        "rpg": 24.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 4.3,
+        "bpg": null,
+        "fg_pct": 44.0,
+        "ft_pct": 56.1,
+        "games": 963,
+        "ppg": 15.1,
+        "rpg": 22.5,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78049/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": null,
+        "mvp": 0
+      },
+      "id": "schayes-dolph",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/schayes-dolph.webp",
+      "name": "Dolph Schayes",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": null,
+        "fg_pct": 39.0,
+        "ft_pct": 82.5,
+        "games": 97,
+        "ppg": 19.5,
+        "rpg": 10.8,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 3.1,
+        "bpg": null,
+        "fg_pct": 38.0,
+        "ft_pct": 84.9,
+        "games": 996,
+        "ppg": 18.5,
+        "rpg": 11.3,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78076/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1950s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 4,
+        "dpoy": null,
+        "finals_mvp": null,
+        "mvp": 0
+      },
+      "id": "sharman-bill",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/sharman-bill.webp",
+      "name": "Bill Sharman",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": null,
+        "fg_pct": 42.6,
+        "ft_pct": 91.1,
+        "games": 78,
+        "ppg": 18.5,
+        "rpg": 3.7,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": null,
+        "fg_pct": 42.6,
+        "ft_pct": 88.3,
+        "games": 711,
+        "ppg": 17.8,
+        "rpg": 3.9,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78126/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 11,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "stockton-john",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/stockton-john.webp",
+      "name": "John Stockton",
+      "playoffs": {
+        "apg": 10.1,
+        "bpg": 0.3,
+        "fg_pct": 47.3,
+        "ft_pct": 81.0,
+        "games": 182,
+        "ppg": 13.4,
+        "rpg": 3.3,
+        "spg": 1.9,
+        "three_pct": 32.6
+      },
+      "regular_season": {
+        "apg": 10.5,
+        "bpg": 0.2,
+        "fg_pct": 51.5,
+        "ft_pct": 82.6,
+        "games": 1504,
+        "ppg": 13.1,
+        "rpg": 2.7,
+        "spg": 2.2,
+        "three_pct": 38.4
+      },
+      "seasons": 19,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/304/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "thomas-isiah",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thomas-isiah.webp",
+      "name": "Isiah Thomas",
+      "playoffs": {
+        "apg": 8.9,
+        "bpg": 0.3,
+        "fg_pct": 44.1,
+        "ft_pct": 76.9,
+        "games": 111,
+        "ppg": 20.4,
+        "rpg": 4.7,
+        "spg": 2.1,
+        "three_pct": 34.6
+      },
+      "regular_season": {
+        "apg": 9.3,
+        "bpg": 0.3,
+        "fg_pct": 45.2,
+        "ft_pct": 75.9,
+        "games": 979,
+        "ppg": 19.2,
+        "rpg": 3.6,
+        "spg": 1.9,
+        "three_pct": 29.0
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78318/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 0,
+        "championships": 0,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "thurmond-nate",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thurmond-nate.webp",
+      "name": "Nate Thurmond",
+      "playoffs": {
+        "apg": 2.8,
+        "bpg": null,
+        "fg_pct": 41.6,
+        "ft_pct": 62.1,
+        "games": 81,
+        "ppg": 11.9,
+        "rpg": 13.6,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.7,
+        "bpg": null,
+        "fg_pct": 42.1,
+        "ft_pct": 66.7,
+        "games": 964,
+        "ppg": 15.0,
+        "rpg": 15.0,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600001/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1970s",
+      "honors": {
+        "all_nba": 1,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 1,
+        "mvp": 1
+      },
+      "id": "unseld-wes",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/unseld-wes.webp",
+      "name": "Wes Unseld",
+      "playoffs": {
+        "apg": 3.8,
+        "bpg": null,
+        "fg_pct": 49.3,
+        "ft_pct": 60.8,
+        "games": 119,
+        "ppg": 10.6,
+        "rpg": 14.9,
+        "spg": null,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.9,
+        "bpg": null,
+        "fg_pct": 50.9,
+        "ft_pct": 63.3,
+        "games": 984,
+        "ppg": 10.8,
+        "rpg": 14.0,
+        "spg": null,
+        "three_pct": 50.0
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78392/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 8,
+        "championships": 3,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "wade-dwyane",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wade-dwyane.webp",
+      "name": "Dwyane Wade",
+      "playoffs": {
+        "apg": 4.9,
+        "bpg": 1.0,
+        "fg_pct": 47.4,
+        "ft_pct": 78.0,
+        "games": 177,
+        "ppg": 22.3,
+        "rpg": 5.2,
+        "spg": 1.5,
+        "three_pct": 33.8
+      },
+      "regular_season": {
+        "apg": 5.4,
+        "bpg": 0.8,
+        "fg_pct": 48.0,
+        "ft_pct": 76.5,
+        "games": 1054,
+        "ppg": 22.0,
+        "rpg": 4.7,
+        "spg": 1.5,
+        "three_pct": 29.3
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2548/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 1
+      },
+      "id": "walton-bill",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/walton-bill.webp",
+      "name": "Bill Walton",
+      "playoffs": {
+        "apg": 3.0,
+        "bpg": 1.7,
+        "fg_pct": 52.5,
+        "ft_pct": 67.3,
+        "games": 49,
+        "ppg": 10.8,
+        "rpg": 9.1,
+        "spg": 0.7,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.4,
+        "bpg": 2.2,
+        "fg_pct": 52.1,
+        "ft_pct": 66.0,
+        "games": 468,
+        "ppg": 13.3,
+        "rpg": 10.5,
+        "spg": 0.8,
+        "three_pct": 0.0
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78450/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 12,
+        "championships": 1,
+        "dpoy": null,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "west-jerry",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/west-jerry.webp",
+      "name": "Jerry West",
+      "playoffs": {
+        "apg": 6.3,
+        "bpg": null,
+        "fg_pct": 46.9,
+        "ft_pct": 80.5,
+        "games": 153,
+        "ppg": 29.1,
+        "rpg": 5.6,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 6.7,
+        "bpg": null,
+        "fg_pct": 47.4,
+        "ft_pct": 81.4,
+        "games": 932,
+        "ppg": 27.0,
+        "rpg": 5.8,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78497/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 9,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "westbrook-russell",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/westbrook-russell.webp",
+      "name": "Russell Westbrook",
+      "playoffs": {
+        "apg": 7.1,
+        "bpg": 0.3,
+        "fg_pct": 40.5,
+        "ft_pct": 82.0,
+        "games": 135,
+        "ppg": 22.5,
+        "rpg": 6.7,
+        "spg": 1.7,
+        "three_pct": 29.9
+      },
+      "regular_season": {
+        "apg": 8.0,
+        "bpg": 0.3,
+        "fg_pct": 43.8,
+        "ft_pct": 77.1,
+        "games": 1301,
+        "ppg": 20.9,
+        "rpg": 6.9,
+        "spg": 1.6,
+        "three_pct": 30.8
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/201566/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1960s",
+      "honors": {
+        "all_nba": 0,
+        "championships": 0,
+        "dpoy": null,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "wilkens-lenny",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wilkens-lenny.webp",
+      "name": "Lenny Wilkens",
+      "playoffs": {
+        "apg": 5.8,
+        "bpg": null,
+        "fg_pct": 39.9,
+        "ft_pct": 76.9,
+        "games": 64,
+        "ppg": 16.1,
+        "rpg": 5.8,
+        "spg": null,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 6.7,
+        "bpg": null,
+        "fg_pct": 43.2,
+        "ft_pct": 77.4,
+        "games": 1077,
+        "ppg": 16.5,
+        "rpg": 4.7,
+        "spg": null,
+        "three_pct": null
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/78530/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "wilkins-dominique",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wilkins-dominique.webp",
+      "name": "Dominique Wilkins",
+      "playoffs": {
+        "apg": 2.6,
+        "bpg": 0.6,
+        "fg_pct": 42.9,
+        "ft_pct": 82.4,
+        "games": 56,
+        "ppg": 25.4,
+        "rpg": 6.7,
+        "spg": 1.3,
+        "three_pct": 28.1
+      },
+      "regular_season": {
+        "apg": 2.5,
+        "bpg": 0.6,
+        "fg_pct": 46.1,
+        "ft_pct": 81.1,
+        "games": 1074,
+        "ppg": 24.8,
+        "rpg": 6.7,
+        "spg": 1.3,
+        "three_pct": 31.9
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1122/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 3,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "worthy-james",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/worthy-james.webp",
+      "name": "James Worthy",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": 0.7,
+        "fg_pct": 54.4,
+        "ft_pct": 72.7,
+        "games": 143,
+        "ppg": 21.1,
+        "rpg": 5.2,
+        "spg": 1.2,
+        "three_pct": 20.9
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": 0.7,
+        "fg_pct": 52.1,
+        "ft_pct": 76.9,
+        "games": 926,
+        "ppg": 17.6,
+        "rpg": 5.1,
+        "spg": 1.1,
+        "three_pct": 24.1
+      },
+      "seasons": 12,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1460/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 8,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 3
+      },
+      "id": "jokic-nikola",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jokic-nikola.webp",
+      "name": "Nikola Jokić",
+      "playoffs": {
+        "apg": 7.7,
+        "bpg": 0.9,
+        "fg_pct": 52.0,
+        "ft_pct": 83.3,
+        "games": 100,
+        "ppg": 27.4,
+        "rpg": 12.4,
+        "spg": 1.2,
+        "three_pct": 37.3
+      },
+      "regular_season": {
+        "apg": 7.5,
+        "bpg": 0.7,
+        "fg_pct": 56.1,
+        "ft_pct": 82.5,
+        "games": 810,
+        "ppg": 22.2,
+        "rpg": 11.1,
+        "spg": 1.3,
+        "three_pct": 36.2
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203999/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 1
+      },
+      "id": "embiid-joel",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/embiid-joel.webp",
+      "name": "Joel Embiid",
+      "playoffs": {
+        "apg": 3.3,
+        "bpg": 1.6,
+        "fg_pct": 45.9,
+        "ft_pct": 82.8,
+        "games": 66,
+        "ppg": 24.8,
+        "rpg": 10.5,
+        "spg": 0.8,
+        "three_pct": 27.7
+      },
+      "regular_season": {
+        "apg": 3.7,
+        "bpg": 1.6,
+        "fg_pct": 50.0,
+        "ft_pct": 83.0,
+        "games": 490,
+        "ppg": 27.6,
+        "rpg": 10.8,
+        "spg": 0.9,
+        "three_pct": 33.9
+      },
+      "seasons": 10,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203954/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 2
+      },
+      "id": "gilgeous-alexander-shai",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gilgeous-alexander-shai.webp",
+      "name": "Shai Gilgeous-Alexander",
+      "playoffs": {
+        "apg": 6.2,
+        "bpg": 1.0,
+        "fg_pct": 46.7,
+        "ft_pct": 86.9,
+        "games": 61,
+        "ppg": 26.2,
+        "rpg": 4.8,
+        "spg": 1.4,
+        "three_pct": 34.0
+      },
+      "regular_season": {
+        "apg": 5.3,
+        "bpg": 0.8,
+        "fg_pct": 50.8,
+        "ft_pct": 86.4,
+        "games": 530,
+        "ppg": 25.3,
+        "rpg": 4.7,
+        "spg": 1.4,
+        "three_pct": 36.0
+      },
+      "seasons": 8,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1628983/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 6,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "doncic-luka",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/doncic-luka.webp",
+      "name": "Luka Dončić",
+      "playoffs": {
+        "apg": 7.8,
+        "bpg": 0.5,
+        "fg_pct": 46.1,
+        "ft_pct": 73.7,
+        "games": 55,
+        "ppg": 30.9,
+        "rpg": 9.2,
+        "spg": 1.6,
+        "three_pct": 34.7
+      },
+      "regular_season": {
+        "apg": 8.2,
+        "bpg": 0.5,
+        "fg_pct": 46.9,
+        "ft_pct": 75.5,
+        "games": 514,
+        "ppg": 29.2,
+        "rpg": 8.5,
+        "spg": 1.3,
+        "three_pct": 35.2
+      },
+      "seasons": 8,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1629029/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "tatum-jayson",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/tatum-jayson.webp",
+      "name": "Jayson Tatum",
+      "playoffs": {
+        "apg": 5.0,
+        "bpg": 0.8,
+        "fg_pct": 44.0,
+        "ft_pct": 83.9,
+        "games": 127,
+        "ppg": 24.2,
+        "rpg": 8.3,
+        "spg": 1.2,
+        "three_pct": 34.9
+      },
+      "regular_season": {
+        "apg": 3.9,
+        "bpg": 0.6,
+        "fg_pct": 45.8,
+        "ft_pct": 83.9,
+        "games": 601,
+        "ppg": 23.5,
+        "rpg": 7.4,
+        "spg": 1.1,
+        "three_pct": 36.8
+      },
+      "seasons": 9,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1628369/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2020s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "booker-devin",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/booker-devin.webp",
+      "name": "Devin Booker",
+      "playoffs": {
+        "apg": 5.2,
+        "bpg": 0.4,
+        "fg_pct": 48.4,
+        "ft_pct": 89.0,
+        "games": 51,
+        "ppg": 27.5,
+        "rpg": 5.0,
+        "spg": 1.0,
+        "three_pct": 38.0
+      },
+      "regular_season": {
+        "apg": 5.3,
+        "bpg": 0.3,
+        "fg_pct": 46.3,
+        "ft_pct": 87.3,
+        "games": 737,
+        "ppg": 24.6,
+        "rpg": 4.0,
+        "spg": 0.9,
+        "three_pct": 35.2
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1626164/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 1,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "irving-kyrie",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/irving-kyrie.webp",
+      "name": "Kyrie Irving",
+      "playoffs": {
+        "apg": 4.9,
+        "bpg": 0.6,
+        "fg_pct": 45.8,
+        "ft_pct": 88.3,
+        "games": 96,
+        "ppg": 23.0,
+        "rpg": 3.7,
+        "spg": 1.3,
+        "three_pct": 39.2
+      },
+      "regular_season": {
+        "apg": 5.6,
+        "bpg": 0.4,
+        "fg_pct": 47.4,
+        "ft_pct": 88.8,
+        "games": 779,
+        "ppg": 23.7,
+        "rpg": 4.1,
+        "spg": 1.3,
+        "three_pct": 39.4
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/202681/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 4,
+        "dpoy": 1,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "green-draymond",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/green-draymond.webp",
+      "name": "Draymond Green",
+      "playoffs": {
+        "apg": 6.0,
+        "bpg": 1.3,
+        "fg_pct": 44.5,
+        "ft_pct": 72.6,
+        "games": 169,
+        "ppg": 11.4,
+        "rpg": 8.6,
+        "spg": 1.5,
+        "three_pct": 30.0
+      },
+      "regular_season": {
+        "apg": 5.6,
+        "bpg": 1.0,
+        "fg_pct": 44.7,
+        "ft_pct": 71.0,
+        "games": 949,
+        "ppg": 8.7,
+        "rpg": 6.8,
+        "spg": 1.3,
+        "three_pct": 32.1
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/203110/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "thompson-klay",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thompson-klay.webp",
+      "name": "Klay Thompson",
+      "playoffs": {
+        "apg": 2.2,
+        "bpg": 0.5,
+        "fg_pct": 43.6,
+        "ft_pct": 84.5,
+        "games": 158,
+        "ppg": 19.2,
+        "rpg": 4.0,
+        "spg": 0.9,
+        "three_pct": 40.5
+      },
+      "regular_season": {
+        "apg": 2.2,
+        "bpg": 0.5,
+        "fg_pct": 44.8,
+        "ft_pct": 85.8,
+        "games": 934,
+        "ppg": 18.6,
+        "rpg": 3.4,
+        "spg": 0.8,
+        "three_pct": 40.9
+      },
+      "seasons": 13,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/202691/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2010s",
+      "honors": {
+        "all_nba": 8,
+        "championships": 1,
+        "dpoy": 3,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "howard-dwight",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/howard-dwight.webp",
+      "name": "Dwight Howard",
+      "playoffs": {
+        "apg": 1.2,
+        "bpg": 2.0,
+        "fg_pct": 58.9,
+        "ft_pct": 54.8,
+        "games": 125,
+        "ppg": 15.3,
+        "rpg": 11.8,
+        "spg": 0.8,
+        "three_pct": 14.3
+      },
+      "regular_season": {
+        "apg": 1.3,
+        "bpg": 1.8,
+        "fg_pct": 58.7,
+        "ft_pct": 56.7,
+        "games": 1242,
+        "ppg": 15.7,
+        "rpg": 11.8,
+        "spg": 0.9,
+        "three_pct": 21.4
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2730/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 2,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "gasol-pau",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gasol-pau.webp",
+      "name": "Pau Gasol",
+      "playoffs": {
+        "apg": 3.2,
+        "bpg": 1.7,
+        "fg_pct": 50.7,
+        "ft_pct": 74.1,
+        "games": 136,
+        "ppg": 15.4,
+        "rpg": 9.2,
+        "spg": 0.5,
+        "three_pct": 29.7
+      },
+      "regular_season": {
+        "apg": 3.2,
+        "bpg": 1.6,
+        "fg_pct": 50.7,
+        "ft_pct": 75.3,
+        "games": 1226,
+        "ppg": 17.0,
+        "rpg": 9.2,
+        "spg": 0.5,
+        "three_pct": 36.8
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2200/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 1,
+        "mvp": 0
+      },
+      "id": "parker-tony",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/parker-tony.webp",
+      "name": "Tony Parker",
+      "playoffs": {
+        "apg": 5.1,
+        "bpg": 0.1,
+        "fg_pct": 46.1,
+        "ft_pct": 73.1,
+        "games": 226,
+        "ppg": 17.9,
+        "rpg": 2.9,
+        "spg": 0.9,
+        "three_pct": 30.9
+      },
+      "regular_season": {
+        "apg": 5.6,
+        "bpg": 0.1,
+        "fg_pct": 49.1,
+        "ft_pct": 75.1,
+        "games": 1254,
+        "ppg": 15.5,
+        "rpg": 2.7,
+        "spg": 0.8,
+        "three_pct": 32.4
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/2225/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 4,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "ginobili-manu",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/ginobili-manu.webp",
+      "name": "Manu Ginóbili",
+      "playoffs": {
+        "apg": 3.8,
+        "bpg": 0.3,
+        "fg_pct": 43.3,
+        "ft_pct": 81.7,
+        "games": 218,
+        "ppg": 14.0,
+        "rpg": 4.0,
+        "spg": 1.3,
+        "three_pct": 35.8
+      },
+      "regular_season": {
+        "apg": 3.8,
+        "bpg": 0.3,
+        "fg_pct": 44.7,
+        "ft_pct": 82.7,
+        "games": 1057,
+        "ppg": 13.3,
+        "rpg": 3.5,
+        "spg": 1.3,
+        "three_pct": 36.9
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1938/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "carter-vince",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/carter-vince.webp",
+      "name": "Vince Carter",
+      "playoffs": {
+        "apg": 3.4,
+        "bpg": 0.5,
+        "fg_pct": 41.6,
+        "ft_pct": 79.6,
+        "games": 88,
+        "ppg": 18.1,
+        "rpg": 5.4,
+        "spg": 1.1,
+        "three_pct": 33.8
+      },
+      "regular_season": {
+        "apg": 3.1,
+        "bpg": 0.6,
+        "fg_pct": 43.5,
+        "ft_pct": 79.8,
+        "games": 1541,
+        "ppg": 16.7,
+        "rpg": 4.3,
+        "spg": 1.0,
+        "three_pct": 37.1
+      },
+      "seasons": 22,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1713/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 7,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "mcgrady-tracy",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mcgrady-tracy.webp",
+      "name": "Tracy McGrady",
+      "playoffs": {
+        "apg": 5.0,
+        "bpg": 0.9,
+        "fg_pct": 42.6,
+        "ft_pct": 75.7,
+        "games": 50,
+        "ppg": 22.2,
+        "rpg": 5.7,
+        "spg": 1.1,
+        "three_pct": 29.0
+      },
+      "regular_season": {
+        "apg": 4.4,
+        "bpg": 0.9,
+        "fg_pct": 43.5,
+        "ft_pct": 74.6,
+        "games": 938,
+        "ppg": 19.6,
+        "rpg": 5.6,
+        "spg": 1.2,
+        "three_pct": 33.8
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1503/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "english-alex",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/english-alex.webp",
+      "name": "Alex English",
+      "playoffs": {
+        "apg": 4.3,
+        "bpg": 0.5,
+        "fg_pct": 50.3,
+        "ft_pct": 86.2,
+        "games": 68,
+        "ppg": 24.4,
+        "rpg": 5.5,
+        "spg": 0.7,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.6,
+        "bpg": 0.7,
+        "fg_pct": 50.7,
+        "ft_pct": 83.2,
+        "games": 1193,
+        "ppg": 21.5,
+        "rpg": 5.5,
+        "spg": 0.9,
+        "three_pct": 21.7
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76673/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 0,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "gilmore-artis",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gilmore-artis.webp",
+      "name": "Artis Gilmore",
+      "playoffs": {
+        "apg": 1.1,
+        "bpg": 1.7,
+        "fg_pct": 56.8,
+        "ft_pct": 68.0,
+        "games": 42,
+        "ppg": 11.7,
+        "rpg": 8.0,
+        "spg": 0.6,
+        "three_pct": null
+      },
+      "regular_season": {
+        "apg": 2.0,
+        "bpg": 1.9,
+        "fg_pct": 59.9,
+        "ft_pct": 71.3,
+        "games": 909,
+        "ppg": 17.1,
+        "rpg": 10.1,
+        "spg": 0.5,
+        "three_pct": 7.7
+      },
+      "seasons": 12,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/600014/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 4,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "king-bernard",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/king-bernard.webp",
+      "name": "Bernard King",
+      "playoffs": {
+        "apg": 2.3,
+        "bpg": 0.2,
+        "fg_pct": 55.9,
+        "ft_pct": 72.9,
+        "games": 28,
+        "ppg": 24.5,
+        "rpg": 4.3,
+        "spg": 0.9,
+        "three_pct": 25.0
+      },
+      "regular_season": {
+        "apg": 3.3,
+        "bpg": 0.3,
+        "fg_pct": 51.8,
+        "ft_pct": 73.0,
+        "games": 874,
+        "ppg": 22.5,
+        "rpg": 5.8,
+        "spg": 1.0,
+        "three_pct": 17.2
+      },
+      "seasons": 14,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77264/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 2,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "dantley-adrian",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/dantley-adrian.webp",
+      "name": "Adrian Dantley",
+      "playoffs": {
+        "apg": 2.3,
+        "bpg": 0.1,
+        "fg_pct": 52.5,
+        "ft_pct": 79.6,
+        "games": 73,
+        "ppg": 21.3,
+        "rpg": 5.4,
+        "spg": 0.9,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 3.0,
+        "bpg": 0.2,
+        "fg_pct": 54.0,
+        "ft_pct": 81.8,
+        "games": 955,
+        "ppg": 24.3,
+        "rpg": 5.7,
+        "spg": 1.0,
+        "three_pct": 17.1
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/76504/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 3,
+        "championships": 0,
+        "dpoy": 4,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "mutombo-dikembe",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mutombo-dikembe.webp",
+      "name": "Dikembe Mutombo",
+      "playoffs": {
+        "apg": 0.8,
+        "bpg": 2.5,
+        "fg_pct": 51.7,
+        "ft_pct": 70.3,
+        "games": 101,
+        "ppg": 9.1,
+        "rpg": 9.5,
+        "spg": 0.4,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 1.0,
+        "bpg": 2.8,
+        "fg_pct": 51.8,
+        "ft_pct": 68.4,
+        "games": 1196,
+        "ppg": 9.8,
+        "rpg": 10.3,
+        "spg": 0.4,
+        "three_pct": 0.0
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/87/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 1,
+        "dpoy": 4,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "wallace-ben",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wallace-ben.webp",
+      "name": "Ben Wallace",
+      "playoffs": {
+        "apg": 1.3,
+        "bpg": 1.9,
+        "fg_pct": 48.2,
+        "ft_pct": 41.8,
+        "games": 130,
+        "ppg": 7.2,
+        "rpg": 11.2,
+        "spg": 1.5,
+        "three_pct": 0.0
+      },
+      "regular_season": {
+        "apg": 1.3,
+        "bpg": 2.0,
+        "fg_pct": 47.4,
+        "ft_pct": 41.4,
+        "games": 1088,
+        "ppg": 5.7,
+        "rpg": 9.6,
+        "spg": 1.3,
+        "three_pct": 13.7
+      },
+      "seasons": 16,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/1112/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1980s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 0,
+        "dpoy": 2,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "moncrief-sidney",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/moncrief-sidney.webp",
+      "name": "Sidney Moncrief",
+      "playoffs": {
+        "apg": 3.4,
+        "bpg": 0.4,
+        "fg_pct": 47.5,
+        "ft_pct": 81.1,
+        "games": 93,
+        "ppg": 16.0,
+        "rpg": 5.0,
+        "spg": 1.1,
+        "three_pct": 29.3
+      },
+      "regular_season": {
+        "apg": 3.6,
+        "bpg": 0.3,
+        "fg_pct": 50.2,
+        "ft_pct": 83.1,
+        "games": 767,
+        "ppg": 15.6,
+        "rpg": 4.7,
+        "spg": 1.2,
+        "three_pct": 28.4
+      },
+      "seasons": 11,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/77626/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "2000s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "webber-chris",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/webber-chris.webp",
+      "name": "Chris Webber",
+      "playoffs": {
+        "apg": 3.6,
+        "bpg": 1.1,
+        "fg_pct": 46.4,
+        "ft_pct": 61.1,
+        "games": 80,
+        "ppg": 18.7,
+        "rpg": 8.7,
+        "spg": 1.1,
+        "three_pct": 26.9
+      },
+      "regular_season": {
+        "apg": 4.2,
+        "bpg": 1.4,
+        "fg_pct": 47.9,
+        "ft_pct": 64.9,
+        "games": 831,
+        "ppg": 20.7,
+        "rpg": 9.8,
+        "spg": 1.4,
+        "three_pct": 29.9
+      },
+      "seasons": 15,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/185/awards"
+    },
+    {
+      "as_of": "2026-06-30",
+      "era": "1990s",
+      "honors": {
+        "all_nba": 5,
+        "championships": 0,
+        "dpoy": 0,
+        "finals_mvp": 0,
+        "mvp": 0
+      },
+      "id": "hill-grant",
+      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/hill-grant.webp",
+      "name": "Grant Hill",
+      "playoffs": {
+        "apg": 3.6,
+        "bpg": 0.5,
+        "fg_pct": 46.9,
+        "ft_pct": 78.1,
+        "games": 39,
+        "ppg": 13.4,
+        "rpg": 6.1,
+        "spg": 0.9,
+        "three_pct": 23.8
+      },
+      "regular_season": {
+        "apg": 4.1,
+        "bpg": 0.6,
+        "fg_pct": 48.3,
+        "ft_pct": 76.9,
+        "games": 1026,
+        "ppg": 16.7,
+        "rpg": 6.0,
+        "spg": 1.2,
+        "three_pct": 31.4
+      },
+      "seasons": 18,
+      "source_note": "NBA.com provider record; awards audited at https://www.nba.com/stats/player/255/awards"
+    }
+  ],
+  "sources": [
+    "NBA.com provider export.",
+    "Awards audited against official NBA records."
+  ]
+}
