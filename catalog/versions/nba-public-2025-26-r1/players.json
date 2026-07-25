@@ -13,7 +13,7 @@
         "mvp": 6
       },
       "id": "abdul-jabbar-kareem",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/abdul-jabbar-kareem.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/abdul-jabbar-kareem.webp",
       "name": "Kareem Abdul-Jabbar",
       "playoffs": {
         "apg": 3.2,
@@ -51,7 +51,7 @@
         "mvp": 0
       },
       "id": "allen-ray",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/allen-ray.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/allen-ray.webp",
       "name": "Ray Allen",
       "playoffs": {
         "apg": 2.6,
@@ -89,7 +89,7 @@
         "mvp": 2
       },
       "id": "antetokounmpo-giannis",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/antetokounmpo-giannis.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/antetokounmpo-giannis.webp",
       "name": "Giannis Antetokounmpo",
       "playoffs": {
         "apg": 5.3,
@@ -127,7 +127,7 @@
         "mvp": 0
       },
       "id": "anthony-carmelo",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/anthony-carmelo.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/anthony-carmelo.webp",
       "name": "Carmelo Anthony",
       "playoffs": {
         "apg": 2.5,
@@ -165,7 +165,7 @@
         "mvp": 0
       },
       "id": "archibald-nate",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/archibald-nate.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/archibald-nate.webp",
       "name": "Nate Archibald",
       "playoffs": {
         "apg": 6.5,
@@ -203,7 +203,7 @@
         "mvp": 0
       },
       "id": "arizin-paul",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/arizin-paul.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/arizin-paul.webp",
       "name": "Paul Arizin",
       "playoffs": {
         "apg": 2.6,
@@ -241,7 +241,7 @@
         "mvp": 1
       },
       "id": "barkley-charles",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/barkley-charles.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/barkley-charles.webp",
       "name": "Charles Barkley",
       "playoffs": {
         "apg": 3.9,
@@ -279,7 +279,7 @@
         "mvp": 0
       },
       "id": "barry-rick",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/barry-rick.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/barry-rick.webp",
       "name": "Rick Barry",
       "playoffs": {
         "apg": 4.6,
@@ -317,7 +317,7 @@
         "mvp": 0
       },
       "id": "baylor-elgin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/baylor-elgin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/baylor-elgin.webp",
       "name": "Elgin Baylor",
       "playoffs": {
         "apg": 4.0,
@@ -355,7 +355,7 @@
         "mvp": 0
       },
       "id": "bing-dave",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bing-dave.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/bing-dave.webp",
       "name": "Dave Bing",
       "playoffs": {
         "apg": 4.3,
@@ -393,7 +393,7 @@
         "mvp": 3
       },
       "id": "bird-larry",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bird-larry.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/bird-larry.webp",
       "name": "Larry Bird",
       "playoffs": {
         "apg": 6.5,
@@ -431,7 +431,7 @@
         "mvp": 1
       },
       "id": "bryant-kobe",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/bryant-kobe.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/bryant-kobe.webp",
       "name": "Kobe Bryant",
       "playoffs": {
         "apg": 4.7,
@@ -469,7 +469,7 @@
         "mvp": 4
       },
       "id": "chamberlain-wilt",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/chamberlain-wilt.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/chamberlain-wilt.webp",
       "name": "Wilt Chamberlain",
       "playoffs": {
         "apg": 4.2,
@@ -507,7 +507,7 @@
         "mvp": 1
       },
       "id": "cousy-bob",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cousy-bob.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/cousy-bob.webp",
       "name": "Bob Cousy",
       "playoffs": {
         "apg": 8.6,
@@ -545,7 +545,7 @@
         "mvp": 1
       },
       "id": "cowens-dave",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cowens-dave.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/cowens-dave.webp",
       "name": "Dave Cowens",
       "playoffs": {
         "apg": 3.7,
@@ -583,7 +583,7 @@
         "mvp": 0
       },
       "id": "cunningham-billy",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/cunningham-billy.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/cunningham-billy.webp",
       "name": "Billy Cunningham",
       "playoffs": {
         "apg": 3.2,
@@ -621,7 +621,7 @@
         "mvp": 2
       },
       "id": "curry-stephen",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/curry-stephen.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/curry-stephen.webp",
       "name": "Stephen Curry",
       "playoffs": {
         "apg": 6.1,
@@ -659,7 +659,7 @@
         "mvp": 0
       },
       "id": "davis-anthony",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/davis-anthony.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/davis-anthony.webp",
       "name": "Anthony Davis",
       "playoffs": {
         "apg": 2.8,
@@ -697,7 +697,7 @@
         "mvp": 0
       },
       "id": "debusschere-dave",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/debusschere-dave.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/debusschere-dave.webp",
       "name": "Dave DeBusschere",
       "playoffs": {
         "apg": 2.6,
@@ -735,7 +735,7 @@
         "mvp": 0
       },
       "id": "drexler-clyde",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/drexler-clyde.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/drexler-clyde.webp",
       "name": "Clyde Drexler",
       "playoffs": {
         "apg": 6.1,
@@ -773,7 +773,7 @@
         "mvp": 2
       },
       "id": "duncan-tim",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/duncan-tim.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/duncan-tim.webp",
       "name": "Tim Duncan",
       "playoffs": {
         "apg": 3.0,
@@ -811,7 +811,7 @@
         "mvp": 1
       },
       "id": "durant-kevin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/durant-kevin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/durant-kevin.webp",
       "name": "Kevin Durant",
       "playoffs": {
         "apg": 4.2,
@@ -849,7 +849,7 @@
         "mvp": 1
       },
       "id": "erving-julius",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/erving-julius.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/erving-julius.webp",
       "name": "Julius Erving",
       "playoffs": {
         "apg": 4.2,
@@ -887,7 +887,7 @@
         "mvp": 0
       },
       "id": "ewing-patrick",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/ewing-patrick.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/ewing-patrick.webp",
       "name": "Patrick Ewing",
       "playoffs": {
         "apg": 2.0,
@@ -925,7 +925,7 @@
         "mvp": 0
       },
       "id": "frazier-walt",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/frazier-walt.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/frazier-walt.webp",
       "name": "Walt Frazier",
       "playoffs": {
         "apg": 6.4,
@@ -963,7 +963,7 @@
         "mvp": 1
       },
       "id": "garnett-kevin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/garnett-kevin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/garnett-kevin.webp",
       "name": "Kevin Garnett",
       "playoffs": {
         "apg": 3.3,
@@ -1001,7 +1001,7 @@
         "mvp": 0
       },
       "id": "gervin-george",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gervin-george.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/gervin-george.webp",
       "name": "George Gervin",
       "playoffs": {
         "apg": 3.2,
@@ -1039,7 +1039,7 @@
         "mvp": 0
       },
       "id": "greer-hal",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/greer-hal.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/greer-hal.webp",
       "name": "Hal Greer",
       "playoffs": {
         "apg": 4.3,
@@ -1077,7 +1077,7 @@
         "mvp": 1
       },
       "id": "harden-james",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/harden-james.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/harden-james.webp",
       "name": "James Harden",
       "playoffs": {
         "apg": 6.4,
@@ -1115,7 +1115,7 @@
         "mvp": 0
       },
       "id": "havlicek-john",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/havlicek-john.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/havlicek-john.webp",
       "name": "John Havlicek",
       "playoffs": {
         "apg": 4.8,
@@ -1153,7 +1153,7 @@
         "mvp": 0
       },
       "id": "hayes-elvin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/hayes-elvin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/hayes-elvin.webp",
       "name": "Elvin Hayes",
       "playoffs": {
         "apg": 1.9,
@@ -1191,7 +1191,7 @@
         "mvp": 4
       },
       "id": "james-lebron",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/james-lebron.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/james-lebron.webp",
       "name": "LeBron James",
       "playoffs": {
         "apg": 7.2,
@@ -1229,7 +1229,7 @@
         "mvp": 3
       },
       "id": "johnson-magic",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/johnson-magic.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/johnson-magic.webp",
       "name": "Magic Johnson",
       "playoffs": {
         "apg": 12.3,
@@ -1267,7 +1267,7 @@
         "mvp": 0
       },
       "id": "jones-sam",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jones-sam.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/jones-sam.webp",
       "name": "Sam Jones",
       "playoffs": {
         "apg": 2.3,
@@ -1305,7 +1305,7 @@
         "mvp": 5
       },
       "id": "jordan-michael",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jordan-michael.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/jordan-michael.webp",
       "name": "Michael Jordan",
       "playoffs": {
         "apg": 5.7,
@@ -1343,7 +1343,7 @@
         "mvp": 0
       },
       "id": "kidd-jason",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/kidd-jason.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/kidd-jason.webp",
       "name": "Jason Kidd",
       "playoffs": {
         "apg": 8.0,
@@ -1381,7 +1381,7 @@
         "mvp": 1
       },
       "id": "iverson-allen",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/iverson-allen.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/iverson-allen.webp",
       "name": "Allen Iverson",
       "playoffs": {
         "apg": 6.0,
@@ -1419,7 +1419,7 @@
         "mvp": 0
       },
       "id": "leonard-kawhi",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/leonard-kawhi.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/leonard-kawhi.webp",
       "name": "Kawhi Leonard",
       "playoffs": {
         "apg": 3.0,
@@ -1457,7 +1457,7 @@
         "mvp": 0
       },
       "id": "lillard-damian",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/lillard-damian.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/lillard-damian.webp",
       "name": "Damian Lillard",
       "playoffs": {
         "apg": 6.1,
@@ -1495,7 +1495,7 @@
         "mvp": 0
       },
       "id": "lucas-jerry",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/lucas-jerry.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/lucas-jerry.webp",
       "name": "Jerry Lucas",
       "playoffs": {
         "apg": 3.0,
@@ -1533,7 +1533,7 @@
         "mvp": 2
       },
       "id": "malone-karl",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/malone-karl.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/malone-karl.webp",
       "name": "Karl Malone",
       "playoffs": {
         "apg": 3.2,
@@ -1571,7 +1571,7 @@
         "mvp": 3
       },
       "id": "malone-moses",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/malone-moses.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/malone-moses.webp",
       "name": "Moses Malone",
       "playoffs": {
         "apg": 1.4,
@@ -1609,7 +1609,7 @@
         "mvp": 0
       },
       "id": "maravich-pete",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/maravich-pete.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/maravich-pete.webp",
       "name": "Pete Maravich",
       "playoffs": {
         "apg": 3.8,
@@ -1647,7 +1647,7 @@
         "mvp": 1
       },
       "id": "mcadoo-bob",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mcadoo-bob.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/mcadoo-bob.webp",
       "name": "Bob McAdoo",
       "playoffs": {
         "apg": 1.4,
@@ -1685,7 +1685,7 @@
         "mvp": 0
       },
       "id": "mchale-kevin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mchale-kevin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/mchale-kevin.webp",
       "name": "Kevin McHale",
       "playoffs": {
         "apg": 1.6,
@@ -1723,7 +1723,7 @@
         "mvp": 0
       },
       "id": "mikan-george",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mikan-george.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/mikan-george.webp",
       "name": "George Mikan",
       "playoffs": {
         "apg": 2.2,
@@ -1761,7 +1761,7 @@
         "mvp": 0
       },
       "id": "miller-reggie",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/miller-reggie.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/miller-reggie.webp",
       "name": "Reggie Miller",
       "playoffs": {
         "apg": 2.5,
@@ -1799,7 +1799,7 @@
         "mvp": 0
       },
       "id": "monroe-earl",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/monroe-earl.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/monroe-earl.webp",
       "name": "Earl Monroe",
       "playoffs": {
         "apg": 3.2,
@@ -1837,7 +1837,7 @@
         "mvp": 2
       },
       "id": "nash-steve",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/nash-steve.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/nash-steve.webp",
       "name": "Steve Nash",
       "playoffs": {
         "apg": 8.8,
@@ -1875,7 +1875,7 @@
         "mvp": 1
       },
       "id": "nowitzki-dirk",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/nowitzki-dirk.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/nowitzki-dirk.webp",
       "name": "Dirk Nowitzki",
       "playoffs": {
         "apg": 2.5,
@@ -1913,7 +1913,7 @@
         "mvp": 1
       },
       "id": "oneal-shaquille",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/oneal-shaquille.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/oneal-shaquille.webp",
       "name": "Shaquille O’Neal",
       "playoffs": {
         "apg": 2.7,
@@ -1951,7 +1951,7 @@
         "mvp": 1
       },
       "id": "olajuwon-hakeem",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/olajuwon-hakeem.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/olajuwon-hakeem.webp",
       "name": "Hakeem Olajuwon",
       "playoffs": {
         "apg": 3.2,
@@ -1989,7 +1989,7 @@
         "mvp": 0
       },
       "id": "parish-robert",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/parish-robert.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/parish-robert.webp",
       "name": "Robert Parish",
       "playoffs": {
         "apg": 1.3,
@@ -2027,7 +2027,7 @@
         "mvp": 0
       },
       "id": "paul-chris",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/paul-chris.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/paul-chris.webp",
       "name": "Chris Paul",
       "playoffs": {
         "apg": 8.3,
@@ -2065,7 +2065,7 @@
         "mvp": 0
       },
       "id": "payton-gary",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/payton-gary.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/payton-gary.webp",
       "name": "Gary Payton",
       "playoffs": {
         "apg": 5.3,
@@ -2103,7 +2103,7 @@
         "mvp": 2
       },
       "id": "pettit-bob",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pettit-bob.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/pettit-bob.webp",
       "name": "Bob Pettit",
       "playoffs": {
         "apg": 2.7,
@@ -2141,7 +2141,7 @@
         "mvp": 0
       },
       "id": "pierce-paul",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pierce-paul.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/pierce-paul.webp",
       "name": "Paul Pierce",
       "playoffs": {
         "apg": 3.4,
@@ -2179,7 +2179,7 @@
         "mvp": 0
       },
       "id": "pippen-scottie",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/pippen-scottie.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/pippen-scottie.webp",
       "name": "Scottie Pippen",
       "playoffs": {
         "apg": 5.0,
@@ -2217,7 +2217,7 @@
         "mvp": 1
       },
       "id": "reed-willis",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/reed-willis.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/reed-willis.webp",
       "name": "Willis Reed",
       "playoffs": {
         "apg": 1.9,
@@ -2255,7 +2255,7 @@
         "mvp": 1
       },
       "id": "robertson-oscar",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/robertson-oscar.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/robertson-oscar.webp",
       "name": "Oscar Robertson",
       "playoffs": {
         "apg": 8.9,
@@ -2293,7 +2293,7 @@
         "mvp": 1
       },
       "id": "robinson-david",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/robinson-david.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/robinson-david.webp",
       "name": "David Robinson",
       "playoffs": {
         "apg": 2.3,
@@ -2331,7 +2331,7 @@
         "mvp": 0
       },
       "id": "rodman-dennis",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/rodman-dennis.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/rodman-dennis.webp",
       "name": "Dennis Rodman",
       "playoffs": {
         "apg": 1.2,
@@ -2369,7 +2369,7 @@
         "mvp": 5
       },
       "id": "russell-bill",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/russell-bill.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/russell-bill.webp",
       "name": "Bill Russell",
       "playoffs": {
         "apg": 4.7,
@@ -2407,7 +2407,7 @@
         "mvp": 0
       },
       "id": "schayes-dolph",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/schayes-dolph.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/schayes-dolph.webp",
       "name": "Dolph Schayes",
       "playoffs": {
         "apg": 2.6,
@@ -2445,7 +2445,7 @@
         "mvp": 0
       },
       "id": "sharman-bill",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/sharman-bill.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/sharman-bill.webp",
       "name": "Bill Sharman",
       "playoffs": {
         "apg": 2.6,
@@ -2483,7 +2483,7 @@
         "mvp": 0
       },
       "id": "stockton-john",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/stockton-john.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/stockton-john.webp",
       "name": "John Stockton",
       "playoffs": {
         "apg": 10.1,
@@ -2521,7 +2521,7 @@
         "mvp": 0
       },
       "id": "thomas-isiah",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thomas-isiah.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/thomas-isiah.webp",
       "name": "Isiah Thomas",
       "playoffs": {
         "apg": 8.9,
@@ -2559,7 +2559,7 @@
         "mvp": 0
       },
       "id": "thurmond-nate",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thurmond-nate.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/thurmond-nate.webp",
       "name": "Nate Thurmond",
       "playoffs": {
         "apg": 2.8,
@@ -2597,7 +2597,7 @@
         "mvp": 1
       },
       "id": "unseld-wes",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/unseld-wes.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/unseld-wes.webp",
       "name": "Wes Unseld",
       "playoffs": {
         "apg": 3.8,
@@ -2635,7 +2635,7 @@
         "mvp": 0
       },
       "id": "wade-dwyane",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wade-dwyane.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/wade-dwyane.webp",
       "name": "Dwyane Wade",
       "playoffs": {
         "apg": 4.9,
@@ -2673,7 +2673,7 @@
         "mvp": 1
       },
       "id": "walton-bill",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/walton-bill.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/walton-bill.webp",
       "name": "Bill Walton",
       "playoffs": {
         "apg": 3.0,
@@ -2711,7 +2711,7 @@
         "mvp": 0
       },
       "id": "west-jerry",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/west-jerry.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/west-jerry.webp",
       "name": "Jerry West",
       "playoffs": {
         "apg": 6.3,
@@ -2749,7 +2749,7 @@
         "mvp": 1
       },
       "id": "westbrook-russell",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/westbrook-russell.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/westbrook-russell.webp",
       "name": "Russell Westbrook",
       "playoffs": {
         "apg": 7.1,
@@ -2787,7 +2787,7 @@
         "mvp": 0
       },
       "id": "wilkens-lenny",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wilkens-lenny.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/wilkens-lenny.webp",
       "name": "Lenny Wilkens",
       "playoffs": {
         "apg": 5.8,
@@ -2825,7 +2825,7 @@
         "mvp": 0
       },
       "id": "wilkins-dominique",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wilkins-dominique.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/wilkins-dominique.webp",
       "name": "Dominique Wilkins",
       "playoffs": {
         "apg": 2.6,
@@ -2863,7 +2863,7 @@
         "mvp": 0
       },
       "id": "worthy-james",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/worthy-james.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/worthy-james.webp",
       "name": "James Worthy",
       "playoffs": {
         "apg": 3.2,
@@ -2901,7 +2901,7 @@
         "mvp": 3
       },
       "id": "jokic-nikola",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/jokic-nikola.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/jokic-nikola.webp",
       "name": "Nikola Jokić",
       "playoffs": {
         "apg": 7.7,
@@ -2939,7 +2939,7 @@
         "mvp": 1
       },
       "id": "embiid-joel",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/embiid-joel.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/embiid-joel.webp",
       "name": "Joel Embiid",
       "playoffs": {
         "apg": 3.3,
@@ -2977,7 +2977,7 @@
         "mvp": 2
       },
       "id": "gilgeous-alexander-shai",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gilgeous-alexander-shai.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/gilgeous-alexander-shai.webp",
       "name": "Shai Gilgeous-Alexander",
       "playoffs": {
         "apg": 6.2,
@@ -3015,7 +3015,7 @@
         "mvp": 0
       },
       "id": "doncic-luka",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/doncic-luka.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/doncic-luka.webp",
       "name": "Luka Dončić",
       "playoffs": {
         "apg": 7.8,
@@ -3053,7 +3053,7 @@
         "mvp": 0
       },
       "id": "tatum-jayson",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/tatum-jayson.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/tatum-jayson.webp",
       "name": "Jayson Tatum",
       "playoffs": {
         "apg": 5.0,
@@ -3091,7 +3091,7 @@
         "mvp": 0
       },
       "id": "booker-devin",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/booker-devin.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/booker-devin.webp",
       "name": "Devin Booker",
       "playoffs": {
         "apg": 5.2,
@@ -3129,7 +3129,7 @@
         "mvp": 0
       },
       "id": "irving-kyrie",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/irving-kyrie.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/irving-kyrie.webp",
       "name": "Kyrie Irving",
       "playoffs": {
         "apg": 4.9,
@@ -3167,7 +3167,7 @@
         "mvp": 0
       },
       "id": "green-draymond",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/green-draymond.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/green-draymond.webp",
       "name": "Draymond Green",
       "playoffs": {
         "apg": 6.0,
@@ -3205,7 +3205,7 @@
         "mvp": 0
       },
       "id": "thompson-klay",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/thompson-klay.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/thompson-klay.webp",
       "name": "Klay Thompson",
       "playoffs": {
         "apg": 2.2,
@@ -3243,7 +3243,7 @@
         "mvp": 0
       },
       "id": "howard-dwight",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/howard-dwight.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/howard-dwight.webp",
       "name": "Dwight Howard",
       "playoffs": {
         "apg": 1.2,
@@ -3281,7 +3281,7 @@
         "mvp": 0
       },
       "id": "gasol-pau",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gasol-pau.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/gasol-pau.webp",
       "name": "Pau Gasol",
       "playoffs": {
         "apg": 3.2,
@@ -3319,7 +3319,7 @@
         "mvp": 0
       },
       "id": "parker-tony",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/parker-tony.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/parker-tony.webp",
       "name": "Tony Parker",
       "playoffs": {
         "apg": 5.1,
@@ -3357,7 +3357,7 @@
         "mvp": 0
       },
       "id": "ginobili-manu",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/ginobili-manu.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/ginobili-manu.webp",
       "name": "Manu Ginóbili",
       "playoffs": {
         "apg": 3.8,
@@ -3395,7 +3395,7 @@
         "mvp": 0
       },
       "id": "carter-vince",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/carter-vince.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/carter-vince.webp",
       "name": "Vince Carter",
       "playoffs": {
         "apg": 3.4,
@@ -3433,7 +3433,7 @@
         "mvp": 0
       },
       "id": "mcgrady-tracy",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mcgrady-tracy.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/mcgrady-tracy.webp",
       "name": "Tracy McGrady",
       "playoffs": {
         "apg": 5.0,
@@ -3471,7 +3471,7 @@
         "mvp": 0
       },
       "id": "english-alex",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/english-alex.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/english-alex.webp",
       "name": "Alex English",
       "playoffs": {
         "apg": 4.3,
@@ -3509,7 +3509,7 @@
         "mvp": 0
       },
       "id": "gilmore-artis",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/gilmore-artis.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/gilmore-artis.webp",
       "name": "Artis Gilmore",
       "playoffs": {
         "apg": 1.1,
@@ -3547,7 +3547,7 @@
         "mvp": 0
       },
       "id": "king-bernard",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/king-bernard.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/king-bernard.webp",
       "name": "Bernard King",
       "playoffs": {
         "apg": 2.3,
@@ -3585,7 +3585,7 @@
         "mvp": 0
       },
       "id": "dantley-adrian",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/dantley-adrian.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/dantley-adrian.webp",
       "name": "Adrian Dantley",
       "playoffs": {
         "apg": 2.3,
@@ -3623,7 +3623,7 @@
         "mvp": 0
       },
       "id": "mutombo-dikembe",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/mutombo-dikembe.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/mutombo-dikembe.webp",
       "name": "Dikembe Mutombo",
       "playoffs": {
         "apg": 0.8,
@@ -3661,7 +3661,7 @@
         "mvp": 0
       },
       "id": "wallace-ben",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/wallace-ben.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/wallace-ben.webp",
       "name": "Ben Wallace",
       "playoffs": {
         "apg": 1.3,
@@ -3699,7 +3699,7 @@
         "mvp": 0
       },
       "id": "moncrief-sidney",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/moncrief-sidney.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/moncrief-sidney.webp",
       "name": "Sidney Moncrief",
       "playoffs": {
         "apg": 3.4,
@@ -3737,7 +3737,7 @@
         "mvp": 0
       },
       "id": "webber-chris",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/webber-chris.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/webber-chris.webp",
       "name": "Chris Webber",
       "playoffs": {
         "apg": 3.6,
@@ -3775,7 +3775,7 @@
         "mvp": 0
       },
       "id": "hill-grant",
-      "image_path": "/assets/catalogs/nba-public-2025-26-r1/players/hill-grant.webp",
+      "image_path": "/versions/nba-public-2025-26-r1/images/hill-grant.webp",
       "name": "Grant Hill",
       "playoffs": {
         "apg": 3.6,

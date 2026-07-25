@@ -143,18 +143,17 @@ def build_catalog(
         {player["id"] for player in allowlist},
     )
     records = validate_coverage(payload, allowlist)
-    destination = catalog_root / "data" / "catalogs" / catalog_id
-    asset_destination = catalog_root / "assets" / "catalogs" / catalog_id / "players"
-    if destination.exists() or asset_destination.exists():
+    destination = catalog_root / "versions" / catalog_id
+    if destination.exists():
         raise CatalogBuildError(
             f"Catalog {catalog_id} already exists and is immutable."
         )
 
     temporary_root = Path(tempfile.mkdtemp(prefix=f"alltime25-{catalog_id}-"))
     try:
-        temporary_data = temporary_root / "data"
-        temporary_assets = temporary_root / "players"
-        temporary_data.mkdir()
+        temporary_version = temporary_root / catalog_id
+        temporary_assets = temporary_version / "images"
+        temporary_version.mkdir()
         temporary_assets.mkdir()
         normalized_players: list[dict[str, Any]] = []
         review_rows: list[dict[str, Any]] = []
@@ -179,7 +178,7 @@ def build_catalog(
             normalized_players.append(player)
             review_rows.append(review)
 
-        players_path = temporary_data / "players.json"
+        players_path = temporary_version / "players.json"
         write_json(
             players_path,
             {
@@ -192,7 +191,7 @@ def build_catalog(
                 "players": normalized_players,
             },
         )
-        pools_path = temporary_data / "pools.json"
+        pools_path = temporary_version / "pools.json"
         write_json(
             pools_path,
             {
@@ -200,7 +199,7 @@ def build_catalog(
                 "pools": published_pools,
             },
         )
-        review_path = temporary_data / "review.csv"
+        review_path = temporary_version / "review.csv"
         write_review_csv(review_path, review_rows)
         manifest = build_manifest(
             payload=payload,
@@ -212,19 +211,15 @@ def build_catalog(
             review_path=review_path,
             asset_directory=temporary_assets,
         )
-        write_json(temporary_data / "manifest.json", manifest)
+        write_json(temporary_version / "manifest.json", manifest)
 
         destination.parent.mkdir(parents=True, exist_ok=True)
-        asset_destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(temporary_data), str(destination))
-        shutil.move(str(temporary_assets), str(asset_destination))
+        shutil.move(str(temporary_version), str(destination))
         if set_current:
             set_current_catalog(catalog_root, catalog_id)
     except Exception:
         if destination.exists():
             shutil.rmtree(destination)
-        if asset_destination.exists():
-            shutil.rmtree(asset_destination)
         raise
     finally:
         shutil.rmtree(temporary_root, ignore_errors=True)
@@ -375,7 +370,7 @@ def normalize_player(
     record_source = required_https_url(record, "record_source")
     award_source = required_https_url(record, "award_source")
     image_license = required_string(record, "image_license")
-    image_url = f"/assets/catalogs/{catalog_id}/players/{expected['id']}.webp"
+    image_url = f"/versions/{catalog_id}/images/{expected['id']}.webp"
     player = {
         "id": expected["id"],
         "name": expected["name"],
@@ -629,9 +624,9 @@ def build_manifest(
 
 def verify_manifest(catalog_root: Path, catalog_id: str) -> None:
     validate_identifier(catalog_id)
-    data_directory = catalog_root / "data" / "catalogs" / catalog_id
-    asset_directory = catalog_root / "assets" / "catalogs" / catalog_id / "players"
-    manifest = load_json(data_directory / "manifest.json")
+    version_directory = catalog_root / "versions" / catalog_id
+    asset_directory = version_directory / "images"
+    manifest = load_json(version_directory / "manifest.json")
     if manifest.get("catalog_id") != catalog_id:
         raise CatalogBuildError("Manifest catalog ID does not match its directory.")
     if manifest.get("player_count") != 100:
@@ -642,7 +637,7 @@ def verify_manifest(catalog_root: Path, catalog_id: str) -> None:
 
     for filename in ("players.json", "pools.json", "review.csv"):
         expected = hashes.get(filename)
-        path = data_directory / filename
+        path = version_directory / filename
         if not isinstance(expected, str) or sha256_file(path) != expected:
             raise CatalogBuildError(f"{filename} hash does not match the manifest.")
 
@@ -673,11 +668,10 @@ def write_review_csv(
 
 
 def set_current_catalog(catalog_root: Path, catalog_id: str) -> None:
-    pointer_directory = catalog_root / "data"
-    pointer_directory.mkdir(parents=True, exist_ok=True)
-    temporary = pointer_directory / ".current.json.tmp"
+    catalog_root.mkdir(parents=True, exist_ok=True)
+    temporary = catalog_root / ".current.json.tmp"
     write_json(temporary, {"catalog_id": catalog_id})
-    os.replace(temporary, pointer_directory / "current.json")
+    os.replace(temporary, catalog_root / "current.json")
 
 
 def flatten_stats(

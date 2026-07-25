@@ -51,7 +51,7 @@ npm --prefix apps/web audit --audit-level=high
 After Vercel builds, verify:
 
 - the home page loads without an API request;
-- `/data/current.json` resolves;
+- `/current.json` resolves;
 - the current players and pools JSON resolve;
 - several current player portraits resolve;
 - Normal and Blind rankings can vote, undo, reload, review, and restart;
@@ -62,7 +62,7 @@ After Vercel builds, verify:
 ## Catalog releases
 
 Do not edit a released catalog directory. Build and verify a new catalog with a
-new ID, add its static files, and update `catalog/data/current.json` in the same
+new ID, add its static files, and update `catalog/current.json` in the same
 commit. Old catalog directories stay deployed so saved rankings can resume.
 
 Follow [scripts/catalog/README.md](../../scripts/catalog/README.md) and

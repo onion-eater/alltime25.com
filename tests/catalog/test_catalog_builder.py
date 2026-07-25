@@ -155,36 +155,23 @@ def test_full_builder_publishes_exactly_one_hundred_hashed_assets(
         set_current=True,
     )
 
-    data_directory = catalog_root / "data" / "catalogs" / "beta-test-2025-26"
+    version_directory = catalog_root / "versions" / "beta-test-2025-26"
     manifest = json.loads(
-        (data_directory / "manifest.json").read_text(encoding="utf-8")
+        (version_directory / "manifest.json").read_text(encoding="utf-8")
     )
     review_rows = (
-        (data_directory / "review.csv").read_text(encoding="utf-8").splitlines()
+        (version_directory / "review.csv").read_text(encoding="utf-8").splitlines()
     )
     assert manifest["player_count"] == 100
     assert manifest["hashes"]["pools.json"]
     assert len(manifest["hashes"]["assets"]) == 100
     assert len(review_rows) == 101
-    assert (
-        len(
-            list(
-                (
-                    catalog_root
-                    / "assets"
-                    / "catalogs"
-                    / "beta-test-2025-26"
-                    / "players"
-                ).glob("*.webp")
-            )
-        )
-        == 100
-    )
-    assert json.loads(
-        (catalog_root / "data" / "current.json").read_text(encoding="utf-8")
-    ) == {"catalog_id": "beta-test-2025-26"}
+    assert len(list((version_directory / "images").glob("*.webp"))) == 100
+    assert json.loads((catalog_root / "current.json").read_text(encoding="utf-8")) == {
+        "catalog_id": "beta-test-2025-26"
+    }
     published_pools = json.loads(
-        (data_directory / "pools.json").read_text(encoding="utf-8")
+        (version_directory / "pools.json").read_text(encoding="utf-8")
     )
     assert published_pools["catalog_id"] == "beta-test-2025-26"
     assert [len(published_pools["pools"][size]) for size in ("25", "50", "100")] == [
@@ -194,11 +181,7 @@ def test_full_builder_publishes_exactly_one_hundred_hashed_assets(
     ]
 
     verify_manifest(catalog_root, "beta-test-2025-26")
-    asset = next(
-        (catalog_root / "assets" / "catalogs" / "beta-test-2025-26" / "players").glob(
-            "*.webp"
-        )
-    )
+    asset = next((version_directory / "images").glob("*.webp"))
     asset.write_bytes(b"tampered")
     with pytest.raises(CatalogBuildError, match="hash"):
         verify_manifest(catalog_root, "beta-test-2025-26")

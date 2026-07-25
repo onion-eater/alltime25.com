@@ -77,7 +77,8 @@ bias rather than determined inspection with developer tools.
 
 ## Catalogs
 
-`catalog/data/current.json` selects the immutable catalog for new rankings.
+`catalog/current.json` selects the immutable catalog for new rankings. Each
+release lives entirely under `catalog/versions/<catalog-id>/`.
 Saved rankings retain their exact catalog ID. Catalog JSON and portraits are
 served as static files and are not copied into localStorage.
 

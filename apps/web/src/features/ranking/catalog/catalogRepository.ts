@@ -21,7 +21,7 @@ const catalogCache = new Map<string, Promise<PlayerCatalog>>();
 export async function loadCurrentCatalog(
   signal?: AbortSignal,
 ): Promise<PlayerCatalog> {
-  const pointer = await fetchJson("/data/current.json", signal);
+  const pointer = await fetchJson("/current.json", signal);
   if (!isRecord(pointer)) {
     throw new Error("Current catalog pointer is invalid.");
   }
@@ -52,7 +52,7 @@ async function loadCatalogFiles(
   catalogId: string,
   signal?: AbortSignal,
 ): Promise<PlayerCatalog> {
-  const base = `/data/catalogs/${catalogId}`;
+  const base = `/versions/${catalogId}`;
   const [playersPayload, poolsPayload] = await Promise.all([
     fetchJson(`${base}/players.json`, signal),
     fetchJson(`${base}/pools.json`, signal),
@@ -133,7 +133,7 @@ function parsePlayer(
     throw new Error(`${id} has a mismatched catalog date.`);
   }
   const imagePath = requiredString(value, "image_path");
-  const expectedPrefix = `/assets/catalogs/${catalogId}/players/`;
+  const expectedPrefix = `/versions/${catalogId}/images/`;
   if (
     !imagePath.startsWith(expectedPrefix) ||
     imagePath.slice(expectedPrefix.length).includes("/")

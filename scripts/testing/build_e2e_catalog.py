@@ -22,10 +22,9 @@ def build_catalog(output: Path) -> None:
     resolved = output.resolve()
     if resolved.exists():
         shutil.rmtree(resolved)
-    data_directory = resolved / "data" / "catalogs" / CATALOG_ID
-    asset_directory = resolved / "assets" / "catalogs" / CATALOG_ID / "players"
-    data_directory.mkdir(parents=True)
-    asset_directory.mkdir(parents=True)
+    version_directory = resolved / "versions" / CATALOG_ID
+    image_directory = version_directory / "images"
+    image_directory.mkdir(parents=True)
 
     stats = {
         "games": 1000,
@@ -42,7 +41,7 @@ def build_catalog(output: Path) -> None:
     for number in range(1, 101):
         player_id = f"e2e-player-{number:03d}"
         image_name = f"{player_id}.svg"
-        (asset_directory / image_name).write_text(PORTRAIT, encoding="utf-8")
+        (image_directory / image_name).write_text(PORTRAIT, encoding="utf-8")
         players.append(
             {
                 "id": player_id,
@@ -62,13 +61,13 @@ def build_catalog(output: Path) -> None:
                     "championships": 0,
                     "finals_mvp": 0,
                 },
-                "image_path": (f"/assets/catalogs/{CATALOG_ID}/players/{image_name}"),
+                "image_path": (f"/versions/{CATALOG_ID}/images/{image_name}"),
                 "as_of": AS_OF,
                 "source_note": "Synthetic end-to-end test fixture.",
             }
         )
 
-    (data_directory / "players.json").write_text(
+    (version_directory / "players.json").write_text(
         json.dumps(
             {
                 "catalog_id": CATALOG_ID,
@@ -81,7 +80,7 @@ def build_catalog(output: Path) -> None:
         encoding="utf-8",
     )
     player_ids = [player["id"] for player in players]
-    (data_directory / "pools.json").write_text(
+    (version_directory / "pools.json").write_text(
         json.dumps(
             {
                 "catalog_id": CATALOG_ID,
@@ -96,7 +95,7 @@ def build_catalog(output: Path) -> None:
         + "\n",
         encoding="utf-8",
     )
-    (resolved / "data" / "current.json").write_text(
+    (resolved / "current.json").write_text(
         json.dumps({"catalog_id": CATALOG_ID}, indent=2) + "\n",
         encoding="utf-8",
     )

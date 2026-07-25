@@ -381,7 +381,7 @@ function player(id: string): PlayerResume {
       championships: 0,
       finalsMvp: 0,
     },
-    imagePath: `/assets/catalogs/test-catalog/players/${id}.webp`,
+    imagePath: `/versions/test-catalog/images/${id}.webp`,
     asOf: "2026-06-30",
     sourceNote: "Test fixture.",
   };

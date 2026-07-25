@@ -414,13 +414,13 @@ test("a rejected storage write leaves the displayed comparison untouched", async
 });
 
 test("catalog loading failures keep Retry available", async ({ page }) => {
-  await page.route("**/data/current.json", (route) =>
+  await page.route("**/current.json", (route) =>
     route.fulfill({ status: 503, body: "Unavailable" }),
   );
   await page.goto("/");
 
   await expect(page.getByText(/Unable to load catalog \(503\)/i)).toBeVisible();
-  await page.unroute("**/data/current.json");
+  await page.unroute("**/current.json");
   await page.getByRole("button", { name: "Retry" }).click();
 
   await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();

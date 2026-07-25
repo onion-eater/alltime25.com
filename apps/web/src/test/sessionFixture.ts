@@ -48,7 +48,7 @@ export function activeSession(): RankingSessionView {
         code: "#042",
         name: "Michael Jordan",
         imageUrl:
-          "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+          "/versions/development-2024-06-18/images/jordami01.jpg",
         era: "1990s",
         seasons: 15,
         regularSeason: stats,
@@ -60,7 +60,7 @@ export function activeSession(): RankingSessionView {
         code: "#077",
         name: "LeBron James",
         imageUrl:
-          "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
+          "/versions/development-2024-06-18/images/jamesle01.jpg",
         era: "2010s",
         seasons: 21,
         regularSeason: { ...stats, games: 1492, ppg: 27.1 },
@@ -77,7 +77,7 @@ export function activeSession(): RankingSessionView {
             name: "Kareem Abdul-Jabbar",
             era: "1970s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
+              "/versions/development-2024-06-18/images/abdulka01.jpg",
           },
         ],
       },
@@ -89,7 +89,7 @@ export function activeSession(): RankingSessionView {
             name: "Michael Jordan",
             era: "1990s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+              "/versions/development-2024-06-18/images/jordami01.jpg",
           },
         ],
       },
@@ -150,13 +150,13 @@ export function completedSession(): RankingSessionView {
             name: "Michael Jordan",
             era: "1990s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+              "/versions/development-2024-06-18/images/jordami01.jpg",
           },
           {
             name: "LeBron James",
             era: "2010s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
+              "/versions/development-2024-06-18/images/jamesle01.jpg",
           },
         ],
       },
@@ -167,7 +167,7 @@ export function completedSession(): RankingSessionView {
             name: "Kareem Abdul-Jabbar",
             era: "1970s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
+              "/versions/development-2024-06-18/images/abdulka01.jpg",
           },
         ],
       },
@@ -178,7 +178,7 @@ export function completedSession(): RankingSessionView {
             name: `Test Player ${index + 4}`,
             era: "2000s",
             imageUrl:
-              "/assets/catalogs/development-2024-06-18/players/birdla01.jpg",
+              "/versions/development-2024-06-18/images/birdla01.jpg",
           },
         ],
       })),

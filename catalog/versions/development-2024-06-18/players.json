@@ -41,7 +41,7 @@
         "championships": 6,
         "finals_mvp": 6
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/jordami01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     },
@@ -79,7 +79,7 @@
         "championships": 4,
         "finals_mvp": 4
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/jamesle01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Frozen through the 2023-24 season; verify before production."
     },
@@ -117,7 +117,7 @@
         "championships": 6,
         "finals_mvp": 2
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/abdulka01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; steals and blocks cover tracked seasons."
     },
@@ -155,7 +155,7 @@
         "championships": 11,
         "finals_mvp": 0
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/russebi01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/russebi01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Steals, blocks, DPOY, and Finals MVP were unavailable in his era."
     },
@@ -193,7 +193,7 @@
         "championships": 5,
         "finals_mvp": 3
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/johnsma02.jpg",
+      "image_path": "/versions/development-2024-06-18/images/johnsma02.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     },
@@ -231,7 +231,7 @@
         "championships": 2,
         "finals_mvp": 1
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/chambwi01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/chambwi01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Steals, blocks, and DPOY were unavailable in his era."
     },
@@ -269,7 +269,7 @@
         "championships": 5,
         "finals_mvp": 3
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/duncati01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/duncati01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     },
@@ -307,7 +307,7 @@
         "championships": 3,
         "finals_mvp": 2
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/birdla01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/birdla01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     },
@@ -345,7 +345,7 @@
         "championships": 4,
         "finals_mvp": 3
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/onealsh01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/onealsh01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     },
@@ -383,7 +383,7 @@
         "championships": 5,
         "finals_mvp": 2
       },
-      "image_path": "/assets/catalogs/development-2024-06-18/players/bryanko01.jpg",
+      "image_path": "/versions/development-2024-06-18/images/bryanko01.jpg",
       "as_of": "2024-06-18",
       "source_note": "Development fixture; verify before production."
     }

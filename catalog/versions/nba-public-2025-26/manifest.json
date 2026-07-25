@@ -1,7 +1,7 @@
 {
   "as_of": "2026-06-30",
-  "built_at": "2026-07-25T02:57:53.720389+00:00",
-  "catalog_id": "nba-public-2025-26-r1",
+  "built_at": "2026-07-25T01:04:03.897789+00:00",
+  "catalog_id": "nba-public-2025-26",
   "hashes": {
     "assets": {
       "abdul-jabbar-kareem.webp": "8c8a5c80b7e919815a88c90a97f63890c3e9b2c181a4078645a3a7cf87d8fcd3",
@@ -105,14 +105,14 @@
       "wilkins-dominique.webp": "1e115cc251af068e44be5510556c5c90fe8a84bcb71135e58b5ac05798203a33",
       "worthy-james.webp": "4c503731c8dc18a97b14d4471cd4f1f2202954bd6138ee1c117ac0107da055f4"
     },
-    "players.json": "75f859eb0d8b617b85d89913575820efa2c6c257d24f06795f6803e666be5202",
-    "pools.json": "ab077328ac6b96c0d6e1571ffcd24f30fcadc628b49fd98449baaba1f5fabd0b",
-    "review.csv": "91fe1102ab4379b5cd396158dcb8ef000778bfd4d927c5bc82ae2f3abfc960a8"
+    "players.json": "af413d7f229e1754d08b82333592b8d600020d67bdff2af77b89a40ce0549015",
+    "pools.json": "44fa2d1c89e897b9d0634bc0c80472283ee7d591f8033b08ab94b617ab0b13e0",
+    "review.csv": "657e70a6d9ecd96482a8d17e3acb7d1186a3d9b39a9d509e1a6e66b1c49f8cb0"
   },
   "license_reference": "Project owner approved public-source NBA.com development use on 2026-07-24.",
   "player_count": 100,
   "provider": "NBA.com",
-  "provider_extracted_at": "2026-07-25T02:51:16.879718+00:00",
+  "provider_extracted_at": "2026-07-25T01:00:19.886293+00:00",
   "provider_version": "NBA.com Stats via nba_api 1.11.4",
   "source_references": [
     "https://www.nba.com/stats/players/traditional",

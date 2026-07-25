@@ -21,7 +21,7 @@ describe("catalogRepository", () => {
     const payloads = validPayloads();
     const fetchMock = vi.fn((input: string | URL | Request) => {
       const path = requestPath(input);
-      if (path === "/data/current.json") {
+      if (path === "/current.json") {
         return Promise.resolve(jsonResponse({ catalog_id: CATALOG_ID }));
       }
       if (path.endsWith("/players.json")) {
@@ -63,7 +63,7 @@ describe("catalogRepository", () => {
 
     expect(fetchMock).toHaveBeenCalledTimes(2);
     expect(fetchMock).not.toHaveBeenCalledWith(
-      "/data/current.json",
+      "/current.json",
       expect.anything(),
     );
   });
@@ -185,7 +185,7 @@ function playerRecord(id: string) {
       championships: 0,
       finals_mvp: 0,
     },
-    image_path: `/assets/catalogs/${CATALOG_ID}/players/${id}.webp`,
+    image_path: `/versions/${CATALOG_ID}/images/${id}.webp`,
     as_of: "2026-06-30",
     source_note: "Test fixture.",
   };

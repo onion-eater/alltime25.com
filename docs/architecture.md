@@ -30,14 +30,13 @@ alltime25/
 │       │   └── share/
 │       └── shared/
 ├── catalog/
-│   ├── data/
-│   │   ├── current.json
-│   │   └── catalogs/<catalog-id>/
-│   │       ├── players.json
-│   │       ├── pools.json
-│   │       ├── manifest.json
-│   │       └── review.csv
-│   └── assets/catalogs/<catalog-id>/players/
+│   ├── current.json
+│   └── versions/<catalog-id>/
+│       ├── players.json
+│       ├── pools.json
+│       ├── manifest.json
+│       ├── review.csv
+│       └── images/
 ├── docs/
 │   ├── architecture.md
 │   ├── data-provenance.md
@@ -77,7 +76,7 @@ immutability, tie behavior, cutoff behavior, and pools up to 100 players.
 
 `catalog/` is Vite's public directory. The browser catalog repository:
 
-- reads `data/current.json` only when creating a ranking;
+- reads `current.json` only when creating a ranking;
 - restores the exact catalog ID stored with existing progress;
 - validates player fields, pools, paths, and identifiers before use;
 - caches validated catalogs in memory for repeated lookups.

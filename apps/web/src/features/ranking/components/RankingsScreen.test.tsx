@@ -37,7 +37,7 @@ describe("RankingsScreen", () => {
     expect(screen.getByText("3")).toBeInTheDocument();
     expect(screen.getByAltText("Michael Jordan")).toHaveAttribute(
       "src",
-      "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
+      "/versions/development-2024-06-18/images/jordami01.jpg",
     );
   });
 
@@ -195,7 +195,7 @@ function largeTieSession(): RankingSessionView {
   const players = Array.from({ length: 51 }, (_, index) => ({
     name: index === 50 ? "Željko Longname-Williams" : `Player ${index + 1}`,
     era: "2000s",
-    imageUrl: `/assets/catalogs/test/players/${index + 1}.webp`,
+    imageUrl: `/versions/test/images/${index + 1}.webp`,
   }));
   return {
     ...completedSession(),

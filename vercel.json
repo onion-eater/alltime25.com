@@ -6,7 +6,7 @@
   "outputDirectory": "apps/web/dist",
   "headers": [
     {
-      "source": "/assets/catalogs/:path*",
+      "source": "/versions/:path*",
       "headers": [
         {
           "key": "Cache-Control",
@@ -15,16 +15,7 @@
       ]
     },
     {
-      "source": "/data/catalogs/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/data/current.json",
+      "source": "/current.json",
       "headers": [
         {
           "key": "Cache-Control",

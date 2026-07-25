@@ -114,9 +114,9 @@ def check_runtime(errors: list[str]) -> None:
 def check_catalog(errors: list[str]) -> None:
     if not ROOT.exists():
         return
-    current_pointer = CATALOG / "data" / "current.json"
+    current_pointer = CATALOG / "current.json"
     if not current_pointer.is_file():
-        errors.append("catalog/data/current.json: current catalog pointer is required")
+        errors.append("catalog/current.json: current catalog pointer is required")
     for path in ROOT.rglob("players.json"):
         if any(part in IGNORED_PARTS for part in path.parts):
             continue
@@ -128,14 +128,10 @@ def check_catalog(errors: list[str]) -> None:
             )
             continue
         parts = relative.parts
-        if (
-            len(parts) != 4
-            or parts[0:2] != ("data", "catalogs")
-            or parts[3:] != ("players.json",)
-        ):
+        if len(parts) != 3 or parts[0] != "versions" or parts[2] != "players.json":
             errors.append(
                 f"{path.relative_to(ROOT)}: players.json must use "
-                "catalog/data/catalogs/<catalog-id>/players.json"
+                "catalog/versions/<catalog-id>/players.json"
             )
     for path in ROOT.rglob("pools.json"):
         if any(part in IGNORED_PARTS for part in path.parts):
@@ -148,14 +144,10 @@ def check_catalog(errors: list[str]) -> None:
             )
             continue
         parts = relative.parts
-        if (
-            len(parts) != 4
-            or parts[0:2] != ("data", "catalogs")
-            or parts[3:] != ("pools.json",)
-        ):
+        if len(parts) != 3 or parts[0] != "versions" or parts[2] != "pools.json":
             errors.append(
                 f"{path.relative_to(ROOT)}: pools.json must use "
-                "catalog/data/catalogs/<catalog-id>/pools.json"
+                "catalog/versions/<catalog-id>/pools.json"
             )
 
 

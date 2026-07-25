@@ -9,11 +9,9 @@ These rules are mandatory for every change in this repository.
   localStorage, Web Locks, and cross-tab session synchronization.
 - `apps/web/src/features/ranking/session/` builds and validates ranking
   sessions and UI view models.
-- `catalog/data/current.json` selects the catalog for new rankings.
-- `catalog/data/catalogs/<catalog-id>/` is the only checked-in location for
-  immutable player data, pool metadata, manifests, and review exports.
-- `catalog/assets/catalogs/<catalog-id>/players/` is the only checked-in
-  player-image directory.
+- `catalog/current.json` selects the catalog for new rankings.
+- `catalog/versions/<catalog-id>/` contains one complete immutable catalog:
+  player data, pools, provenance, review export, and `images/`.
 - `scripts/catalog/` owns offline Python import, normalization, image
   processing, provenance, and publication verification.
 - `apps/web/src/shared/styles/tokens.css` owns values reused across components.
