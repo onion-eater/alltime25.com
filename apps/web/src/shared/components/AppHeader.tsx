@@ -1,3 +1,4 @@
+import wordmark from "@/assets/alltime25-wordmark.svg";
 import styles from "@/shared/components/AppHeader.module.css";
 
 interface AppHeaderProps {
@@ -27,8 +28,11 @@ export function AppHeader({
           onClick={onBrand}
           type="button"
         >
-          <span className={styles.mark}>25</span>
-          <span className={styles.name}>ALLTIME</span>
+          <img
+            alt=""
+            className={styles.wordmark}
+            src={wordmark}
+          />
         </button>
         <nav
           aria-label="Main navigation"
@@ -51,7 +55,7 @@ export function AppHeader({
             Restart
           </button>
           <button
-            className={styles.navButton}
+            className={`${styles.navButton} ${styles.rankingButton}`}
             onClick={onRanking}
             type="button"
           >

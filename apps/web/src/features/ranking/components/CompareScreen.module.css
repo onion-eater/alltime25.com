@@ -88,7 +88,6 @@
   background: var(--color-ink);
 }
 
-.primaryVote:hover:not(:disabled),
 .primaryVote:focus-visible {
   color: var(--color-ink);
   background: var(--color-yellow);
@@ -98,7 +97,6 @@
   background: var(--color-surface);
 }
 
-.tieVote:hover:not(:disabled),
 .tieVote:focus-visible {
   background: var(--color-yellow);
 }
@@ -130,7 +128,6 @@
   text-transform: uppercase;
 }
 
-.undo:hover:not(:disabled),
 .undo:focus-visible {
   background: var(--color-yellow);
 }
@@ -138,6 +135,18 @@
 .undo:disabled {
   cursor: default;
   opacity: 0.4;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryVote:hover:not(:disabled) {
+    color: var(--color-ink);
+    background: var(--color-yellow);
+  }
+
+  .tieVote:hover:not(:disabled),
+  .undo:hover:not(:disabled) {
+    background: var(--color-yellow);
+  }
 }
 
 @media (max-width: 560px) {

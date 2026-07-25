@@ -30,7 +30,6 @@
   letter-spacing: inherit;
 }
 
-.links button:hover,
 .links button:focus-visible {
   color: var(--color-ink);
   text-decoration: underline;
@@ -40,6 +39,14 @@
 .disclaimer {
   justify-self: end;
   text-align: right;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .links button:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 @media (max-width: 700px) {

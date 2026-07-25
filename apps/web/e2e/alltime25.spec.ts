@@ -156,8 +156,10 @@ test("comparison stays clean and centered at every required viewport", async ({
   await page.goto("/");
   await expect(page).toHaveTitle("AllTime 25");
   await expect(
-    page.getByRole("button", { name: "AllTime 25" }),
-  ).toContainText("25ALLTIME");
+    page
+      .getByRole("button", { name: "AllTime 25" })
+      .locator("img"),
+  ).toBeVisible();
   await expect(page.getByTestId("comparison-heading")).toBeVisible();
   expect(
     await page

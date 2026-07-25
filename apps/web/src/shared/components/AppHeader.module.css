@@ -19,7 +19,6 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   padding: 0;
   color: var(--color-ink);
   background: transparent;
@@ -27,21 +26,10 @@
   cursor: pointer;
 }
 
-.mark {
-  width: 42px;
+.wordmark {
+  flex: none;
+  width: auto;
   height: 42px;
-  display: grid;
-  place-items: center;
-  color: var(--color-surface);
-  background: var(--color-orange);
-  font-family: var(--font-display);
-  font-size: 18px;
-}
-
-.name {
-  font-family: var(--font-display);
-  font-size: 18px;
-  letter-spacing: -0.04em;
 }
 
 .navigation {
@@ -75,24 +63,41 @@
 
 @media (max-width: 560px) {
   .navigation {
-    gap: 12px;
+    gap: 8px;
   }
 
   .navButton {
     display: none;
+    font-size: 10px;
   }
 
-  .restartButton {
-    display: block;
-  }
-
+  .rankingButton,
+  .restartButton,
   .voteButton {
     display: block;
   }
 
-  .mark {
-    width: 42px;
+  .wordmark {
     height: 42px;
+  }
+}
+
+@media (max-width: 340px) {
+  .navigation {
+    gap: 6px;
+  }
+
+  .navButton {
+    font-size: 9px;
+  }
+
+  .wordmark {
+    height: 34px;
+  }
+
+  .help {
+    width: 34px;
+    height: 34px;
   }
 }
 
@@ -101,14 +106,8 @@
     gap: 14px;
   }
 
-  .mark {
-    width: 34px;
+  .wordmark {
     height: 34px;
-    font-size: 16px;
-  }
-
-  .name {
-    font-size: 16px;
   }
 
   .help {
