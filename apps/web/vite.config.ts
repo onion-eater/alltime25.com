@@ -6,9 +6,14 @@ import { defineConfig } from "vitest/config";
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const apiOrigin = `http://127.0.0.1:${process.env.ALLTIME25_E2E_API_PORT ?? "8000"}`;
+const catalogRoot = path.resolve(
+  directory,
+  process.env.ALLTIME25_CATALOG_ROOT ?? "../../catalog",
+);
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: catalogRoot,
   resolve: {
     alias: {
       "@": path.resolve(directory, "src"),
