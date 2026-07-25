@@ -7,7 +7,7 @@ import type {
   IdentityMode,
   RankingPreset,
   RankingSelection,
-} from "@/features/ranking/api/rankingApi";
+} from "@/features/ranking/domain/player";
 import styles from "@/features/ranking/components/RestartDialog.module.css";
 import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
 import dialogStyles from "@/shared/components/Dialog.module.css";

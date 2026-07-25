@@ -9,8 +9,8 @@ import {
 } from "vitest";
 
 import { RankingsScreen } from "@/features/ranking/components/RankingsScreen";
-import type { SessionResponse } from "@/features/ranking/api/rankingApi";
 import { shareRankingImage } from "@/features/ranking/share/shareRankingImage";
+import type { RankingSessionView } from "@/features/ranking/session/sessionView";
 import { completedSession } from "@/test/sessionFixture";
 
 vi.mock("@/features/ranking/share/shareRankingImage", () => ({
@@ -103,7 +103,7 @@ describe("RankingsScreen", () => {
 
     expect(shareRankingImage).toHaveBeenCalledWith(
       session.ranking,
-      session.target_size,
+      session.targetSize,
     );
     expect(screen.getByRole("status")).toHaveTextContent("Image downloaded.");
   });
@@ -191,16 +191,16 @@ describe("RankingsScreen", () => {
   });
 });
 
-function largeTieSession(): SessionResponse {
+function largeTieSession(): RankingSessionView {
   const players = Array.from({ length: 51 }, (_, index) => ({
     name: index === 50 ? "Željko Longname-Williams" : `Player ${index + 1}`,
     era: "2000s",
-    image_url: `/assets/catalogs/test/players/${index + 1}.webp`,
+    imageUrl: `/assets/catalogs/test/players/${index + 1}.webp`,
   }));
   return {
     ...completedSession(),
-    target_size: 50,
-    pool_size: 100,
+    targetSize: 50,
+    poolSize: 100,
     progress: {
       processed: 100,
       total: 100,

@@ -125,7 +125,7 @@ export function App(): React.JSX.Element {
       </div>
       <HelpDialog
         identityMode={
-          session?.identity_mode ??
+          session?.identityMode ??
           DEFAULT_RANKING_SELECTION.identityMode
         }
         isOpen={openDialog === "help"}

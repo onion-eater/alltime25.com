@@ -1,15 +1,15 @@
-import type {
-  SessionResponse,
-  VoteOutcome,
-} from "@/features/ranking/api/rankingApi";
 import { CenterComparisonLedger } from "@/features/ranking/components/CenterComparisonLedger";
 import { CompactComparisonMatrix } from "@/features/ranking/components/CompactComparisonMatrix";
 import styles from "@/features/ranking/components/CompareScreen.module.css";
 import { comparisonSections } from "@/features/ranking/model/comparisonRows";
+import type {
+  RankingSessionView,
+  VoteOutcome,
+} from "@/features/ranking/session/sessionView";
 import { ArrowIcon } from "@/shared/components/ArrowIcon";
 
 interface CompareScreenProps {
-  session: SessionResponse;
+  session: RankingSessionView;
   isSubmitting: boolean;
   statusMessage?: string;
   onShowProgress?: () => void;
@@ -31,8 +31,8 @@ export function CompareScreen({
   const progressPercent =
     (session.progress.processed / session.progress.total) * 100;
   const sections = comparisonSections(
-    comparison.player_a,
-    comparison.player_b,
+    comparison.playerA,
+    comparison.playerB,
   );
 
   return (
@@ -66,13 +66,13 @@ export function CompareScreen({
         </header>
 
         <CenterComparisonLedger
-          playerA={comparison.player_a}
-          playerB={comparison.player_b}
+          playerA={comparison.playerA}
+          playerB={comparison.playerB}
           sections={sections}
         />
         <CompactComparisonMatrix
-          playerA={comparison.player_a}
-          playerB={comparison.player_b}
+          playerA={comparison.playerA}
+          playerB={comparison.playerB}
           sections={sections}
         />
 
@@ -112,7 +112,7 @@ export function CompareScreen({
         >
           <button
             className={styles.undo}
-            disabled={isSubmitting || !session.can_undo}
+            disabled={isSubmitting || !session.canUndo}
             onClick={() => void onUndo()}
             type="button"
           >

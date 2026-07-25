@@ -1,5 +1,5 @@
-import type { SessionResponse } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/ProgressScreen.module.css";
+import type { RankingSessionView } from "@/features/ranking/session/sessionView";
 import { ArrowIcon } from "@/shared/components/ArrowIcon";
 
 interface ProgressScreenProps {
@@ -7,7 +7,7 @@ interface ProgressScreenProps {
   isLoading?: boolean;
   onResume: () => void;
   onRetry?: () => void;
-  session: SessionResponse | null;
+  session: RankingSessionView | null;
 }
 
 export function ProgressScreen({

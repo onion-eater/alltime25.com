@@ -1,8 +1,8 @@
 import type {
-  AnonymousPlayerResponse,
-  CareerStatsResponse,
-  HonorsResponse,
-} from "@/features/ranking/api/rankingApi";
+  CareerStats,
+  Honors,
+} from "@/features/ranking/domain/player";
+import type { ComparisonPlayer } from "@/features/ranking/session/sessionView";
 
 export interface ComparisonRow {
   label: string;
@@ -16,7 +16,7 @@ export interface ComparisonSection {
 }
 
 const CAREER_STATS: readonly {
-  key: Exclude<keyof CareerStatsResponse, "games">;
+  key: Exclude<keyof CareerStats, "games">;
   label: string;
   percentage?: boolean;
 }[] = [
@@ -25,25 +25,25 @@ const CAREER_STATS: readonly {
   { key: "apg", label: "AST" },
   { key: "spg", label: "STL" },
   { key: "bpg", label: "BLK" },
-  { key: "fg_pct", label: "FG%", percentage: true },
-  { key: "three_pct", label: "3PT%", percentage: true },
-  { key: "ft_pct", label: "FT%", percentage: true },
+  { key: "fgPct", label: "FG%", percentage: true },
+  { key: "threePct", label: "3PT%", percentage: true },
+  { key: "ftPct", label: "FT%", percentage: true },
 ];
 
 const HONORS: readonly {
-  key: keyof HonorsResponse;
+  key: keyof Honors;
   label: string;
 }[] = [
   { key: "mvp", label: "MVP" },
-  { key: "all_nba", label: "All-NBA" },
+  { key: "allNba", label: "All-NBA" },
   { key: "dpoy", label: "DPOY" },
   { key: "championships", label: "Titles" },
-  { key: "finals_mvp", label: "Finals MVP" },
+  { key: "finalsMvp", label: "Finals MVP" },
 ];
 
 export function comparisonSections(
-  playerA: AnonymousPlayerResponse,
-  playerB: AnonymousPlayerResponse,
+  playerA: ComparisonPlayer,
+  playerB: ComparisonPlayer,
 ): readonly ComparisonSection[] {
   return [
     {
@@ -71,8 +71,8 @@ export function comparisonSections(
     },
     statsSection(
       "Regular Season",
-      playerA.regular_season,
-      playerB.regular_season,
+      playerA.regularSeason,
+      playerB.regularSeason,
     ),
     statsSection("Playoffs", playerA.playoffs, playerB.playoffs),
   ];
@@ -80,8 +80,8 @@ export function comparisonSections(
 
 function statsSection(
   label: "Regular Season" | "Playoffs",
-  statsA: CareerStatsResponse,
-  statsB: CareerStatsResponse,
+  statsA: CareerStats,
+  statsB: CareerStats,
 ): ComparisonSection {
   return {
     label,

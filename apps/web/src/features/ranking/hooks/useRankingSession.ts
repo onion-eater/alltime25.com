@@ -6,105 +6,133 @@ import {
 } from "react";
 
 import {
-  rankingApi,
-  type RankingSelection,
-  type SessionResponse,
-  type VoteOutcome,
-} from "@/features/ranking/api/rankingApi";
+  loadCatalog,
+  loadCurrentCatalog,
+} from "@/features/ranking/catalog/catalogRepository";
+import type { RankingSelection } from "@/features/ranking/domain/player";
+import type { VoteOutcome } from "@/features/ranking/domain/ranking";
 import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
-import { ApiError } from "@/shared/api/client";
 import {
-  storageGet,
-  storageRemove,
-  storageSet,
-} from "@/shared/browser/safeStorage";
-
-const SESSION_KEY = "alltime25.session_id";
-const VERSION_KEY = "alltime25.session_version";
-const PENDING_CREATE_KEY = "alltime25.pending_create_operation";
-const SELECTION_KEY = "alltime25.ranking_selection";
-const CHANNEL_NAME = "alltime25-session";
-
-interface PendingCreate extends RankingSelection {
-  operationId: string;
-}
-
-let volatilePendingCreate: PendingCreate | null = null;
+  mutateStoredSession,
+  postSessionNotification,
+  RANKING_CHANNEL_NAME,
+  replaceCorruptStoredSession,
+  sessionExpectation,
+  type StoredMutationResult,
+} from "@/features/ranking/persistence/localRankingStore";
+import {
+  clearLegacySessionKeys,
+  parsePersistedSession,
+  readPersistedSessionRaw,
+  type PersistedRankingSessionV1,
+} from "@/features/ranking/persistence/persistedSession";
+import {
+  applySessionVote,
+  createRankingSession,
+  undoSessionVote,
+} from "@/features/ranking/session/rankingSession";
+import {
+  buildRankingSessionView,
+  type RankingSessionView,
+} from "@/features/ranking/session/sessionView";
 
 export interface RankingSessionController {
-  session: SessionResponse | null;
+  session: RankingSessionView | null;
   isLoading: boolean;
   isSubmitting: boolean;
   error: string | null;
   statusMessage: string;
   vote: (outcome: VoteOutcome) => Promise<void>;
   undo: () => Promise<void>;
-  startNewRanking: (
-    selection: RankingSelection,
-  ) => Promise<boolean>;
+  startNewRanking: (selection: RankingSelection) => Promise<boolean>;
   retry: () => void;
 }
 
 export function useRankingSession(): RankingSessionController {
-  const [session, setSession] = useState<SessionResponse | null>(null);
+  const [session, setSession] = useState<RankingSessionView | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState("Loading");
   const [loadAttempt, setLoadAttempt] = useState(0);
-  const sessionRef = useRef<SessionResponse | null>(null);
+  const persistedRef = useRef<PersistedRankingSessionV1 | null>(null);
+  const corruptRawRef = useRef<string | null>(null);
   const submittingRef = useRef(false);
   const channelRef = useRef<BroadcastChannel | null>(null);
+  const adoptionSequenceRef = useRef(0);
+  const mountedRef = useRef(true);
 
-  const adoptSession = useCallback(
-    (next: SessionResponse, broadcast = true): void => {
-      const current = sessionRef.current;
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  const adoptPersistedSession = useCallback(
+    async (
+      next: PersistedRankingSessionV1,
+      nextStatus?: string,
+    ): Promise<boolean> => {
+      const current = persistedRef.current;
       if (
         current?.id === next.id &&
-        next.version < current.version
+        current.revision > next.revision
       ) {
-        return;
+        return false;
       }
-      sessionRef.current = next;
-      setSession(next);
-      storageSet(SESSION_KEY, next.id);
-      storageSet(VERSION_KEY, String(next.version));
-      storageSet(
-        SELECTION_KEY,
-        JSON.stringify(selectionForSession(next)),
-      );
-      if (broadcast) {
-        channelRef.current?.postMessage({
-          id: next.id,
-          version: next.version,
-        });
+      const adoptionSequence = ++adoptionSequenceRef.current;
+      const catalog = await loadCatalog(next.catalogId);
+      const view = buildRankingSessionView(next, catalog);
+      if (
+        !mountedRef.current ||
+        adoptionSequence !== adoptionSequenceRef.current
+      ) {
+        return false;
       }
+      persistedRef.current = next;
+      corruptRawRef.current = null;
+      setSession(view);
+      setError(null);
+      if (nextStatus !== undefined) setStatusMessage(nextStatus);
+      return true;
     },
     [],
   );
 
-  const createSession = useCallback(
+  const adoptMutationResult = useCallback(
     async (
-      selection: RankingSelection,
-      signal?: AbortSignal,
-    ): Promise<SessionResponse> => {
-      const pending = pendingCreateFor(selection);
-      volatilePendingCreate = pending;
-      storageSet(PENDING_CREATE_KEY, JSON.stringify(pending));
-      const created = await rankingApi.createSession(
-        pending.operationId,
-        selection,
-        signal,
-      );
-      volatilePendingCreate = null;
-      storageRemove(PENDING_CREATE_KEY);
-      return created;
+      result: StoredMutationResult,
+      savedStatus = "Saved",
+    ): Promise<"saved" | "stale" | "cleared"> => {
+      if (result.session === null) return "cleared";
+      const status =
+        result.status === "saved"
+          ? savedStatus
+          : "Updated from another tab.";
+      await adoptPersistedSession(result.session, status);
+      if (result.status === "saved") {
+        postSessionNotification(channelRef.current, result.session);
+      }
+      return result.status;
     },
-    [],
+    [adoptPersistedSession],
+  );
+
+  const createAfterClear = useCallback(
+    async (selection: RankingSelection): Promise<void> => {
+      const catalog = await loadCurrentCatalog();
+      const replacement = createRankingSession(catalog, selection);
+      const result = await mutateStoredSession(
+        null,
+        () => replacement,
+      );
+      await adoptMutationResult(result, "New ranking started.");
+    },
+    [adoptMutationResult],
   );
 
   useEffect(() => {
-    const controller = new AbortController();
     let cancelled = false;
 
     async function loadSession(): Promise<void> {
@@ -112,42 +140,38 @@ export function useRankingSession(): RankingSessionController {
       setError(null);
       setStatusMessage("Loading");
       try {
-        const storedSessionId = storageGet(SESSION_KEY);
-        let loaded: SessionResponse;
-        if (storedSessionId) {
-          try {
-            loaded = await rankingApi.getSession(
-              storedSessionId,
-              controller.signal,
-            );
-          } catch (loadError) {
-            if (
-              !(loadError instanceof ApiError) ||
-              ![404, 410].includes(loadError.status)
-            ) {
-              throw loadError;
-            }
-            storageRemove(SESSION_KEY);
-            storageRemove(VERSION_KEY);
-            loaded = await createSession(
-              storedSelection(),
-              controller.signal,
-            );
-            setStatusMessage(
-              loadError.status === 410
-                ? "Session expired. New ranking started."
-                : "New ranking started.",
-            );
-          }
-        } else {
-          loaded = await createSession(
-            storedSelection(),
-            controller.signal,
+        clearLegacySessionKeys();
+        const raw = readPersistedSessionRaw();
+        let loaded: PersistedRankingSessionV1;
+        let created = false;
+        if (raw === null) {
+          const catalog = await loadCurrentCatalog();
+          const candidate = createRankingSession(
+            catalog,
+            DEFAULT_RANKING_SELECTION,
           );
+          const result = await mutateStoredSession(
+            null,
+            () => candidate,
+          );
+          if (result.session === null) {
+            throw new Error("Ranking creation did not save.");
+          }
+          loaded = result.session;
+          created = result.status === "saved";
+        } else {
+          try {
+            loaded = parsePersistedSession(raw);
+          } catch (loadError) {
+            corruptRawRef.current = raw;
+            throw loadError;
+          }
+          persistedRef.current = loaded;
         }
-        if (!cancelled) {
-          adoptSession(loaded);
-          setStatusMessage("Saved");
+        if (cancelled) return;
+        const adopted = await adoptPersistedSession(loaded, "Saved");
+        if (created && adopted) {
+          postSessionNotification(channelRef.current, loaded);
         }
       } catch (loadError) {
         if (!cancelled) {
@@ -162,56 +186,59 @@ export function useRankingSession(): RankingSessionController {
     void loadSession();
     return () => {
       cancelled = true;
-      controller.abort();
     };
-  }, [adoptSession, createSession, loadAttempt]);
+  }, [adoptPersistedSession, loadAttempt]);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function synchronize(
-      sessionId: string,
-      version: number,
-    ): Promise<void> {
-      const current = sessionRef.current;
-      if (
-        current?.id === sessionId &&
-        current.version >= version
-      ) {
-        return;
-      }
+    async function synchronize(): Promise<void> {
       try {
-        const updated = await rankingApi.getSession(sessionId);
-        if (!cancelled) {
-          adoptSession(updated, false);
-          setStatusMessage("Updated from another tab.");
+        const raw = readPersistedSessionRaw();
+        if (raw === null) return;
+        let updated: PersistedRankingSessionV1;
+        try {
+          updated = parsePersistedSession(raw);
+        } catch (syncError) {
+          corruptRawRef.current = raw;
+          throw syncError;
         }
-      } catch {
-        // The active tab handles recovery when the user next interacts.
+        const current = persistedRef.current;
+        if (
+          current?.id === updated.id &&
+          current.revision >= updated.revision
+        ) {
+          return;
+        }
+        if (!cancelled) {
+          await adoptPersistedSession(
+            updated,
+            "Updated from another tab.",
+          );
+        }
+      } catch (syncError) {
+        if (!cancelled) {
+          setError(messageFor(syncError));
+          setStatusMessage("Retry");
+        }
       }
     }
 
     function onStorage(event: StorageEvent): void {
-      if (event.key !== SESSION_KEY && event.key !== VERSION_KEY) return;
-      const sessionId = storageGet(SESSION_KEY);
-      const version = Number(storageGet(VERSION_KEY) ?? "0");
-      if (sessionId) void synchronize(sessionId, version);
+      if (event.key === "alltime25.ranking-session.v1") {
+        void synchronize();
+      }
     }
 
     window.addEventListener("storage", onStorage);
     if ("BroadcastChannel" in window) {
-      const channel = new BroadcastChannel(CHANNEL_NAME);
-      channelRef.current = channel;
-      channel.onmessage = (
-        event: MessageEvent<{ id?: unknown; version?: unknown }>,
-      ) => {
-        if (
-          typeof event.data.id === "string" &&
-          typeof event.data.version === "number"
-        ) {
-          void synchronize(event.data.id, event.data.version);
-        }
-      };
+      try {
+        const channel = new BroadcastChannel(RANKING_CHANNEL_NAME);
+        channelRef.current = channel;
+        channel.onmessage = () => void synchronize();
+      } catch {
+        channelRef.current = null;
+      }
     }
     return () => {
       cancelled = true;
@@ -219,116 +246,86 @@ export function useRankingSession(): RankingSessionController {
       channelRef.current?.close();
       channelRef.current = null;
     };
-  }, [adoptSession]);
+  }, [adoptPersistedSession]);
 
   const runMutation = useCallback(
     async (
-      mutation: (
-        currentSession: SessionResponse,
-        operationId: string,
-      ) => Promise<SessionResponse>,
+      transform: (
+        current: PersistedRankingSessionV1,
+      ) => PersistedRankingSessionV1,
     ): Promise<void> => {
-      const current = sessionRef.current;
+      const current = persistedRef.current;
       if (current === null || submittingRef.current) return;
       submittingRef.current = true;
       setIsSubmitting(true);
       setError(null);
       setStatusMessage("Saving");
-      const operationId = crypto.randomUUID();
       try {
-        let updated: SessionResponse;
-        try {
-          updated = await mutation(current, operationId);
-        } catch (firstError) {
-          if (firstError instanceof ApiError) throw firstError;
-          setStatusMessage("Retrying");
-          updated = await mutation(current, operationId);
+        const result = await mutateStoredSession(
+          sessionExpectation(current),
+          (stored) => {
+            if (stored === null) {
+              throw new Error("Saved ranking was cleared.");
+            }
+            return transform(stored);
+          },
+        );
+        const outcome = await adoptMutationResult(result);
+        if (outcome === "cleared") {
+          await createAfterClear(selectionFor(current));
         }
-        adoptSession(updated);
-        setStatusMessage("Saved");
       } catch (mutationError) {
-        if (
-          mutationError instanceof ApiError &&
-          mutationError.code === "stale_session"
-        ) {
-          try {
-            const refreshed = await rankingApi.getSession(current.id);
-            adoptSession(refreshed);
-            setStatusMessage("Updated from another tab.");
-          } catch (refreshError) {
-            setError(messageFor(refreshError));
-            setStatusMessage("Retry");
-          }
-        } else if (
-          mutationError instanceof ApiError &&
-          [404, 410].includes(mutationError.status)
-        ) {
-          try {
-            const replacement = await createSession(
-              selectionForSession(current),
-            );
-            adoptSession(replacement);
-            setStatusMessage(
-              mutationError.status === 410
-                ? "Session expired. New ranking started."
-                : "New ranking started.",
-            );
-          } catch (replacementError) {
-            setError(messageFor(replacementError));
-            setStatusMessage("Retry");
-          }
-        } else {
-          setError(messageFor(mutationError));
-          setStatusMessage("Retry");
-        }
+        setError(messageFor(mutationError));
+        setStatusMessage("Retry");
       } finally {
         submittingRef.current = false;
         setIsSubmitting(false);
       }
     },
-    [adoptSession, createSession],
+    [adoptMutationResult, createAfterClear],
   );
 
   const vote = useCallback(
     async (outcome: VoteOutcome): Promise<void> => {
-      await runMutation((current, operationId) =>
-        rankingApi.vote(
-          current.id,
-          outcome,
-          operationId,
-          current.version,
-        ),
+      await runMutation((current) =>
+        applySessionVote(current, outcome),
       );
     },
     [runMutation],
   );
 
   const undo = useCallback(async (): Promise<void> => {
-    await runMutation((current, operationId) =>
-      rankingApi.undo(
-        current.id,
-        operationId,
-        current.version,
-      ),
-    );
+    await runMutation(undoSessionVote);
   }, [runMutation]);
 
   const startNewRanking = useCallback(
     async (selection: RankingSelection): Promise<boolean> => {
       if (submittingRef.current) return false;
-      const current = sessionRef.current;
+      const current = persistedRef.current;
+      const corruptRaw = corruptRawRef.current;
       submittingRef.current = true;
       setIsSubmitting(true);
       setError(null);
       setStatusMessage("Starting");
       try {
-        const created = await createSession(selection);
-        adoptSession(created);
-        setStatusMessage("Saved");
-        if (current !== null) {
-          void rankingApi.deleteSession(current.id).catch(() => undefined);
+        const catalog = await loadCurrentCatalog();
+        const replacement = createRankingSession(catalog, selection);
+        let result =
+          corruptRaw === null
+            ? await mutateStoredSession(
+                current === null ? null : sessionExpectation(current),
+                () => replacement,
+              )
+            : await replaceCorruptStoredSession(corruptRaw, replacement);
+
+        if (result.status === "stale" && result.session === null) {
+          result = await mutateStoredSession(
+            null,
+            () => replacement,
+          );
         }
-        return true;
+        const outcome = await adoptMutationResult(result);
+        return outcome === "saved";
       } catch (mutationError) {
         setError(messageFor(mutationError));
         setStatusMessage("Retry");
@@ -338,7 +335,7 @@ export function useRankingSession(): RankingSessionController {
         setIsSubmitting(false);
       }
     },
-    [adoptSession, createSession],
+    [adoptMutationResult],
   );
 
   const retry = useCallback((): void => {
@@ -358,78 +355,15 @@ export function useRankingSession(): RankingSessionController {
   };
 }
 
-function messageFor(error: unknown): string {
-  return error instanceof Error ? error.message : "Something went wrong.";
-}
-
-function selectionForSession(
-  session: SessionResponse,
+function selectionFor(
+  session: PersistedRankingSessionV1,
 ): RankingSelection {
   return {
     preset: session.preset,
-    identityMode: session.identity_mode,
+    identityMode: session.identityMode,
   };
 }
 
-function storedSelection(): RankingSelection {
-  const stored = storageGet(SELECTION_KEY);
-  if (stored === null) return DEFAULT_RANKING_SELECTION;
-  try {
-    const parsed: unknown = JSON.parse(stored);
-    return isSelection(parsed) ? parsed : DEFAULT_RANKING_SELECTION;
-  } catch {
-    return DEFAULT_RANKING_SELECTION;
-  }
-}
-
-function pendingCreateFor(
-  selection: RankingSelection,
-): PendingCreate {
-  const stored = parsePendingCreate(storageGet(PENDING_CREATE_KEY));
-  const reusable =
-    stored?.preset === selection.preset &&
-    stored.identityMode === selection.identityMode
-      ? stored
-      : volatilePendingCreate?.preset === selection.preset &&
-          volatilePendingCreate.identityMode === selection.identityMode
-        ? volatilePendingCreate
-        : null;
-  return (
-    reusable ?? {
-      ...selection,
-      operationId: crypto.randomUUID(),
-    }
-  );
-}
-
-function parsePendingCreate(value: string | null): PendingCreate | null {
-  if (value === null) return null;
-  try {
-    const parsed: unknown = JSON.parse(value);
-    if (
-      isSelection(parsed) &&
-      "operationId" in parsed &&
-      typeof parsed.operationId === "string"
-    ) {
-      return {
-        operationId: parsed.operationId,
-        preset: parsed.preset,
-        identityMode: parsed.identityMode,
-      };
-    }
-  } catch {
-    // A legacy operation ID cannot be safely reused without its mode.
-  }
-  return null;
-}
-
-function isSelection(value: unknown): value is RankingSelection {
-  if (typeof value !== "object" || value === null) return false;
-  const candidate = value as Partial<RankingSelection>;
-  return (
-    ["top_10", "top_25", "top_50"].includes(
-      candidate.preset ?? "",
-    ) &&
-    ["normal", "blind"].includes(candidate.identityMode ?? "")
-  );
+function messageFor(error: unknown): string {
+  return error instanceof Error ? error.message : "Something went wrong.";
 }

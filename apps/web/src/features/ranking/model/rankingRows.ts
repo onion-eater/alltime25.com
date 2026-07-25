@@ -1,12 +1,11 @@
 import type {
-  ActiveRankingGroupResponse,
-  RankingGroupResponse,
-} from "@/features/ranking/api/rankingApi";
+  ActiveRankedPlayer,
+  ActiveRankingGroup,
+  RevealedRankedPlayer,
+  RevealedRankingGroup,
+} from "@/features/ranking/session/sessionView";
 
-type RevealedPlayer = RankingGroupResponse["players"][number];
-type ActiveRankingPlayer = ActiveRankingGroupResponse["players"][number];
-
-export interface DisplayRow<Player = RevealedPlayer> {
+export interface DisplayRow<Player = RevealedRankedPlayer> {
   isTied: boolean;
   player: Player;
   rank: number;
@@ -17,14 +16,14 @@ export interface ShareRow extends DisplayRow {
 }
 
 export function flattenRanking(
-  groups: readonly RankingGroupResponse[],
+  groups: readonly RevealedRankingGroup[],
 ): DisplayRow[] {
   return flattenGroups(groups);
 }
 
 export function flattenActiveRanking(
-  groups: readonly ActiveRankingGroupResponse[],
-): DisplayRow<ActiveRankingPlayer>[] {
+  groups: readonly ActiveRankingGroup[],
+): DisplayRow<ActiveRankedPlayer>[] {
   return flattenGroups(groups);
 }
 

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
-import type { IdentityMode } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/HelpDialog.module.css";
+import type { IdentityMode } from "@/features/ranking/domain/player";
 import dialogStyles from "@/shared/components/Dialog.module.css";
 import { useDialogFocus } from "@/shared/hooks/useDialogFocus";
 

@@ -1,5 +1,7 @@
 import {
+  parsePersistedSession,
   readPersistedSession,
+  readPersistedSessionRaw,
   writePersistedSession,
   type PersistedRankingSessionV1,
 } from "@/features/ranking/persistence/persistedSession";
@@ -41,6 +43,24 @@ export async function mutateStoredSession(
       return { status: "stale", session: current };
     }
     const next = await transform(current);
+    writePersistedSession(next);
+    return { status: "saved", session: next };
+  });
+}
+
+export async function replaceCorruptStoredSession(
+  expectedRaw: string,
+  next: PersistedRankingSessionV1,
+): Promise<StoredMutationResult> {
+  return withRankingLock(() => {
+    const currentRaw = readPersistedSessionRaw();
+    if (currentRaw !== expectedRaw) {
+      return {
+        status: "stale",
+        session:
+          currentRaw === null ? null : parsePersistedSession(currentRaw),
+      };
+    }
     writePersistedSession(next);
     return { status: "saved", session: next };
   });

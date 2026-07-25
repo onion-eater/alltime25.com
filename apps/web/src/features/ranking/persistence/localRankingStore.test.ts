@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   mutateStoredSession,
   RANKING_LOCK_NAME,
+  replaceCorruptStoredSession,
   sessionExpectation,
   UnsupportedRankingBrowserError,
 } from "@/features/ranking/persistence/localRankingStore";
@@ -110,6 +111,22 @@ describe("localRankingStore", () => {
     await expect(
       mutateStoredSession(null, () => validSession()),
     ).rejects.toThrow(UnsupportedRankingBrowserError);
+  });
+
+  it("replaces corrupt data only when its raw value still matches", async () => {
+    localStorage.setItem(SESSION_STORAGE_KEY, "{broken");
+    const replacement = validSession();
+
+    const saved = await replaceCorruptStoredSession(
+      "{broken",
+      replacement,
+    );
+
+    expect(saved).toEqual({
+      status: "saved",
+      session: replacement,
+    });
+    expect(readPersistedSession()).toEqual(replacement);
   });
 });
 

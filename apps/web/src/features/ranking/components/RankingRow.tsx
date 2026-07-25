@@ -1,13 +1,11 @@
 import type {
-  ActiveRankingGroupResponse,
-  RankingGroupResponse,
-} from "@/features/ranking/api/rankingApi";
+  ActiveRankedPlayer,
+  RevealedRankedPlayer,
+} from "@/features/ranking/session/sessionView";
 import { PlayerPortrait } from "@/features/ranking/components/PlayerPortrait";
 import styles from "@/features/ranking/components/RankingRow.module.css";
 
-type RankedPlayer =
-  | RankingGroupResponse["players"][number]
-  | ActiveRankingGroupResponse["players"][number];
+type RankedPlayer = RevealedRankedPlayer | ActiveRankedPlayer;
 
 interface RankingRowProps {
   player: RankedPlayer;
@@ -35,7 +33,7 @@ export function RankingRow({
       <div className={styles.photo}>
         <PlayerPortrait
           name={player.name}
-          src={player.image_url}
+          src={player.imageUrl}
         />
       </div>
       <div className={styles.identity}>

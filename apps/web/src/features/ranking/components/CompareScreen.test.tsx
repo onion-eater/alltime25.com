@@ -14,10 +14,13 @@ import {
 
 describe("CompareScreen", () => {
   it("does not render a bordered fill when progress is zero", () => {
-    const session = activeSession();
-    session.progress = {
-      ...session.progress,
-      processed: 0,
+    const current = activeSession();
+    const session = {
+      ...current,
+      progress: {
+        ...current.progress,
+        processed: 0,
+      },
     };
 
     const { container } = render(
@@ -166,12 +169,31 @@ describe("CompareScreen", () => {
   });
 
   it("renders unavailable statistics and awards as em dashes", () => {
-    const session = activeSession();
-    if (session.comparison === null) throw new Error("Missing comparison");
-    session.comparison.player_a.regular_season.three_pct = null;
-    session.comparison.player_a.playoffs.three_pct = null;
-    session.comparison.player_a.honors.dpoy = null;
-    session.comparison.player_a.honors.finals_mvp = null;
+    const current = activeSession();
+    if (current.comparison === null) throw new Error("Missing comparison");
+    const playerA = current.comparison.playerA;
+    const session = {
+      ...current,
+      comparison: {
+        ...current.comparison,
+        playerA: {
+          ...playerA,
+          regularSeason: {
+            ...playerA.regularSeason,
+            threePct: null,
+          },
+          playoffs: {
+            ...playerA.playoffs,
+            threePct: null,
+          },
+          honors: {
+            ...playerA.honors,
+            dpoy: null,
+            finalsMvp: null,
+          },
+        },
+      },
+    };
 
     render(
       <CompareScreen

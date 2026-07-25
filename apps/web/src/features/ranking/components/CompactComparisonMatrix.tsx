@@ -1,11 +1,11 @@
-import type { AnonymousPlayerResponse } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/CompactComparisonMatrix.module.css";
 import { PlayerPortrait } from "@/features/ranking/components/PlayerPortrait";
 import type { ComparisonSection } from "@/features/ranking/model/comparisonRows";
+import type { ComparisonPlayer } from "@/features/ranking/session/sessionView";
 
 interface CompactComparisonMatrixProps {
-  playerA: AnonymousPlayerResponse;
-  playerB: AnonymousPlayerResponse;
+  playerA: ComparisonPlayer;
+  playerB: ComparisonPlayer;
   sections: readonly ComparisonSection[];
 }
 
@@ -53,16 +53,16 @@ export function CompactComparisonMatrix({
 function CompactPlayer({
   player,
 }: {
-  player: AnonymousPlayerResponse;
+  player: ComparisonPlayer;
 }): React.JSX.Element {
-  if ("name" in player && "image_url" in player) {
+  if ("name" in player) {
     return (
       <strong className={styles.identifiedPlayer}>
         <span className="sr-only">{player.label}</span>
         <PlayerPortrait
           className={styles.portrait}
           name={player.name}
-          src={player.image_url}
+          src={player.imageUrl}
         />
         <span>{abbreviateName(player.name)}</span>
       </strong>

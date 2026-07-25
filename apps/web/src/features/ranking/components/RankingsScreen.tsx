@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 
-import type { SessionResponse } from "@/features/ranking/api/rankingApi";
 import { RankingRow } from "@/features/ranking/components/RankingRow";
 import styles from "@/features/ranking/components/RankingsScreen.module.css";
 import {
@@ -8,13 +7,14 @@ import {
   flattenRanking,
 } from "@/features/ranking/model/rankingRows";
 import { shareRankingImage } from "@/features/ranking/share/shareRankingImage";
+import type { RankingSessionView } from "@/features/ranking/session/sessionView";
 import { ArrowIcon } from "@/shared/components/ArrowIcon";
 
 interface RankingsScreenProps {
   isSubmitting?: boolean;
   onResume?: () => void;
   onStartOver?: () => void | Promise<void>;
-  session: SessionResponse;
+  session: RankingSessionView;
   statusMessage?: string;
 }
 
@@ -32,12 +32,12 @@ export function RankingsScreen({
     () =>
       isComplete
         ? flattenRanking(session.ranking ?? [])
-        : flattenActiveRanking(session.ranking_preview ?? []),
-    [isComplete, session.ranking, session.ranking_preview],
+        : flattenActiveRanking(session.rankingPreview ?? []),
+    [isComplete, session.ranking, session.rankingPreview],
   );
   const groups = isComplete
     ? session.ranking ?? []
-    : session.ranking_preview ?? [];
+    : session.rankingPreview ?? [];
   const tieCount = groups.filter(
     (group) => group.players.length > 1,
   ).length;
@@ -50,7 +50,7 @@ export function RankingsScreen({
       setActionStatus(
         await shareRankingImage(
           session.ranking,
-          session.target_size,
+          session.targetSize,
         ),
       );
     } catch {
@@ -73,7 +73,7 @@ export function RankingsScreen({
           <div>
             <h1>
               {isComplete
-                ? `Your NBA top ${session.target_size}.`
+                ? `Your NBA top ${session.targetSize}.`
                 : "Your ranking so far."}
             </h1>
             <p className={styles.summary}>
@@ -85,7 +85,7 @@ export function RankingsScreen({
             className={`${styles.complete} ${isComplete ? "" : styles.inProgress}`}
           >
             {isComplete ? "Complete" : "In progress"} ·{" "}
-            {session.progress.processed} / {session.pool_size}
+            {session.progress.processed} / {session.poolSize}
           </div>
         </header>
 

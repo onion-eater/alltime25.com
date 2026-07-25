@@ -1,8 +1,8 @@
-import type { RankingGroupResponse } from "@/features/ranking/api/rankingApi";
+import type { RevealedRankingGroup } from "@/features/ranking/session/sessionView";
 import { createRankingImage } from "@/features/ranking/share/createRankingImage";
 
 export async function shareRankingImage(
-  groups: readonly RankingGroupResponse[],
+  groups: readonly RevealedRankingGroup[],
   targetSize: number,
 ): Promise<string> {
   const blob = await createRankingImage(groups, targetSize);

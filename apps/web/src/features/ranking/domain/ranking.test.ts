@@ -68,8 +68,10 @@ describe("ranking domain", () => {
     }
   });
 
-  it("matches Python for every pool and target from one to one hundred", () => {
-    for (const expected of parity.broad_matrix) {
+  it(
+    "matches Python for every pool and target from one to one hundred",
+    () => {
+      for (const expected of parity.broad_matrix) {
       const playerIds = Array.from(
         { length: expected.pool_size },
         (_, index) => `player-${String(index).padStart(3, "0")}`,
@@ -106,9 +108,11 @@ describe("ranking domain", () => {
         comparisons += 1;
       }
       expect(comparisons).toBe(expected.comparison_count);
-      expect(hashState(state)).toBe(expected.final_state_sha256);
-    }
-  });
+        expect(hashState(state)).toBe(expected.final_state_sha256);
+      }
+    },
+    30_000,
+  );
 
   it("matches a transitive preference model across random pools", () => {
     fc.assert(

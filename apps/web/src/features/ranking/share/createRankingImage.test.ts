@@ -6,10 +6,10 @@ import {
   vi,
 } from "vitest";
 
-import type { RankingGroupResponse } from "@/features/ranking/api/rankingApi";
+import type { RevealedRankingGroup } from "@/features/ranking/session/sessionView";
 import { createRankingImage } from "@/features/ranking/share/createRankingImage";
 
-const groups: RankingGroupResponse[] = [
+const groups: RevealedRankingGroup[] = [
   {
     rank: 1,
     players: Array.from({ length: 50 }, (_, index) => ({
@@ -18,7 +18,7 @@ const groups: RankingGroupResponse[] = [
           ? "Željko Longname-Williams"
           : `Player ${index + 1}`,
       era: "2000s",
-      image_url: `/players/${index + 1}.webp`,
+      imageUrl: `/players/${index + 1}.webp`,
     })),
   },
 ];

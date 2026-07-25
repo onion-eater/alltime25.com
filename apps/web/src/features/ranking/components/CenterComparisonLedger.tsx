@@ -1,11 +1,11 @@
-import type { AnonymousPlayerResponse } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/CenterComparisonLedger.module.css";
 import { PlayerLedgerHeader } from "@/features/ranking/components/PlayerLedgerHeader";
 import type { ComparisonSection } from "@/features/ranking/model/comparisonRows";
+import type { ComparisonPlayer } from "@/features/ranking/session/sessionView";
 
 interface CenterComparisonLedgerProps {
-  playerA: AnonymousPlayerResponse;
-  playerB: AnonymousPlayerResponse;
+  playerA: ComparisonPlayer;
+  playerB: ComparisonPlayer;
   sections: readonly ComparisonSection[];
 }
 
@@ -16,9 +16,7 @@ export function CenterComparisonLedger({
 }: CenterComparisonLedgerProps): React.JSX.Element {
   const identified =
     "name" in playerA &&
-    "image_url" in playerA &&
-    "name" in playerB &&
-    "image_url" in playerB;
+    "name" in playerB;
 
   return (
     <div

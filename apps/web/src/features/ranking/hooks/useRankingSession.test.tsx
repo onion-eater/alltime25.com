@@ -1,344 +1,375 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vitest";
 
-import { rankingApi } from "@/features/ranking/api/rankingApi";
+import type { PlayerCatalog } from "@/features/ranking/catalog/catalogRepository";
+import type { PlayerResume } from "@/features/ranking/domain/player";
 import { useRankingSession } from "@/features/ranking/hooks/useRankingSession";
-import { ApiError } from "@/shared/api/client";
-import { activeSession } from "@/test/sessionFixture";
+import {
+  SESSION_STORAGE_KEY,
+  readPersistedSession,
+  writePersistedSession,
+} from "@/features/ranking/persistence/persistedSession";
+import {
+  applySessionVote,
+  createRankingSession,
+} from "@/features/ranking/session/rankingSession";
 
-vi.mock("@/features/ranking/api/rankingApi", () => ({
-  rankingApi: {
-    createSession: vi.fn(),
-    deleteSession: vi.fn(),
-    getSession: vi.fn(),
-    undo: vi.fn(),
-    vote: vi.fn(),
-  },
+const catalogMocks = vi.hoisted(() => ({
+  loadCatalog: vi.fn(),
+  loadCurrentCatalog: vi.fn(),
 }));
 
-const CREATE_ID = "00000000-0000-4000-8000-000000000001";
-const MUTATION_ID = "00000000-0000-4000-8000-000000000002";
+vi.mock("@/features/ranking/catalog/catalogRepository", () => ({
+  loadCatalog: catalogMocks.loadCatalog,
+  loadCurrentCatalog: catalogMocks.loadCurrentCatalog,
+}));
 
 describe("useRankingSession", () => {
   beforeEach(() => {
-    vi.resetAllMocks();
-    vi.spyOn(globalThis.crypto, "randomUUID")
-      .mockReturnValueOnce(CREATE_ID)
-      .mockReturnValue(MUTATION_ID);
+    vi.restoreAllMocks();
+    const value = catalog();
+    catalogMocks.loadCatalog.mockReset();
+    catalogMocks.loadCurrentCatalog.mockReset();
+    catalogMocks.loadCatalog.mockImplementation((catalogId: string) =>
+      catalogId === value.catalogId
+        ? Promise.resolve(value)
+        : Promise.reject(new Error("Saved ranking catalog is unavailable.")),
+    );
+    catalogMocks.loadCurrentCatalog.mockResolvedValue(value);
+    installWebLocks();
   });
 
-  it("creates and stores a session with a persistent operation ID", async () => {
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
-
+  it("creates and persists a fresh Top 25 / Normal ranking", async () => {
     const { result } = renderHook(() => useRankingSession());
 
-    await waitFor(() => {
-      expect(result.current.session?.id).toBe("session-1");
-    });
-    expect(rankingApi.createSession).toHaveBeenCalledWith(
-      CREATE_ID,
-      { preset: "top_25", identityMode: "normal" },
-      expect.any(AbortSignal),
-    );
-    expect(window.localStorage.getItem("alltime25.session_id")).toBe("session-1");
-    expect(window.localStorage.getItem("alltime25.session_version")).toBe("0");
-    expect(
-      window.localStorage.getItem("alltime25.pending_create_operation"),
-    ).toBeNull();
-  });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-  it("restores a saved session without creating another one", async () => {
-    window.localStorage.setItem("alltime25.session_id", "session-1");
-    vi.mocked(rankingApi.getSession).mockResolvedValue(activeSession());
-
-    const { result } = renderHook(() => useRankingSession());
-
-    await waitFor(() => {
-      expect(result.current.session?.id).toBe("session-1");
-    });
-    expect(rankingApi.createSession).not.toHaveBeenCalled();
-  });
-
-  it("passes operation ID and expected version with a vote", async () => {
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
-    const voted = {
-      ...activeSession(),
-      version: 1,
-      progress: { ...activeSession().progress, votes: 9 },
-    };
-    vi.mocked(rankingApi.vote).mockResolvedValue(voted);
-    const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.session).not.toBeNull());
-
-    await act(async () => {
-      await result.current.vote("tie");
-    });
-
-    expect(rankingApi.vote).toHaveBeenCalledWith(
-      "session-1",
-      "tie",
-      MUTATION_ID,
-      0,
-    );
-    expect(result.current.session?.version).toBe(1);
-  });
-
-  it("refetches instead of overwriting after a stale-session conflict", async () => {
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
-    const refreshed = { ...activeSession(), version: 1 };
-    vi.mocked(rankingApi.vote).mockRejectedValue(
-      new ApiError(
-        409,
-        "Changed in another tab.",
-        "stale_session",
-        1,
-      ),
-    );
-    vi.mocked(rankingApi.getSession).mockResolvedValue(refreshed);
-    const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.session).not.toBeNull());
-
-    await act(async () => {
-      await result.current.vote("better");
-    });
-
-    expect(rankingApi.getSession).toHaveBeenCalledWith("session-1");
-    expect(result.current.session?.version).toBe(1);
-    expect(result.current.statusMessage).toContain("another tab");
-  });
-
-  it("replaces an expired saved session", async () => {
-    window.localStorage.setItem("alltime25.session_id", "expired-session");
-    window.localStorage.setItem(
-      "alltime25.ranking_selection",
-      JSON.stringify({ preset: "top_10", identityMode: "blind" }),
-    );
-    vi.mocked(rankingApi.getSession).mockRejectedValue(
-      new ApiError(410, "Expired.", "session_expired"),
-    );
-    vi.mocked(rankingApi.createSession).mockResolvedValue({
-      ...activeSession(),
-      preset: "top_10",
-      identity_mode: "blind",
-    });
-
-    const { result } = renderHook(() => useRankingSession());
-
-    await waitFor(() => {
-      expect(result.current.session?.id).toBe("session-1");
-    });
     expect(result.current.error).toBeNull();
-    expect(rankingApi.createSession).toHaveBeenCalledWith(
-      CREATE_ID,
-      { preset: "top_10", identityMode: "blind" },
-      expect.any(AbortSignal),
-    );
-    expect(window.localStorage.getItem("alltime25.session_id")).toBe("session-1");
+    expect(result.current.session).toMatchObject({
+      preset: "top_25",
+      identityMode: "normal",
+      poolSize: 50,
+      targetSize: 25,
+      revision: 0,
+    });
+    expect(readPersistedSession()?.playerOrder).toHaveLength(50);
   });
 
-  it("ignores an idempotent response older than local state", async () => {
-    const current = { ...activeSession(), version: 2 };
-    vi.mocked(rankingApi.createSession).mockResolvedValue(current);
-    vi.mocked(rankingApi.vote).mockResolvedValue({
-      ...activeSession(),
-      version: 1,
-    });
+  it("restores the exact stored catalog, mode, order, and vote history", async () => {
+    const stored = applySessionVote(
+      createRankingSession(catalog(), {
+        preset: "top_10",
+        identityMode: "blind",
+      }),
+      "tie",
+    );
+    writePersistedSession(stored);
+
     const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.session?.version).toBe(2));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
 
-    await act(async () => {
-      await result.current.vote("worse");
+    expect(result.current.session).toMatchObject({
+      id: stored.id,
+      preset: "top_10",
+      identityMode: "blind",
+      revision: 1,
+      canUndo: true,
     });
-
-    expect(result.current.session?.version).toBe(2);
+    expect(result.current.session?.comparison?.playerA).not.toHaveProperty(
+      "name",
+    );
+    expect(catalogMocks.loadCurrentCatalog).not.toHaveBeenCalled();
   });
 
-  it("blocks duplicate local submissions", async () => {
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
-    let resolveVote: ((value: ReturnType<typeof activeSession>) => void) | null =
-      null;
-    vi.mocked(rankingApi.vote).mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          resolveVote = resolve;
-        }),
-    );
+  it("persists a vote before changing the rendered comparison", async () => {
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+    const before = result.current.session?.comparison;
+
+    await act(() => result.current.vote("better"));
+
+    expect(result.current.session?.revision).toBe(1);
+    expect(result.current.session?.comparison).not.toEqual(before);
+    expect(readPersistedSession()?.outcomes).toEqual(["better"]);
+  });
+
+  it("persists undo and permits a new branch", async () => {
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+
+    await act(() => result.current.vote("better"));
+    await act(() => result.current.undo());
+    await act(() => result.current.vote("worse"));
+
+    expect(readPersistedSession()).toMatchObject({
+      outcomes: ["worse"],
+      revision: 3,
+    });
+  });
+
+  it("blocks a duplicate click while the first mutation owns the lock", async () => {
+    let release: (() => void) | undefined;
+    const barrier = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    let requests = 0;
+    installWebLocks(async (callback) => {
+      requests += 1;
+      if (requests > 1) await barrier;
+      return callback();
+    });
     const { result } = renderHook(() => useRankingSession());
     await waitFor(() => expect(result.current.session).not.toBeNull());
 
     let first: Promise<void>;
-    let second: Promise<void>;
     act(() => {
-      first = result.current.vote("better");
-      second = result.current.vote("worse");
+      first = result.current.vote("tie");
+      void result.current.vote("better");
     });
-    expect(rankingApi.vote).toHaveBeenCalledTimes(1);
     await act(async () => {
-      resolveVote?.({ ...activeSession(), version: 1 });
-      await Promise.all([first, second]);
+      release?.();
+      await first;
     });
+
+    expect(readPersistedSession()?.outcomes).toEqual(["tie"]);
   });
 
-  it("switches modes by creating the replacement before deleting", async () => {
-    const replacement = {
-      ...activeSession(),
-      id: "session-2",
-      preset: "top_10" as const,
-      identity_mode: "blind" as const,
-    };
-    vi.mocked(rankingApi.createSession)
-      .mockResolvedValueOnce(activeSession())
-      .mockResolvedValueOnce(replacement);
-    vi.mocked(rankingApi.deleteSession).mockResolvedValue();
+  it("keeps the current ranking when a restart write fails", async () => {
     const { result } = renderHook(() => useRankingSession());
     await waitFor(() => expect(result.current.session).not.toBeNull());
+    const prior = result.current.session;
+    const setItem = vi
+      .spyOn(Storage.prototype, "setItem")
+      .mockImplementation(() => {
+        throw new DOMException("Full", "QuotaExceededError");
+      });
 
-    let changed = false;
+    let restarted = true;
     await act(async () => {
-      changed = await result.current.startNewRanking({
+      restarted = await result.current.startNewRanking({
         preset: "top_10",
         identityMode: "blind",
       });
     });
 
-    expect(changed).toBe(true);
-    expect(result.current.session).toMatchObject({
-      id: "session-2",
-      preset: "top_10",
-      identity_mode: "blind",
-    });
-    expect(rankingApi.createSession).toHaveBeenNthCalledWith(
-      2,
-      MUTATION_ID,
-      { preset: "top_10", identityMode: "blind" },
-      undefined,
-    );
-    expect(
-      vi.mocked(rankingApi.createSession).mock.invocationCallOrder[1],
-    ).toBeLessThan(
-      vi.mocked(rankingApi.deleteSession).mock.invocationCallOrder[0],
-    );
+    expect(restarted).toBe(false);
+    expect(result.current.session).toEqual(prior);
+    expect(result.current.error).toMatch(/could not be saved/i);
+    setItem.mockRestore();
   });
 
-  it("finishes restart without waiting for old-session cleanup", async () => {
-    const replacement = {
-      ...activeSession(),
-      id: "session-2",
-    };
-    let finishDelete: (() => void) | null = null;
-    vi.mocked(rankingApi.createSession)
-      .mockResolvedValueOnce(activeSession())
-      .mockResolvedValueOnce(replacement);
-    vi.mocked(rankingApi.deleteSession).mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          finishDelete = resolve;
-        }),
-    );
+  it("leaves corrupt progress intact until an explicit restart replaces it", async () => {
+    window.localStorage.setItem(SESSION_STORAGE_KEY, "{broken");
     const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.session).not.toBeNull());
 
-    let restart!: Promise<boolean>;
-    act(() => {
-      restart = result.current.startNewRanking({
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.session).toBeNull();
+    expect(window.localStorage.getItem(SESSION_STORAGE_KEY)).toBe("{broken");
+
+    let restarted = false;
+    await act(async () => {
+      restarted = await result.current.startNewRanking({
         preset: "top_25",
         identityMode: "normal",
       });
     });
-    await waitFor(() => {
-      expect(rankingApi.deleteSession).toHaveBeenCalledWith("session-1");
-    });
-
-    let restarted: boolean | undefined;
-    void restart.then((value) => {
-      restarted = value;
-    });
-    await act(async () => {
-      await Promise.resolve();
-    });
 
     expect(restarted).toBe(true);
-    expect(result.current.session?.id).toBe("session-2");
-    await act(async () => {
-      finishDelete?.();
-      await restart;
+    expect(result.current.session?.preset).toBe("top_25");
+    expect(readPersistedSession()).not.toBeNull();
+  });
+
+  it("can restart when a saved immutable catalog is no longer shipped", async () => {
+    const stored = {
+      ...createRankingSession(catalog(), {
+        preset: "top_25",
+        identityMode: "normal",
+      }),
+      catalogId: "retired-catalog",
+    };
+    writePersistedSession(stored);
+    const { result } = renderHook(() => useRankingSession());
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.error).toMatch(/catalog is unavailable/i);
+
+    await act(() =>
+      result.current.startNewRanking({
+        preset: "top_10",
+        identityMode: "blind",
+      }),
+    );
+
+    expect(result.current.session).toMatchObject({
+      catalogId: "test-catalog",
+      preset: "top_10",
+      identityMode: "blind",
     });
   });
 
-  it("keeps the current session when a mode change fails", async () => {
-    vi.mocked(rankingApi.createSession)
-      .mockResolvedValueOnce(activeSession())
-      .mockRejectedValueOnce(new Error("Offline"));
+  it("adopts a newer storage revision from another tab", async () => {
     const { result } = renderHook(() => useRankingSession());
     await waitFor(() => expect(result.current.session).not.toBeNull());
+    const current = readPersistedSession();
+    if (current === null) throw new Error("Missing stored session.");
+    const updated = applySessionVote(current, "tie");
+    writePersistedSession(updated);
 
-    let changed = true;
-    await act(async () => {
-      changed = await result.current.startNewRanking({
-        preset: "top_50",
-        identityMode: "blind",
-      });
+    act(() => {
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: SESSION_STORAGE_KEY,
+          newValue: JSON.stringify(updated),
+        }),
+      );
     });
 
-    expect(changed).toBe(false);
-    expect(result.current.session?.id).toBe("session-1");
-    expect(rankingApi.deleteSession).not.toHaveBeenCalled();
+    await waitFor(() =>
+      expect(result.current.session?.revision).toBe(updated.revision),
+    );
+    expect(result.current.statusMessage).toBe(
+      "Updated from another tab.",
+    );
   });
 
-  it("does not crash when local storage is unavailable", async () => {
-    const getItem = vi
-      .spyOn(Storage.prototype, "getItem")
-      .mockImplementation(() => {
-        throw new DOMException("Blocked");
-      });
-    const setItem = vi
-      .spyOn(Storage.prototype, "setItem")
-      .mockImplementation(() => {
-        throw new DOMException("Blocked");
-      });
-    vi.mocked(rankingApi.createSession).mockResolvedValue(activeSession());
-
+  it("preserves the display after another tab clears storage, then starts fresh on action", async () => {
     const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.session).not.toBeNull());
+    const prior = result.current.session;
+    window.localStorage.removeItem(SESSION_STORAGE_KEY);
 
-    await waitFor(() => {
-      expect(result.current.session?.id).toBe("session-1");
+    act(() => {
+      window.dispatchEvent(
+        new StorageEvent("storage", {
+          key: SESSION_STORAGE_KEY,
+          newValue: null,
+        }),
+      );
     });
-    expect(result.current.error).toBeNull();
-    getItem.mockRestore();
-    setItem.mockRestore();
-  });
+    expect(result.current.session).toEqual(prior);
 
-  it("exposes retry after initial loading fails", async () => {
-    vi.mocked(rankingApi.createSession)
-      .mockRejectedValueOnce(new Error("Offline"))
-      .mockResolvedValueOnce(activeSession());
-    const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.error).toBe("Offline"));
+    await act(() => result.current.vote("tie"));
 
-    act(() => result.current.retry());
-
-    await waitFor(() => {
-      expect(result.current.session?.id).toBe("session-1");
+    expect(result.current.session?.id).not.toBe(prior?.id);
+    expect(result.current.session).toMatchObject({
+      preset: prior?.preset,
+      identityMode: prior?.identityMode,
+      revision: 0,
     });
-    expect(result.current.error).toBeNull();
   });
 
-  it("keeps a failed create operation bound to its selected mode", async () => {
-    vi.mocked(rankingApi.createSession).mockRejectedValue(new Error("Offline"));
-
+  it("reports browsers without Web Locks instead of using unsafe persistence", async () => {
+    Object.defineProperty(navigator, "locks", {
+      configurable: true,
+      value: undefined,
+    });
     const { result } = renderHook(() => useRankingSession());
 
-    await waitFor(() => expect(result.current.error).toBe("Offline"));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current.session).toBeNull();
+    expect(result.current.error).toMatch(/cannot safely save/i);
+    expect(window.localStorage.getItem(SESSION_STORAGE_KEY)).toBeNull();
+  });
+
+  it("removes legacy server-session keys during first client startup", async () => {
+    window.localStorage.setItem("alltime25.session_id", "server-id");
+    window.localStorage.setItem("alltime25.session_version", "9");
+    window.localStorage.setItem(
+      "alltime25.pending_create_operation",
+      "operation",
+    );
+    window.localStorage.setItem(
+      "alltime25.ranking_selection",
+      "selection",
+    );
+
+    const { result } = renderHook(() => useRankingSession());
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(window.localStorage.getItem("alltime25.session_id")).toBeNull();
     expect(
-      JSON.parse(
-        window.localStorage.getItem(
-          "alltime25.pending_create_operation",
-        ) ?? "{}",
-      ),
-    ).toEqual({
-      operationId: CREATE_ID,
-      preset: "top_25",
-      identityMode: "normal",
-    });
+      window.localStorage.getItem("alltime25.session_version"),
+    ).toBeNull();
+    expect(
+      window.localStorage.getItem("alltime25.pending_create_operation"),
+    ).toBeNull();
+    expect(
+      window.localStorage.getItem("alltime25.ranking_selection"),
+    ).toBeNull();
   });
 });
+
+function installWebLocks(
+  run: <T>(
+    callback: () => T | Promise<T>,
+  ) => T | Promise<T> = (callback) => callback(),
+): void {
+  Object.defineProperty(navigator, "locks", {
+    configurable: true,
+    value: {
+      request: vi.fn(
+        <T,>(
+          _name: string,
+          callback: () => T | Promise<T>,
+        ): T | Promise<T> => run(callback),
+      ),
+    },
+  });
+}
+
+function catalog(): PlayerCatalog {
+  const playerIds = Array.from(
+    { length: 100 },
+    (_, index) => `player-${String(index).padStart(3, "0")}`,
+  );
+  const players = playerIds.map(player);
+  return {
+    catalogId: "test-catalog",
+    asOf: "2026-06-30",
+    playersById: new Map(players.map((resume) => [resume.id, resume])),
+    playerIdsByPool: {
+      25: playerIds.slice(0, 25),
+      50: playerIds.slice(0, 50),
+      100: playerIds,
+    },
+  };
+}
+
+function player(id: string): PlayerResume {
+  const stats = {
+    games: 100,
+    ppg: 20,
+    rpg: 5,
+    apg: 5,
+    spg: 1,
+    bpg: 1,
+    fgPct: 50,
+    threePct: 35,
+    ftPct: 80,
+  };
+  return {
+    id,
+    name: `Player ${id}`,
+    era: "2000s",
+    seasons: 10,
+    regularSeason: stats,
+    playoffs: stats,
+    honors: {
+      mvp: 0,
+      allNba: 0,
+      dpoy: 0,
+      championships: 0,
+      finalsMvp: 0,
+    },
+    imagePath: `/assets/catalogs/test-catalog/players/${id}.webp`,
+    asOf: "2026-06-30",
+    sourceNote: "Test fixture.",
+  };
+}

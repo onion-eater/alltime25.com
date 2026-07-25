@@ -55,17 +55,20 @@ export class CorruptRankingSessionError extends RankingStorageError {
 }
 
 export function readPersistedSession(): PersistedRankingSessionV1 | null {
-  let raw: string | null;
+  const raw = readPersistedSessionRaw();
+  if (raw === null) return null;
+  return parsePersistedSession(raw);
+}
+
+export function readPersistedSessionRaw(): string | null {
   try {
-    raw = window.localStorage.getItem(SESSION_STORAGE_KEY);
+    return window.localStorage.getItem(SESSION_STORAGE_KEY);
   } catch (error) {
     throw new RankingStorageError(
       "Local saving is unavailable in this browser.",
       { cause: error },
     );
   }
-  if (raw === null) return null;
-  return parsePersistedSession(raw);
 }
 
 export function writePersistedSession(

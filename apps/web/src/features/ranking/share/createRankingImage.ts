@@ -1,9 +1,9 @@
-import type { RankingGroupResponse } from "@/features/ranking/api/rankingApi";
 import {
   flattenRanking,
   rowsForShare,
   type ShareRow,
 } from "@/features/ranking/model/rankingRows";
+import type { RevealedRankingGroup } from "@/features/ranking/session/sessionView";
 
 const WIDTH = 1080;
 const HEIGHT = 1350;
@@ -26,7 +26,7 @@ interface ShareLayout {
 }
 
 export async function createRankingImage(
-  groups: readonly RankingGroupResponse[],
+  groups: readonly RevealedRankingGroup[],
   targetSize: number,
 ): Promise<Blob> {
   const rows = rowsForShare(flattenRanking(groups), targetSize);

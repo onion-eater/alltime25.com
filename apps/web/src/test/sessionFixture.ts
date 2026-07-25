@@ -1,38 +1,40 @@
-import type { components } from "@/shared/api/generated/schema";
+import type {
+  AnonymousComparisonPlayer,
+  ComparisonPlayer,
+  RankingSessionView,
+} from "@/features/ranking/session/sessionView";
 
-export type SessionResponse = components["schemas"]["SessionResponse"];
-
-const stats: components["schemas"]["CareerStatsResponse"] = {
+const stats = {
   games: 1000,
   ppg: 25.4,
   rpg: 6.2,
   apg: 5.3,
   spg: 2.3,
   bpg: 0.8,
-  fg_pct: 49.7,
-  three_pct: 32.7,
-  ft_pct: 83.5,
+  fgPct: 49.7,
+  threePct: 32.7,
+  ftPct: 83.5,
 };
 
-const honors: components["schemas"]["HonorsResponse"] = {
+const honors = {
   mvp: 5,
-  all_nba: 11,
+  allNba: 11,
   dpoy: 1,
   championships: 6,
-  finals_mvp: 6,
+  finalsMvp: 6,
 };
 
-export function activeSession(): SessionResponse {
+export function activeSession(): RankingSessionView {
   return {
     id: "session-1",
     status: "active",
-    target_size: 10,
-    pool_size: 10,
-    version: 0,
-    can_undo: true,
-    catalog_id: "development-2024-06-18",
+    targetSize: 10,
+    poolSize: 10,
+    revision: 0,
+    canUndo: true,
+    catalogId: "development-2024-06-18",
     preset: "top_25",
-    identity_mode: "normal",
+    identityMode: "normal",
     progress: {
       processed: 4,
       total: 10,
@@ -41,32 +43,32 @@ export function activeSession(): SessionResponse {
       eliminated: 0,
     },
     comparison: {
-      player_a: {
+      playerA: {
         label: "Player A",
         code: "#042",
         name: "Michael Jordan",
-        image_url:
+        imageUrl:
           "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
         era: "1990s",
         seasons: 15,
-        regular_season: stats,
+        regularSeason: stats,
         playoffs: { ...stats, games: 179, ppg: 33.4 },
         honors,
       },
-      player_b: {
+      playerB: {
         label: "Player B",
         code: "#077",
         name: "LeBron James",
-        image_url:
+        imageUrl:
           "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
         era: "2010s",
         seasons: 21,
-        regular_season: { ...stats, games: 1492, ppg: 27.1 },
+        regularSeason: { ...stats, games: 1492, ppg: 27.1 },
         playoffs: { ...stats, games: 287, ppg: 28.4 },
-        honors: { ...honors, mvp: 4, all_nba: 20 },
+        honors: { ...honors, mvp: 4, allNba: 20 },
       },
     },
-    ranking_preview: [
+    rankingPreview: [
       {
         rank: 1,
         players: [
@@ -74,7 +76,7 @@ export function activeSession(): SessionResponse {
             code: "#018",
             name: "Kareem Abdul-Jabbar",
             era: "1970s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
           },
         ],
@@ -86,7 +88,7 @@ export function activeSession(): SessionResponse {
             code: "#042",
             name: "Michael Jordan",
             era: "1990s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
           },
         ],
@@ -96,17 +98,17 @@ export function activeSession(): SessionResponse {
   };
 }
 
-export function blindSession(): SessionResponse {
+export function blindSession(): RankingSessionView {
   const session = activeSession();
   if (session.comparison === null) return session;
   return {
     ...session,
-    identity_mode: "blind",
+    identityMode: "blind",
     comparison: {
-      player_a: anonymize(session.comparison.player_a),
-      player_b: anonymize(session.comparison.player_b),
+      playerA: anonymize(session.comparison.playerA),
+      playerB: anonymize(session.comparison.playerB),
     },
-    ranking_preview: session.ranking_preview?.map((group) => ({
+    rankingPreview: session.rankingPreview?.map((group) => ({
       rank: group.rank,
       players: group.players.map((player) => ({ code: player.code })),
     })) ?? null,
@@ -114,20 +116,20 @@ export function blindSession(): SessionResponse {
 }
 
 function anonymize(
-  player: components["schemas"]["ComparisonResponse"]["player_a"],
-): components["schemas"]["ComparisonPlayerResponse"] {
+  player: ComparisonPlayer,
+): AnonymousComparisonPlayer {
   return {
     label: player.label,
     code: player.code,
     era: player.era,
     seasons: player.seasons,
-    regular_season: player.regular_season,
+    regularSeason: player.regularSeason,
     playoffs: player.playoffs,
     honors: player.honors,
   };
 }
 
-export function completedSession(): SessionResponse {
+export function completedSession(): RankingSessionView {
   return {
     ...activeSession(),
     status: "complete",
@@ -139,7 +141,7 @@ export function completedSession(): SessionResponse {
       ties: 1,
       eliminated: 0,
     },
-    ranking_preview: null,
+    rankingPreview: null,
     ranking: [
       {
         rank: 1,
@@ -147,13 +149,13 @@ export function completedSession(): SessionResponse {
           {
             name: "Michael Jordan",
             era: "1990s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/jordami01.jpg",
           },
           {
             name: "LeBron James",
             era: "2010s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/jamesle01.jpg",
           },
         ],
@@ -164,7 +166,7 @@ export function completedSession(): SessionResponse {
           {
             name: "Kareem Abdul-Jabbar",
             era: "1970s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/abdulka01.jpg",
           },
         ],
@@ -175,7 +177,7 @@ export function completedSession(): SessionResponse {
           {
             name: `Test Player ${index + 4}`,
             era: "2000s",
-            image_url:
+            imageUrl:
               "/assets/catalogs/development-2024-06-18/players/birdla01.jpg",
           },
         ],

@@ -6,7 +6,7 @@ import {
   vi,
 } from "vitest";
 
-import type { RankingGroupResponse } from "@/features/ranking/api/rankingApi";
+import type { RevealedRankingGroup } from "@/features/ranking/session/sessionView";
 import { createRankingImage } from "@/features/ranking/share/createRankingImage";
 import { shareRankingImage } from "@/features/ranking/share/shareRankingImage";
 
@@ -14,14 +14,14 @@ vi.mock("@/features/ranking/share/createRankingImage", () => ({
   createRankingImage: vi.fn(),
 }));
 
-const groups: RankingGroupResponse[] = [
+const groups: RevealedRankingGroup[] = [
   {
     rank: 1,
     players: [
       {
         name: "Michael Jordan",
         era: "1990s",
-        image_url: "/jordan.webp",
+        imageUrl: "/jordan.webp",
       },
     ],
   },
