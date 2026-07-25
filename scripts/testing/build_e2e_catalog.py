@@ -7,12 +7,15 @@ from pathlib import Path
 
 CATALOG_ID = "e2e-100"
 AS_OF = "2026-06-30"
-PORTRAIT = """<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
-<rect width="600" height="800" fill="#eceae4"/>
-<circle cx="300" cy="270" r="118" fill="#8a8a84"/>
-<path d="M104 800c8-190 82-304 196-304s188 114 196 304H104Z" fill="#8a8a84"/>
-</svg>
-"""
+PORTRAIT = (
+    '<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" '
+    'viewBox="0 0 600 800">\n'
+    '<rect width="600" height="800" fill="#eceae4"/>\n'
+    '<circle cx="300" cy="270" r="118" fill="#8a8a84"/>\n'
+    '<path d="M104 800c8-190 82-304 196-304s188 114 196 304H104Z" '
+    'fill="#8a8a84"/>\n'
+    "</svg>\n"
+)
 
 
 def build_catalog(output: Path) -> None:

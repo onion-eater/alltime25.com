@@ -37,7 +37,7 @@ describe("CompareScreen", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("maps the three buttons to backend vote outcomes", () => {
+  it("maps the three buttons to ranking-domain vote outcomes", () => {
     const onVote = vi.fn();
 
     render(

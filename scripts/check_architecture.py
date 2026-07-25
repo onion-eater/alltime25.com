@@ -1,19 +1,23 @@
 from __future__ import annotations
 
-import ast
 import re
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BACKEND = ROOT / "apps" / "api" / "src" / "alltime25"
 FRONTEND = ROOT / "apps" / "web" / "src"
 CATALOG = ROOT / "catalog"
+FORBIDDEN_RUNTIME_PATHS = (
+    ROOT / "apps" / "api" / "src",
+    ROOT / "contracts",
+    ROOT / "Dockerfile",
+    ROOT / "compose.yml",
+)
 IGNORED_PARTS = {
     ".git",
     ".playwright",
     ".venv",
     "__pycache__",
+    "dist",
     "node_modules",
 }
 
@@ -24,62 +28,6 @@ COLOR_RE = re.compile(
     r":\s*(?:#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(|(?:black|white)\b)",
     re.IGNORECASE,
 )
-
-
-def python_imports(path: Path) -> set[str]:
-    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    imports: set[str] = set()
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Import):
-            imports.update(alias.name for alias in node.names)
-        elif isinstance(node, ast.ImportFrom) and node.module:
-            imports.add(node.module)
-    return imports
-
-
-def check_backend(errors: list[str]) -> None:
-    if not BACKEND.exists():
-        return
-
-    forbidden_by_layer = {
-        "domain": (
-            "fastapi",
-            "pydantic",
-            "sqlalchemy",
-            "alltime25.api",
-            "alltime25.application",
-            "alltime25.infrastructure",
-        ),
-        "application": (
-            "fastapi",
-            "sqlalchemy",
-            "alltime25.api",
-            "alltime25.infrastructure",
-        ),
-        "infrastructure": ("alltime25.api",),
-        "api": ("alltime25.infrastructure",),
-    }
-
-    for path in BACKEND.rglob("*.py"):
-        relative = path.relative_to(BACKEND)
-        if path.name == "main.py" or not relative.parts:
-            continue
-        layer = relative.parts[0]
-        forbidden = forbidden_by_layer.get(layer, ())
-        for imported in python_imports(path):
-            if any(
-                imported == prefix or imported.startswith(f"{prefix}.")
-                for prefix in forbidden
-            ):
-                errors.append(f"{relative}: {layer} may not import {imported}")
-            if (
-                layer == "domain"
-                and not imported.startswith("alltime25.domain")
-                and imported.split(".", 1)[0] not in sys.stdlib_module_names
-            ):
-                errors.append(
-                    f"{relative}: domain may only import stdlib or alltime25.domain"
-                )
 
 
 def resolve_frontend_import(path: Path, specifier: str) -> Path | None:
@@ -111,6 +59,10 @@ def check_frontend(errors: list[str]) -> None:
         source_layer, source_feature = frontend_layer(path)
         source = path.read_text(encoding="utf-8")
         for specifier in IMPORT_RE.findall(source):
+            if specifier.startswith("@/shared/api") or "/api/" in specifier:
+                errors.append(
+                    f"{path.relative_to(ROOT)}: runtime API imports are prohibited"
+                )
             resolved = resolve_frontend_import(path, specifier)
             if resolved is None:
                 continue
@@ -132,7 +84,8 @@ def check_frontend(errors: list[str]) -> None:
                 and source_feature != target_feature
             ):
                 errors.append(
-                    f"{path.relative_to(ROOT)}: features may not cross-import {specifier}"
+                    f"{path.relative_to(ROOT)}: features may not "
+                    f"cross-import {specifier}"
                 )
 
     tokens = FRONTEND / "shared" / "styles" / "tokens.css"
@@ -147,6 +100,15 @@ def check_frontend(errors: list[str]) -> None:
                     f"{path.relative_to(ROOT)}:{line_number}: "
                     "shared colors belong in tokens.css"
                 )
+
+
+def check_runtime(errors: list[str]) -> None:
+    for path in FORBIDDEN_RUNTIME_PATHS:
+        if path.exists():
+            errors.append(
+                f"{path.relative_to(ROOT)}: client-only runtime "
+                "may not include this path"
+            )
 
 
 def check_catalog(errors: list[str]) -> None:
@@ -199,7 +161,7 @@ def check_catalog(errors: list[str]) -> None:
 
 def main() -> int:
     errors: list[str] = []
-    check_backend(errors)
+    check_runtime(errors)
     check_frontend(errors)
     check_catalog(errors)
     if errors:

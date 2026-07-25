@@ -9,37 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  backend:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:17-alpine
-        env:
-          POSTGRES_DB: alltime25_test
-          POSTGRES_USER: alltime25
-          POSTGRES_PASSWORD: alltime25
-        ports:
-          - 55432:5432
-        options: >-
-          --health-cmd "pg_isready -U alltime25 -d alltime25_test"
-          --health-interval 2s
-          --health-timeout 3s
-          --health-retries 20
-    env:
-      ALLTIME25_TEST_DATABASE_URL: postgresql+psycopg://alltime25:alltime25@127.0.0.1:55432/alltime25_test
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          python-version: "3.12"
-      - run: uv sync --project apps/api --group dev --frozen
-      - run: uv run --project apps/api python scripts/check_architecture.py
-      - run: uv run --project apps/api ruff check apps/api/src apps/api/tests scripts
-      - run: uv run --project apps/api ruff format --check apps/api/src apps/api/tests scripts
-      - run: uv run --project apps/api python -m pytest apps/api/tests -W error
-
-  contracts:
+  tooling:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,16 +17,11 @@ jobs:
         with:
           enable-cache: true
           python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
-      - run: uv sync --project apps/api --group dev --frozen
-      - run: npm --prefix apps/web ci
-      - run: uv run --project apps/api python scripts/export_openapi.py
-      - run: npm --prefix apps/web run generate:api
-      - run: git diff --exit-code -- contracts/openapi.json apps/web/src/shared/api/generated/schema.d.ts
+      - run: uv sync --frozen --group dev
+      - run: uv run ruff check scripts tests
+      - run: uv run ruff format --check scripts tests
+      - run: uv run python -m pytest -W error
+      - run: uv run python scripts/check_architecture.py
 
   frontend:
     runs-on: ubuntu-latest
@@ -70,46 +35,18 @@ jobs:
       - run: npm --prefix apps/web ci
       - run: npm --prefix apps/web run check
 
-  catalog:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          python-version: "3.12"
-      - run: uv sync --project apps/api --group dev --frozen
-      - name: Verify frozen pool, publication, and manifest tamper detection
-        run: uv run --project apps/api python -m pytest apps/api/tests/unit/infrastructure/test_catalog.py apps/api/tests/unit/scripts/test_catalog_builder.py
-
   browser:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: apps/web/package-lock.json
-      - run: uv sync --project apps/api --group dev --frozen
       - run: npm --prefix apps/web ci
-      - run: npx --prefix apps/web playwright install --with-deps chromium
+      - run: npx --prefix apps/web playwright install --with-deps chromium firefox webkit
       - run: npm --prefix apps/web run test:e2e
-
-  container:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
-        with:
-          context: .
-          load: true
-          tags: alltime25:ci
 
   security:
     runs-on: ubuntu-latest
@@ -126,7 +63,8 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: apps/web/package-lock.json
+      - run: uv sync --frozen --group dev
       - run: npm --prefix apps/web ci
       - run: npm --prefix apps/web audit --audit-level=high
-      - run: uv export --project apps/api --no-dev --no-emit-project --format requirements-txt --output-file /tmp/alltime25-requirements.txt
-      - run: uvx pip-audit -r /tmp/alltime25-requirements.txt
+      - run: uv export --no-dev --no-emit-project --format requirements-txt --output-file /tmp/alltime25-tools-requirements.txt
+      - run: uvx pip-audit -r /tmp/alltime25-tools-requirements.txt

@@ -5,8 +5,10 @@ from pathlib import Path
 
 import pytest
 from PIL import Image
+
 from scripts.catalog.build_catalog import (
     CANDIDATE_POOLS_PATH,
+    PLAYER_POOL_PATH,
     CatalogBuildError,
     build_catalog,
     load_json,
@@ -16,10 +18,6 @@ from scripts.catalog.build_catalog import (
     validate_candidate_pools,
     validate_pool,
     verify_manifest,
-)
-
-PLAYER_POOL_PATH = (
-    Path(__file__).resolve().parents[5] / "scripts" / "catalog" / "player_pool.json"
 )
 
 

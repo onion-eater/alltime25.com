@@ -4,40 +4,23 @@ These rules are mandatory for every change in this repository.
 
 ## Canonical ownership
 
-- `apps/api/src/alltime25/domain/` owns ranking rules and domain models.
-- `catalog/data/current.json` selects the catalog for new sessions.
+- `apps/web/src/features/ranking/domain/` owns ranking rules and player models.
+- `apps/web/src/features/ranking/persistence/` is the only runtime owner of
+  localStorage, Web Locks, and cross-tab session synchronization.
+- `apps/web/src/features/ranking/session/` builds and validates ranking
+  sessions and UI view models.
+- `catalog/data/current.json` selects the catalog for new rankings.
 - `catalog/data/catalogs/<catalog-id>/` is the only checked-in location for
-  immutable player data, pool metadata, manifests, and human-review exports.
+  immutable player data, pool metadata, manifests, and review exports.
 - `catalog/assets/catalogs/<catalog-id>/players/` is the only checked-in
   player-image directory.
-- `contracts/openapi.json` is the canonical client/server contract.
-- `apps/web/src/shared/api/generated/` contains generated API types. Never edit
-  those files by hand.
-- `apps/web/src/shared/styles/tokens.css` is the only location for colors,
-  spacing, typography, borders, and viewport constants used by more than one
-  component.
-- A reusable component has one canonical implementation. Responsive variants
-  consume the same data model and may differ only when their presentation is
-  materially different.
+- `scripts/catalog/` owns offline Python import, normalization, image
+  processing, provenance, and publication verification.
+- `apps/web/src/shared/styles/tokens.css` owns values reused across components.
 
 ## Dependency direction
 
-Backend imports must follow:
-
-```text
-domain <- application <- api
-   ^            ^
-   + infrastructure
-```
-
-- `domain` imports only the Python standard library.
-- `application` may import `domain` and application ports.
-- `infrastructure` may import `domain` and application ports.
-- `api` may import application services and API schemas.
-- `main.py` is the only composition root allowed to connect API,
-  infrastructure, and application implementations.
-
-Frontend imports must follow:
+Frontend imports follow:
 
 ```text
 shared <- features <- app
@@ -46,31 +29,45 @@ shared <- features <- app
 - `shared` never imports from `features` or `app`.
 - A feature never imports from another feature.
 - `app` composes features but contains no ranking rules.
+- Ranking-domain code is pure TypeScript. It does not import React, browser
+  storage, the network, or presentation code.
 - Use direct file imports. Do not create barrel `index.ts` files.
 
 ## Change rules
 
-- Do not add a new top-level directory without updating
-  `docs/architecture.md`.
-- Do not duplicate API response types in handwritten TypeScript.
-- Do not calculate ranking order in React.
-- Do not read or write SQLite outside the infrastructure repositories.
-- Do not place HTTP details in domain or application modules.
-- Do not add gradients, rounded cards, pills, or decorative shadows.
-- Do not add visible copy that is absent from the approved design without
-  product approval.
+- Do not add a production API, serverless function, database, cookie, or
+  server-side session.
+- Store mutable ranking progress only under
+  `alltime25.ranking-session.v1`.
+- Store player JSON and portraits as immutable static assets, never in
+  localStorage.
+- Do not silently discard corrupt progress or use an in-memory persistence
+  fallback.
+- Do not calculate ranking order inside React components.
 - Do not hotlink player images.
-- Every data change must update catalog provenance and validation tests.
-- Every ranking-rule change starts with a failing domain test.
-- Every API change updates the OpenAPI contract and generated TypeScript.
+- Do not add gradients, rounded cards, pills, decorative shadows, or
+  unapproved visible copy.
+- Every data change updates catalog provenance and validation tests.
+- Every ranking-rule change starts with a failing domain test and preserves the
+  committed Python parity vectors.
+- Keep Python import credentials, caches, license documents, and private source
+  paths outside the repository.
 
 ## Required checks
 
 Run all checks before handoff:
 
 ```bash
-python3 scripts/check_architecture.py
-npm --prefix apps/web run check
-apps/api/.venv/bin/python -m pytest
-apps/api/.venv/bin/ruff check .
+uv sync --frozen --group dev
+uv run ruff check scripts tests
+uv run ruff format --check scripts tests
+uv run python -m pytest -W error
+uv run python scripts/check_architecture.py
+
+npm --prefix apps/web ci
+npm --prefix apps/web run lint
+npm --prefix apps/web run typecheck
+npm --prefix apps/web run test
+npm --prefix apps/web run build
+npm --prefix apps/web run test:e2e
 ```
