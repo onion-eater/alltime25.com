@@ -1,0 +1,28 @@
+.body {
+  padding: 6px 22px 10px;
+}
+
+.item {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  border-bottom: var(--border-soft);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 560px) {
+  .body {
+    padding-inline: 18px;
+  }
+
+  .item {
+    min-height: 50px;
+  }
+}

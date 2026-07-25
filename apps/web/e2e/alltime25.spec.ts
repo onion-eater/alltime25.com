@@ -294,6 +294,43 @@ test("comparison and dialogs pass automated accessibility checks", async ({
   expect(dialogResults.violations).toEqual([]);
 });
 
+test("the branded favicon and minimal footer work without navigation", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const iconHref = await page
+    .locator('link[rel="icon"]')
+    .getAttribute("href");
+  expect(iconHref).toBeTruthy();
+  const iconResponse = await page.request.get(
+    new URL(iconHref!, page.url()).toString(),
+  );
+  expect(iconResponse.ok()).toBe(true);
+  expect(iconResponse.headers()["content-type"]).toContain("image/svg+xml");
+
+  const footer = page.getByTestId("app-footer");
+  await expect(footer).toContainText("© 2026 AllTime25");
+  await expect(footer).toContainText("Not affiliated with the NBA");
+  await expect(footer).not.toContainText("NBA.com data");
+  await expect(footer).not.toContainText("Frozen 2026-06-30");
+
+  await footer.getByRole("button", { name: "Data" }).click();
+  await expect(page.getByRole("dialog", { name: "Data" })).toBeVisible();
+  await page
+    .getByRole("dialog", { name: "Data" })
+    .getByRole("button", { name: "Close Data" })
+    .click();
+
+  await footer.getByRole("button", { name: "Privacy" }).click();
+  const privacy = page.getByRole("dialog", { name: "Privacy" });
+  await expect(privacy).toContainText(
+    "Your ranking stays in this browser and is not uploaded",
+  );
+  const privacyResults = await new AxeBuilder({ page }).analyze();
+  expect(privacyResults.violations).toEqual([]);
+});
+
 test("the static runtime never requests an API", async ({ page }) => {
   const apiRequests: string[] = [];
   page.on("request", (request) => {
@@ -478,20 +515,21 @@ test("tablet result actions fill the bar in equal columns", async ({ page }) => 
   expect(actionGeometry.widthDifference).toBeLessThanOrEqual(1);
 });
 
-test("share delivers a valid 1080 by 1350 PNG", async ({
-  browserName,
-  page,
-}) => {
+test("share delivers a valid 1080 by 1350 PNG", async ({ page }) => {
   test.setTimeout(90_000);
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {
+      configurable: true,
+      value: undefined,
+    });
+    Object.defineProperty(navigator, "canShare", {
+      configurable: true,
+      value: undefined,
+    });
+  });
   await page.goto("/");
   await switchMode(page, "Top 10", "Normal");
   await finishWith(page, "Player B");
-
-  if (browserName === "webkit") {
-    await page.getByRole("button", { name: "Share" }).click();
-    await expect(page.getByRole("status")).toHaveText("Shared.");
-    return;
-  }
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Share" }).click();

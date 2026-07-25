@@ -12,12 +12,16 @@ import { SESSION_STORAGE_KEY } from "@/features/ranking/persistence/persistedSes
 import { AppHeader } from "@/shared/components/AppHeader";
 import { Footer } from "@/shared/components/Footer";
 import {
+  SiteInfoDialog,
+  type SiteInfoTopic,
+} from "@/shared/components/SiteInfoDialog";
+import {
   storageGet,
   storageSet,
 } from "@/shared/browser/safeStorage";
 
 const HELP_KEY = "alltime25.help_seen";
-type OpenDialog = "help" | "restart" | null;
+type OpenDialog = "help" | "restart" | SiteInfoTopic | null;
 type ReviewView = "progress" | "ranking" | null;
 
 export function App(): React.JSX.Element {
@@ -133,7 +137,11 @@ export function App(): React.JSX.Element {
           onVote={session?.status === "active" ? showMain : null}
         />
         <main className={styles.viewport}>{content}</main>
-        <Footer />
+        <Footer
+          onData={() => setOpenDialog("data")}
+          onHowItWorks={() => setOpenDialog("help")}
+          onPrivacy={() => setOpenDialog("privacy")}
+        />
       </div>
       {isOnboarding ? (
         <HelpDialog
@@ -173,6 +181,14 @@ export function App(): React.JSX.Element {
             setReviewView(null);
           }
         }}
+      />
+      <SiteInfoDialog
+        onClose={closeDialog}
+        topic={
+          openDialog === "data" || openDialog === "privacy"
+            ? openDialog
+            : null
+        }
       />
     </div>
   );

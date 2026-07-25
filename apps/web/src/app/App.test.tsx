@@ -73,6 +73,50 @@ describe("App dialogs", () => {
     );
   });
 
+  it("opens compact footer information dialogs one at a time", () => {
+    render(<App />);
+
+    const footer = screen.getByTestId("app-footer");
+    expect(within(footer).getByText("© 2026 AllTime25")).toBeVisible();
+    expect(
+      within(footer).getByText("Not affiliated with the NBA"),
+    ).toBeVisible();
+    expect(footer).not.toHaveTextContent("NBA.com data");
+    expect(footer).not.toHaveTextContent("Frozen 2026-06-30");
+
+    fireEvent.click(within(footer).getByRole("button", { name: "Data" }));
+    expect(screen.getByRole("dialog", { name: "Data" })).toBeVisible();
+    expect(
+      screen.getByText("Regular season and playoffs"),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("dialog", { name: "Privacy" }),
+    ).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Close Data" }));
+
+    fireEvent.click(
+      within(footer).getByRole("button", { name: "Privacy" }),
+    );
+    expect(screen.getByRole("dialog", { name: "Privacy" })).toBeVisible();
+    expect(
+      screen.getByText(
+        /Your ranking stays in this browser and is not uploaded/i,
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByRole("dialog", { name: "Data" }),
+    ).not.toBeInTheDocument();
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(
+      screen.queryByRole("dialog", { name: "Privacy" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(
+      within(footer).getByRole("button", { name: "How it works" }),
+    );
+    expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
+  });
+
   it("requires a mode choice before creating the first ranking", async () => {
     window.localStorage.removeItem("alltime25.help_seen");
     window.localStorage.removeItem(SESSION_STORAGE_KEY);
