@@ -1,3 +1,15 @@
+.dialog {
+  max-height: calc(100dvh - 36px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
 .step {
   min-height: 76px;
   display: grid;
@@ -27,8 +39,42 @@
   border-bottom: 0;
 }
 
+.form {
+  padding: 18px 20px 20px;
+  border-top: var(--border-strong);
+}
+
+.footer {
+  padding: 0 20px 20px;
+}
+
+.start {
+  width: 100%;
+  min-height: 54px;
+  color: var(--color-surface);
+  background: var(--color-ink);
+  border: var(--border-strong);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.start:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+
 @media (max-width: 560px) {
   .step {
     min-height: 64px;
+  }
+}
+
+@media (max-width: 420px) {
+  .form,
+  .footer {
+    padding-inline: 14px;
   }
 }

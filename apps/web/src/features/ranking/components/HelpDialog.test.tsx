@@ -21,6 +21,73 @@ describe("HelpDialog", () => {
     expect(
       screen.queryByRole("button", { name: "Start" }),
     ).not.toBeInTheDocument();
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+  });
+
+  it("selects a ranking mode before starting the first ranking", () => {
+    const onStart = vi.fn();
+    render(
+      <HelpDialog
+        isOpen
+        mode="onboarding"
+        onClose={vi.fn()}
+        onStart={onStart}
+      />,
+    );
+
+    expect(screen.getByRole("radio", { name: "Top 25" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Normal" })).toBeChecked();
+
+    fireEvent.click(screen.getByRole("radio", { name: "Top 50" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Blind" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Start ranking" }),
+    );
+
+    expect(onStart).toHaveBeenCalledWith({
+      preset: "top_50",
+      identityMode: "blind",
+    });
+  });
+
+  it("does not let first-run onboarding close without starting", () => {
+    const onClose = vi.fn();
+    render(
+      <HelpDialog
+        isOpen
+        mode="onboarding"
+        onClose={onClose}
+        onStart={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.queryByRole("button", { name: "Close instructions" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    const dialog = screen.getByRole("dialog");
+    const backdrop = dialog.parentElement;
+    if (backdrop === null) throw new Error("Missing dialog backdrop.");
+    fireEvent.mouseDown(backdrop);
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("disables first-run submission while a ranking is starting", () => {
+    render(
+      <HelpDialog
+        isOpen
+        isSubmitting
+        mode="onboarding"
+        onClose={vi.fn()}
+        onStart={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.getByRole("button", { name: "Start ranking" }),
+    ).toBeDisabled();
   });
 
   it("closes on Escape", () => {
