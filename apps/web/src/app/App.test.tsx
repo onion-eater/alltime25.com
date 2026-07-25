@@ -3,6 +3,7 @@ import {
   render,
   screen,
   waitFor,
+  within,
 } from "@testing-library/react";
 import {
   beforeEach,
@@ -188,6 +189,50 @@ describe("App dialogs", () => {
     expect(
       screen.getByRole("heading", { name: "Greater career?" }),
     ).toBeVisible();
+  });
+
+  it("shows Vote before Restart and returns to the active comparison", () => {
+    render(<App />);
+
+    const navigation = screen.getByRole("navigation", {
+      name: "Main navigation",
+    });
+    const navigationButtons = within(navigation).getAllByRole("button");
+
+    expect(navigationButtons).toHaveLength(4);
+    expect(navigationButtons[0]).toHaveAccessibleName("Vote");
+    expect(navigationButtons[1]).toHaveAccessibleName("Restart");
+    expect(navigationButtons[2]).toHaveAccessibleName("Ranking");
+    expect(navigationButtons[3]).toHaveAccessibleName("How to play");
+
+    fireEvent.click(screen.getByRole("button", { name: "Ranking" }));
+    expect(
+      screen.getByRole("heading", { name: "Your ranking so far." }),
+    ).toBeVisible();
+
+    fireEvent.click(screen.getByRole("button", { name: "Vote" }));
+    expect(
+      screen.getByRole("heading", { name: "Greater career?" }),
+    ).toBeVisible();
+  });
+
+  it("hides Vote after the ranking is complete", () => {
+    vi.mocked(useRankingSession).mockReturnValue({
+      session: completedSession(),
+      isLoading: false,
+      isSubmitting: false,
+      error: null,
+      statusMessage: "Saved",
+      vote: vi.fn(),
+      undo: vi.fn(),
+      startNewRanking,
+      retry: vi.fn(),
+    });
+    render(<App />);
+
+    expect(
+      screen.queryByRole("button", { name: "Vote" }),
+    ).not.toBeInTheDocument();
   });
 
   it("keeps identities hidden in a blind ranking preview", () => {

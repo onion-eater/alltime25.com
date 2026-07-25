@@ -119,6 +119,7 @@ export function App(): React.JSX.Element {
           onHelp={() => setOpenDialog("help")}
           onRestart={openRestartDialog}
           onRanking={showRanking}
+          onVote={session?.status === "active" ? showMain : null}
         />
         <main className={styles.viewport}>{content}</main>
         <Footer />

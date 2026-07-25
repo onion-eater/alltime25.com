@@ -94,6 +94,13 @@ test("comparison stays clean and centered at every required viewport", async ({
       };
       const rect = (element: HTMLElement): DOMRect =>
         element.getBoundingClientRect();
+      const navigation = document.querySelector<HTMLElement>(
+        '[aria-label="Main navigation"]',
+      );
+      if (!navigation) throw new Error("Missing main navigation");
+      const voteButton = Array.from(
+        navigation.querySelectorAll<HTMLButtonElement>("button"),
+      ).find((button) => button.textContent?.trim() === "Vote");
       const ordered = [
         byTestId("app-header"),
         byTestId("comparison-heading"),
@@ -106,6 +113,8 @@ test("comparison stays clean and centered at every required viewport", async ({
         byTestId("comparison-tools"),
         byTestId("app-footer"),
       ].map(rect);
+      const tools = rect(byTestId("comparison-tools"));
+      const footer = rect(byTestId("app-footer"));
       const overlaps = ordered.slice(0, -1).some((current, index) => {
         const next = ordered[index + 1];
         return current.bottom > next.top + 1;
@@ -133,18 +142,27 @@ test("comparison stays clean and centered at every required viewport", async ({
         horizontalOverflow:
           document.documentElement.scrollWidth >
           document.documentElement.clientWidth + 1,
+        navigationOverflow:
+          navigation.scrollWidth > navigation.clientWidth + 1,
         overlaps,
+        toolsFooterGap: footer.top - tools.bottom,
         voteBottom: rect(byTestId("vote-controls")).bottom,
+        voteVisible: voteButton ? visible(voteButton) : false,
         viewportHeight: window.innerHeight,
       };
     }, isCompact);
 
     expect(layout.horizontalOverflow, JSON.stringify(viewport)).toBe(false);
+    expect(layout.navigationOverflow, JSON.stringify(viewport)).toBe(false);
     expect(layout.overlaps, JSON.stringify(viewport)).toBe(false);
     expect(layout.clipped, JSON.stringify(viewport)).toEqual([]);
+    expect(layout.toolsFooterGap, JSON.stringify(viewport)).toBeGreaterThanOrEqual(
+      12,
+    );
     expect(layout.voteBottom, JSON.stringify(viewport)).toBeLessThanOrEqual(
       layout.viewportHeight + 1,
     );
+    expect(layout.voteVisible, JSON.stringify(viewport)).toBe(true);
 
     if (!isCompact) {
       const geometry = await centeredGeometry(page);
@@ -405,6 +423,7 @@ test("every blind preset completes and reveals its result", async ({ page }) => 
     await expect(
       page.getByRole("heading", { name: `Your NBA top ${targetSize}.` }),
     ).toBeVisible();
+    await expect(page.getByRole("button", { name: "Vote" })).toHaveCount(0);
     expect(await page.locator("main img").count()).toBeGreaterThan(0);
   }
 });

@@ -86,6 +86,10 @@
     display: block;
   }
 
+  .voteButton {
+    display: block;
+  }
+
   .mark {
     width: 42px;
     height: 42px;

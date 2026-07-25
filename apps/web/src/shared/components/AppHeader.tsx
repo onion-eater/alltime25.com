@@ -5,6 +5,7 @@ interface AppHeaderProps {
   onHelp: () => void;
   onRestart: () => void;
   onRanking: () => void;
+  onVote: (() => void) | null;
 }
 
 export function AppHeader({
@@ -12,6 +13,7 @@ export function AppHeader({
   onHelp,
   onRestart,
   onRanking,
+  onVote,
 }: AppHeaderProps): React.JSX.Element {
   return (
     <header
@@ -32,6 +34,15 @@ export function AppHeader({
           aria-label="Main navigation"
           className={styles.navigation}
         >
+          {onVote !== null ? (
+            <button
+              className={`${styles.navButton} ${styles.voteButton}`}
+              onClick={onVote}
+              type="button"
+            >
+              Vote
+            </button>
+          ) : null}
           <button
             className={`${styles.navButton} ${styles.restartButton}`}
             onClick={onRestart}
