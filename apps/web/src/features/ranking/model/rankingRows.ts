@@ -14,7 +14,6 @@ export interface DisplayRow<Player = RevealedPlayer> {
 
 export interface ShareRow extends DisplayRow {
   rankLabel: string;
-  showPortrait: boolean;
 }
 
 export function flattenRanking(
@@ -58,6 +57,5 @@ export function rowsForShare(
   return selected.map((row) => ({
     ...row,
     rankLabel: row.isTied ? `T-${row.rank}` : String(row.rank),
-    showPortrait: targetSize !== 50,
   }));
 }

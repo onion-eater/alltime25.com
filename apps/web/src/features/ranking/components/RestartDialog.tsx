@@ -8,12 +8,12 @@ import type {
   RankingPreset,
   RankingSelection,
 } from "@/features/ranking/api/rankingApi";
-import dialogStyles from "@/features/ranking/components/HelpDialog.module.css";
-import styles from "@/features/ranking/components/ModesDialog.module.css";
+import styles from "@/features/ranking/components/RestartDialog.module.css";
+import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
+import dialogStyles from "@/shared/components/Dialog.module.css";
 import { useDialogFocus } from "@/shared/hooks/useDialogFocus";
 
-interface ModesDialogProps {
-  currentSelection: RankingSelection;
+interface RestartDialogProps {
   isOpen: boolean;
   isSubmitting: boolean;
   onClose: () => void;
@@ -37,33 +37,25 @@ const IDENTITIES: readonly {
   { label: "Blind", value: "blind" },
 ];
 
-export function ModesDialog({
-  currentSelection,
+export function RestartDialog({
   isOpen,
   ...props
-}: ModesDialogProps): React.JSX.Element | null {
+}: RestartDialogProps): React.JSX.Element | null {
   if (!isOpen) return null;
-  return (
-    <OpenModesDialog
-      currentSelection={currentSelection}
-      key={`${currentSelection.preset}-${currentSelection.identityMode}`}
-      {...props}
-    />
-  );
+  return <OpenRestartDialog {...props} />;
 }
 
-type OpenModesDialogProps = Omit<ModesDialogProps, "isOpen">;
+type OpenRestartDialogProps = Omit<RestartDialogProps, "isOpen">;
 
-function OpenModesDialog({
-  currentSelection,
+function OpenRestartDialog({
   isSubmitting,
   onClose,
   onStart,
-}: OpenModesDialogProps): React.JSX.Element {
+}: OpenRestartDialogProps): React.JSX.Element {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useDialogFocus(true, onClose, closeButtonRef);
   const [selection, setSelection] =
-    useState<RankingSelection>(currentSelection);
+    useState<RankingSelection>(DEFAULT_RANKING_SELECTION);
 
   return (
     <div

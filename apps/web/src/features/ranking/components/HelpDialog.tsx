@@ -2,12 +2,12 @@ import { useRef } from "react";
 
 import type { IdentityMode } from "@/features/ranking/api/rankingApi";
 import styles from "@/features/ranking/components/HelpDialog.module.css";
+import dialogStyles from "@/shared/components/Dialog.module.css";
 import { useDialogFocus } from "@/shared/hooks/useDialogFocus";
 
 interface HelpDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onStart: () => void;
   identityMode?: IdentityMode;
 }
 
@@ -15,7 +15,6 @@ export function HelpDialog({
   identityMode = "normal",
   isOpen,
   onClose,
-  onStart,
 }: HelpDialogProps): React.JSX.Element | null {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useDialogFocus(isOpen, onClose, closeButtonRef);
@@ -32,7 +31,7 @@ export function HelpDialog({
 
   return (
     <div
-      className={styles.backdrop}
+      className={dialogStyles.backdrop}
       onMouseDown={(event) => {
         if (event.currentTarget === event.target) onClose();
       }}
@@ -41,15 +40,15 @@ export function HelpDialog({
       <section
         aria-labelledby="help-title"
         aria-modal="true"
-        className={styles.dialog}
+        className={dialogStyles.dialog}
         ref={dialogRef}
         role="dialog"
       >
-        <header className={styles.header}>
+        <header className={dialogStyles.header}>
           <h2 id="help-title">How it works</h2>
           <button
             aria-label="Close instructions"
-            className={styles.close}
+            className={dialogStyles.close}
             onClick={onClose}
             ref={closeButtonRef}
             type="button"
@@ -66,15 +65,6 @@ export function HelpDialog({
             <strong>{step}</strong>
           </div>
         ))}
-        <footer className={styles.footer}>
-          <button
-            className={styles.start}
-            onClick={onStart}
-            type="button"
-          >
-            Start
-          </button>
-        </footer>
       </section>
     </div>
   );

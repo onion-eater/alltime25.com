@@ -3,16 +3,14 @@ import styles from "@/shared/components/AppHeader.module.css";
 interface AppHeaderProps {
   onBrand: () => void;
   onHelp: () => void;
-  onMethodology: () => void;
-  onModes: () => void;
+  onRestart: () => void;
   onRanking: () => void;
 }
 
 export function AppHeader({
   onBrand,
   onHelp,
-  onMethodology,
-  onModes,
+  onRestart,
   onRanking,
 }: AppHeaderProps): React.JSX.Element {
   return (
@@ -35,8 +33,8 @@ export function AppHeader({
           className={styles.navigation}
         >
           <button
-            className={`${styles.navButton} ${styles.modesButton}`}
-            onClick={onModes}
+            className={`${styles.navButton} ${styles.restartButton}`}
+            onClick={onRestart}
             type="button"
           >
             Restart
@@ -47,13 +45,6 @@ export function AppHeader({
             type="button"
           >
             Ranking
-          </button>
-          <button
-            className={styles.navButton}
-            onClick={onMethodology}
-            type="button"
-          >
-            Methodology
           </button>
           <button
             aria-label="How to play"

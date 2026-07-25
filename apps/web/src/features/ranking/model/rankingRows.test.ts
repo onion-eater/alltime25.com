@@ -22,7 +22,7 @@ describe("ranking rows", () => {
     expect(rows.at(-1)?.player.name).toBe("Player 50");
   });
 
-  it("selects portrait layouts only for Top 10 and Top 25", () => {
+  it("does not attach portrait display instructions to share rows", () => {
     const groups: RankingGroupResponse[] = [
       {
         rank: 1,
@@ -34,14 +34,8 @@ describe("ranking rows", () => {
       },
     ];
 
-    expect(rowsForShare(flattenRanking(groups), 10)[0].showPortrait).toBe(
-      true,
-    );
-    expect(rowsForShare(flattenRanking(groups), 25)[0].showPortrait).toBe(
-      true,
-    );
-    expect(rowsForShare(flattenRanking(groups), 50)[0].showPortrait).toBe(
-      false,
+    expect(rowsForShare(flattenRanking(groups), 10)[0]).not.toHaveProperty(
+      "showPortrait",
     );
   });
 });

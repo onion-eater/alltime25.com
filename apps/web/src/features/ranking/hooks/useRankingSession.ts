@@ -11,6 +11,7 @@ import {
   type SessionResponse,
   type VoteOutcome,
 } from "@/features/ranking/api/rankingApi";
+import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
 import { ApiError } from "@/shared/api/client";
 import {
   storageGet,
@@ -23,11 +24,6 @@ const VERSION_KEY = "blind50.session_version";
 const PENDING_CREATE_KEY = "blind50.pending_create_operation";
 const SELECTION_KEY = "blind50.ranking_selection";
 const CHANNEL_NAME = "blind50-session";
-
-const DEFAULT_SELECTION: RankingSelection = {
-  preset: "top_25",
-  identityMode: "normal",
-};
 
 interface PendingCreate extends RankingSelection {
   operationId: string;
@@ -43,7 +39,6 @@ export interface RankingSessionController {
   statusMessage: string;
   vote: (outcome: VoteOutcome) => Promise<void>;
   undo: () => Promise<void>;
-  startOver: () => Promise<void>;
   startNewRanking: (
     selection: RankingSelection,
   ) => Promise<boolean>;
@@ -350,15 +345,6 @@ export function useRankingSession(): RankingSessionController {
     [adoptSession, createSession],
   );
 
-  const startOver = useCallback(async (): Promise<void> => {
-    const current = sessionRef.current;
-    await startNewRanking(
-      current === null
-        ? storedSelection()
-        : selectionForSession(current),
-    );
-  }, [startNewRanking]);
-
   const retry = useCallback((): void => {
     setLoadAttempt((current) => current + 1);
   }, []);
@@ -371,7 +357,6 @@ export function useRankingSession(): RankingSessionController {
     statusMessage,
     vote,
     undo,
-    startOver,
     startNewRanking,
     retry,
   };
@@ -392,12 +377,12 @@ function selectionForSession(
 
 function storedSelection(): RankingSelection {
   const stored = storageGet(SELECTION_KEY);
-  if (stored === null) return DEFAULT_SELECTION;
+  if (stored === null) return DEFAULT_RANKING_SELECTION;
   try {
     const parsed: unknown = JSON.parse(stored);
-    return isSelection(parsed) ? parsed : DEFAULT_SELECTION;
+    return isSelection(parsed) ? parsed : DEFAULT_RANKING_SELECTION;
   } catch {
-    return DEFAULT_SELECTION;
+    return DEFAULT_RANKING_SELECTION;
   }
 }
 

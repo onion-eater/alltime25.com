@@ -6,13 +6,12 @@ export async function shareRankingImage(
   targetSize: number,
 ): Promise<string> {
   const blob = await createRankingImage(groups, targetSize);
-  const title = `MY NBA TOP ${targetSize}`;
   const filename = `alltime25-top-${targetSize}.png`;
 
-  if (supportsFileShare(blob, filename, title)) {
+  if (supportsFileShare(blob, filename)) {
     const file = new File([blob], filename, { type: "image/png" });
     try {
-      await navigator.share({ files: [file], title });
+      await navigator.share({ files: [file] });
       return "Shared.";
     } catch (error) {
       return error instanceof DOMException && error.name === "AbortError"
@@ -27,7 +26,6 @@ export async function shareRankingImage(
 function supportsFileShare(
   blob: Blob,
   filename: string,
-  title: string,
 ): boolean {
   if (
     typeof File === "undefined" ||
@@ -38,7 +36,7 @@ function supportsFileShare(
   }
   try {
     const file = new File([blob], filename, { type: "image/png" });
-    return navigator.canShare({ files: [file], title });
+    return navigator.canShare({ files: [file] });
   } catch {
     return false;
   }

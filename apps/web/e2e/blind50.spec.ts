@@ -206,7 +206,7 @@ test("the current ranking can be reviewed and resumed safely", async ({
   ).toBeVisible();
   await expect(page.locator("main img")).not.toHaveCount(0);
   const resume = page.getByRole("button", { name: "Resume" });
-  await expect(resume).toHaveCSS("background-color", "rgb(16, 24, 32)");
+  await expect(resume).toHaveCSS("background-color", "rgb(251, 250, 246)");
   expect(
     await resume.evaluate((button) => button.getBoundingClientRect().height),
   ).toBeGreaterThanOrEqual(48);
@@ -351,13 +351,19 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
   await page.getByRole("button", { name: "Share" }).click();
   await expect(page.getByRole("status")).not.toHaveText("");
 
+  await page.getByRole("button", { name: "Start over" }).click();
+  await expect(page.getByRole("dialog", { name: "Restart" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "Top 25" })).toBeChecked();
+  await expect(page.getByRole("radio", { name: "Normal" })).toBeChecked();
+  await page.getByRole("radio", { name: "Top 50" }).check();
+
   await Promise.all([
     page.waitForResponse(
       (response) =>
         response.url().endsWith("/sessions") &&
         response.request().method() === "POST",
     ),
-    page.getByRole("button", { name: "Start over" }).click(),
+    page.getByRole("button", { name: "Restart ranking" }).click(),
   ]);
   await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
 

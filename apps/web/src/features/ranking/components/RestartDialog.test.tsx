@@ -5,17 +5,13 @@ import {
 } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { ModesDialog } from "@/features/ranking/components/ModesDialog";
+import { RestartDialog } from "@/features/ranking/components/RestartDialog";
 
-describe("ModesDialog", () => {
+describe("RestartDialog", () => {
   it("submits one explicit ranking-size and identity selection", () => {
     const onStart = vi.fn();
     render(
-      <ModesDialog
-        currentSelection={{
-          preset: "top_25",
-          identityMode: "normal",
-        }}
+      <RestartDialog
         isOpen
         isSubmitting={false}
         onClose={vi.fn()}
@@ -35,14 +31,10 @@ describe("ModesDialog", () => {
     });
   });
 
-  it("restarts with the current selection when it is unchanged", () => {
+  it("defaults every restart to Top 25 and Normal", () => {
     const onStart = vi.fn();
     render(
-      <ModesDialog
-        currentSelection={{
-          preset: "top_25",
-          identityMode: "normal",
-        }}
+      <RestartDialog
         isOpen
         isSubmitting={false}
         onClose={vi.fn()}
@@ -50,6 +42,8 @@ describe("ModesDialog", () => {
       />,
     );
 
+    expect(screen.getByRole("radio", { name: "Top 25" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Normal" })).toBeChecked();
     fireEvent.click(
       screen.getByRole("button", { name: "Restart ranking" }),
     );

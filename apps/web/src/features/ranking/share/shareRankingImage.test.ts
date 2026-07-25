@@ -35,11 +35,12 @@ describe("shareRankingImage", () => {
     );
   });
 
-  it("uses native file sharing when the PNG is supported", async () => {
+  it("shares exactly one PNG file without an additional text item", async () => {
     const share = vi.fn().mockResolvedValue(undefined);
+    const canShare = vi.fn().mockReturnValue(true);
     Object.defineProperty(navigator, "canShare", {
       configurable: true,
-      value: vi.fn().mockReturnValue(true),
+      value: canShare,
     });
     Object.defineProperty(navigator, "share", {
       configurable: true,
@@ -51,7 +52,9 @@ describe("shareRankingImage", () => {
     expect(status).toBe("Shared.");
     expect(share).toHaveBeenCalledWith({
       files: [expect.any(File)],
-      title: "MY NBA TOP 10",
+    });
+    expect(canShare).toHaveBeenCalledWith({
+      files: [expect.any(File)],
     });
   });
 

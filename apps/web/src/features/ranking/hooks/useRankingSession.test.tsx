@@ -179,34 +179,6 @@ describe("useRankingSession", () => {
     });
   });
 
-  it("creates and stores a replacement before deleting the old session", async () => {
-    const replacement = { ...activeSession(), id: "session-2" };
-    vi.mocked(rankingApi.createSession)
-      .mockResolvedValueOnce(activeSession())
-      .mockResolvedValueOnce(replacement);
-    vi.mocked(rankingApi.deleteSession).mockResolvedValue();
-    const { result } = renderHook(() => useRankingSession());
-    await waitFor(() => expect(result.current.session).not.toBeNull());
-
-    await act(async () => {
-      await result.current.startOver();
-    });
-
-    expect(result.current.session?.id).toBe("session-2");
-    expect(rankingApi.createSession).toHaveBeenNthCalledWith(
-      2,
-      MUTATION_ID,
-      { preset: "top_25", identityMode: "normal" },
-      undefined,
-    );
-    expect(window.localStorage.getItem("blind50.session_id")).toBe("session-2");
-    expect(
-      vi.mocked(rankingApi.createSession).mock.invocationCallOrder[1],
-    ).toBeLessThan(
-      vi.mocked(rankingApi.deleteSession).mock.invocationCallOrder[0],
-    );
-  });
-
   it("switches modes by creating the replacement before deleting", async () => {
     const replacement = {
       ...activeSession(),

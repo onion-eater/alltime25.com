@@ -5,15 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 import { HelpDialog } from "@/features/ranking/components/HelpDialog";
 
 describe("HelpDialog", () => {
-  it("shows the three minimal steps and starts the game", () => {
-    const onStart = vi.fn();
-
+  it("shows the three minimal steps without a start action", () => {
     render(
       <HelpDialog
         identityMode="blind"
         isOpen
         onClose={vi.fn()}
-        onStart={onStart}
       />,
     );
 
@@ -21,8 +18,9 @@ describe("HelpDialog", () => {
     expect(screen.getByText("Compare blind résumés")).toBeInTheDocument();
     expect(screen.getByText("Pick A, B, or tie")).toBeInTheDocument();
     expect(screen.getByText("Reveal your ranking")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Start" }));
-    expect(onStart).toHaveBeenCalledOnce();
+    expect(
+      screen.queryByRole("button", { name: "Start" }),
+    ).not.toBeInTheDocument();
   });
 
   it("closes on Escape", () => {
@@ -31,7 +29,6 @@ describe("HelpDialog", () => {
       <HelpDialog
         isOpen
         onClose={onClose}
-        onStart={vi.fn()}
       />,
     );
 
@@ -49,14 +46,11 @@ describe("HelpDialog", () => {
       <HelpDialog
         isOpen
         onClose={vi.fn()}
-        onStart={vi.fn()}
       />,
     );
 
     const close = screen.getByRole("button", { name: "Close instructions" });
-    const start = screen.getByRole("button", { name: "Start" });
     expect(close).toHaveFocus();
-    start.focus();
     await user.tab();
     expect(close).toHaveFocus();
 
@@ -64,7 +58,6 @@ describe("HelpDialog", () => {
       <HelpDialog
         isOpen={false}
         onClose={vi.fn()}
-        onStart={vi.fn()}
       />,
     );
     expect(opener).toHaveFocus();

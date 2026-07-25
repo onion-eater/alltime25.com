@@ -47,6 +47,24 @@ describe("createRankingImage", () => {
     expect(dimensions).toEqual({ width: 1080, height: 1350 });
   });
 
+  it("draws the share wordmark as AllTime, the 25 mark, then .com", async () => {
+    const context = mockContext();
+    const blob = new Blob(["png"], { type: "image/png" });
+    vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
+      (callback) => callback(blob),
+    );
+
+    await createRankingImage(groups, 50);
+
+    expect(context.fillText.mock.calls.slice(0, 4)).toEqual([
+      ["ALLTIME", 64, 81],
+      ["25", 233, 81],
+      [".COM", 284, 81],
+      ["MY NBA TOP 50", 64, 174],
+    ]);
+    expect(context.font).toContain("Arial");
+  });
+
   it("rejects when the browser cannot encode the PNG", async () => {
     mockContext();
     vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
@@ -58,14 +76,19 @@ describe("createRankingImage", () => {
     );
   });
 
-  it("still renders when both a portrait and its fallback fail", async () => {
+  it("does not load player portraits for any share size", async () => {
     mockContext();
+    const imageConstructor = vi.fn();
     vi.stubGlobal(
       "Image",
       class {
         decoding = "auto";
         onerror: (() => void) | null = null;
         onload: (() => void) | null = null;
+
+        constructor() {
+          imageConstructor();
+        }
 
         set src(_source: string) {
           this.onerror?.();
@@ -77,21 +100,15 @@ describe("createRankingImage", () => {
       (callback) => callback(blob),
     );
 
-    await expect(
-      createRankingImage(
-        [
-          {
-            rank: 1,
-            players: groups[0].players.slice(0, 10),
-          },
-        ],
-        10,
-      ),
-    ).resolves.toBe(blob);
+    for (const targetSize of [10, 25, 50]) {
+      await createRankingImage(groups, targetSize);
+    }
+
+    expect(imageConstructor).not.toHaveBeenCalled();
   });
 });
 
-function mockContext(): void {
+function mockContext() {
   const context = {
     drawImage: vi.fn(),
     fillRect: vi.fn(),
@@ -110,4 +127,5 @@ function mockContext(): void {
   vi.spyOn(HTMLCanvasElement.prototype, "getContext").mockReturnValue(
     context as unknown as CanvasRenderingContext2D,
   );
+  return context;
 }

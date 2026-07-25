@@ -111,15 +111,7 @@
 
 .resumeAction {
   min-height: 66px;
-  color: var(--color-surface);
-  background: var(--color-ink);
   font-size: 12px;
-}
-
-.resumeAction:hover,
-.resumeAction:focus-visible {
-  color: var(--color-ink);
-  background: var(--color-yellow);
 }
 
 @media (max-width: 900px) {

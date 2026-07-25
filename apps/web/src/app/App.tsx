@@ -3,11 +3,11 @@ import { useCallback, useState } from "react";
 import styles from "@/app/App.module.css";
 import { CompareScreen } from "@/features/ranking/components/CompareScreen";
 import { HelpDialog } from "@/features/ranking/components/HelpDialog";
-import { MethodologyDialog } from "@/features/ranking/components/MethodologyDialog";
-import { ModesDialog } from "@/features/ranking/components/ModesDialog";
 import { ProgressScreen } from "@/features/ranking/components/ProgressScreen";
 import { RankingsScreen } from "@/features/ranking/components/RankingsScreen";
+import { RestartDialog } from "@/features/ranking/components/RestartDialog";
 import { useRankingSession } from "@/features/ranking/hooks/useRankingSession";
+import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
 import { AppHeader } from "@/shared/components/AppHeader";
 import { Footer } from "@/shared/components/Footer";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@/shared/browser/safeStorage";
 
 const HELP_KEY = "blind50.help_seen";
-type OpenDialog = "help" | "methodology" | "modes" | null;
+type OpenDialog = "help" | "restart" | null;
 type ReviewView = "progress" | "ranking" | null;
 
 export function App(): React.JSX.Element {
@@ -28,7 +28,6 @@ export function App(): React.JSX.Element {
     statusMessage,
     vote,
     undo,
-    startOver,
     startNewRanking,
     retry,
   } = useRankingSession();
@@ -38,8 +37,12 @@ export function App(): React.JSX.Element {
   const [reviewView, setReviewView] = useState<ReviewView>(null);
 
   const closeDialog = useCallback(() => setOpenDialog(null), []);
+  const openRestartDialog = useCallback(
+    () => setOpenDialog("restart"),
+    [],
+  );
 
-  const start = useCallback(() => {
+  const dismissHelp = useCallback(() => {
     storageSet(HELP_KEY, "1");
     setOpenDialog(null);
   }, []);
@@ -55,10 +58,6 @@ export function App(): React.JSX.Element {
   }
 
   const hasOpenDialog = openDialog !== null;
-  const currentSelection = {
-    preset: session?.preset ?? "top_25",
-    identityMode: session?.identity_mode ?? "normal",
-  } as const;
 
   let content: React.JSX.Element;
   if (isLoading || session === null) {
@@ -75,7 +74,7 @@ export function App(): React.JSX.Element {
     content = (
       <RankingsScreen
         isSubmitting={isSubmitting}
-        onStartOver={startOver}
+        onStartOver={openRestartDialog}
         session={session}
         statusMessage={statusMessage}
       />
@@ -118,27 +117,22 @@ export function App(): React.JSX.Element {
         <AppHeader
           onBrand={showMain}
           onHelp={() => setOpenDialog("help")}
-          onMethodology={() => setOpenDialog("methodology")}
-          onModes={() => setOpenDialog("modes")}
+          onRestart={openRestartDialog}
           onRanking={showRanking}
         />
         <main className={styles.viewport}>{content}</main>
         <Footer />
       </div>
       <HelpDialog
-        identityMode={currentSelection.identityMode}
+        identityMode={
+          session?.identity_mode ??
+          DEFAULT_RANKING_SELECTION.identityMode
+        }
         isOpen={openDialog === "help"}
-        onClose={closeDialog}
-        onStart={start}
+        onClose={dismissHelp}
       />
-      <MethodologyDialog
-        candidateCount={session?.pool_size}
-        isOpen={openDialog === "methodology"}
-        onClose={closeDialog}
-      />
-      <ModesDialog
-        currentSelection={currentSelection}
-        isOpen={openDialog === "modes"}
+      <RestartDialog
+        isOpen={openDialog === "restart"}
         isSubmitting={isSubmitting}
         onClose={closeDialog}
         onStart={async (selection) => {

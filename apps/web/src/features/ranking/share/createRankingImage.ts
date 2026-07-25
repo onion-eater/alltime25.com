@@ -7,7 +7,6 @@ import {
 
 const WIDTH = 1080;
 const HEIGHT = 1350;
-const FALLBACK_IMAGE = "/player-fallback.svg";
 const COLORS = {
   paper: "#f4f0e7",
   surface: "#fbfaf6",
@@ -22,8 +21,6 @@ interface ShareLayout {
   columns: number;
   contentTop: number;
   columnGap: number;
-  portraitHeight: number;
-  portraitWidth: number;
   rowHeight: number;
   rowsPerColumn: number;
 }
@@ -34,11 +31,6 @@ export async function createRankingImage(
 ): Promise<Blob> {
   const rows = rowsForShare(flattenRanking(groups), targetSize);
   const layout = layoutFor(targetSize);
-  const portraits = rows[0]?.showPortrait
-    ? await Promise.all(
-        rows.map((row) => loadPortrait(row.player.image_url)),
-      )
-    : rows.map(() => null);
   const canvas = document.createElement("canvas");
   canvas.width = WIDTH;
   canvas.height = HEIGHT;
@@ -48,7 +40,7 @@ export async function createRankingImage(
   drawBackground(context);
   drawHeader(context, targetSize);
   rows.forEach((row, index) => {
-    drawRow(context, row, portraits[index], index, layout);
+    drawRow(context, row, index, layout);
   });
   drawFooter(context);
 
@@ -61,8 +53,6 @@ function layoutFor(targetSize: number): ShareLayout {
       columns: 1,
       contentTop: 240,
       columnGap: 0,
-      portraitHeight: 72,
-      portraitWidth: 54,
       rowHeight: 94,
       rowsPerColumn: 10,
     };
@@ -72,8 +62,6 @@ function layoutFor(targetSize: number): ShareLayout {
       columns: 2,
       contentTop: 240,
       columnGap: 28,
-      portraitHeight: 48,
-      portraitWidth: 36,
       rowHeight: 72,
       rowsPerColumn: 13,
     };
@@ -82,8 +70,6 @@ function layoutFor(targetSize: number): ShareLayout {
     columns: 2,
     contentTop: 240,
     columnGap: 28,
-    portraitHeight: 0,
-    portraitWidth: 0,
     rowHeight: 38,
     rowsPerColumn: 25,
   };
@@ -98,15 +84,20 @@ function drawHeader(
   context: CanvasRenderingContext2D,
   targetSize: number,
 ): void {
+  drawText(context, "ALLTIME", 64, 81, {
+    color: COLORS.ink,
+    size: 25,
+    weight: 900,
+  });
   context.fillStyle = COLORS.orange;
-  context.fillRect(64, 48, 66, 66);
-  drawText(context, "25", 97, 81, {
+  context.fillRect(200, 48, 66, 66);
+  drawText(context, "25", 233, 81, {
     align: "center",
     color: COLORS.surface,
     size: 27,
     weight: 900,
   });
-  drawText(context, "ALLTIME", 148, 81, {
+  drawText(context, ".COM", 284, 81, {
     color: COLORS.ink,
     size: 25,
     weight: 900,
@@ -123,7 +114,6 @@ function drawHeader(
 function drawRow(
   context: CanvasRenderingContext2D,
   row: ShareRow,
-  portrait: HTMLImageElement | null,
   index: number,
   layout: ShareLayout,
 ): void {
@@ -162,66 +152,14 @@ function drawRow(
     },
   );
 
-  let nameX = x + rankWidth + 18;
-  let nameWidth = columnWidth - rankWidth - 34;
-  if (row.showPortrait) {
-    const portraitX = nameX;
-    const portraitY =
-      y + (layout.rowHeight - layout.portraitHeight) / 2 - 1;
-    drawPortrait(
-      context,
-      portrait,
-      portraitX,
-      portraitY,
-      layout.portraitWidth,
-      layout.portraitHeight,
-    );
-    nameX += layout.portraitWidth + 16;
-    nameWidth -= layout.portraitWidth + 16;
-  }
-
   drawFittedText(
     context,
     row.player.name,
-    nameX,
+    x + rankWidth + 18,
     y + layout.rowHeight / 2,
-    nameWidth,
-    layout.columns === 1 ? 28 : targetFontSize(layout),
+    columnWidth - rankWidth - 34,
+    layout.columns === 1 ? 28 : 19,
   );
-}
-
-function targetFontSize(layout: ShareLayout): number {
-  return layout.portraitWidth > 0 ? 20 : 19;
-}
-
-function drawPortrait(
-  context: CanvasRenderingContext2D,
-  image: HTMLImageElement | null,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-): void {
-  context.fillStyle = COLORS.paper;
-  context.fillRect(x, y, width, height);
-  if (image !== null) {
-    const scale = Math.min(
-      width / image.naturalWidth,
-      height / image.naturalHeight,
-    );
-    const drawnWidth = image.naturalWidth * scale;
-    const drawnHeight = image.naturalHeight * scale;
-    context.drawImage(
-      image,
-      x + (width - drawnWidth) / 2,
-      y + (height - drawnHeight) / 2,
-      drawnWidth,
-      drawnHeight,
-    );
-  }
-  context.strokeStyle = COLORS.softLine;
-  context.lineWidth = 1;
-  context.strokeRect(x, y, width, height);
 }
 
 function drawFooter(context: CanvasRenderingContext2D): void {
@@ -277,21 +215,6 @@ function drawText(
 
 function font(size: number, weight: number): string {
   return `${weight} ${size}px Arial, Helvetica, sans-serif`;
-}
-
-async function loadPortrait(source: string): Promise<HTMLImageElement | null> {
-  const image = await loadImage(source);
-  return image ?? loadImage(FALLBACK_IMAGE);
-}
-
-function loadImage(source: string): Promise<HTMLImageElement | null> {
-  return new Promise((resolve) => {
-    const image = new Image();
-    image.decoding = "async";
-    image.onload = () => resolve(image);
-    image.onerror = () => resolve(null);
-    image.src = source;
-  });
 }
 
 function canvasBlob(canvas: HTMLCanvasElement): Promise<Blob> {
