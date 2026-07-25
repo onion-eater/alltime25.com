@@ -6,6 +6,17 @@ import {
   type Page,
 } from "@playwright/test";
 
+interface StoredSession {
+  id: string;
+  preset: "top_10" | "top_25" | "top_50";
+  identityMode: "normal" | "blind";
+  playerOrder: string[];
+  outcomes: ("better" | "tie" | "worse")[];
+  revision: number;
+}
+
+const SESSION_KEY = "alltime25.ranking-session.v1";
+
 const VIEWPORTS = [
   { width: 320, height: 568 },
   { width: 360, height: 640 },
@@ -163,6 +174,99 @@ test("comparison and dialogs pass automated accessibility checks", async ({
   expect(dialogResults.violations).toEqual([]);
 });
 
+test("the static runtime never requests an API", async ({ page }) => {
+  const apiRequests: string[] = [];
+  page.on("request", (request) => {
+    if (new URL(request.url()).pathname.startsWith("/api/")) {
+      apiRequests.push(request.url());
+    }
+  });
+
+  await page.goto("/");
+  await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+  await castVote(page, "Player A");
+  await mutateAndWait(
+    page,
+    () => page.getByRole("button", { name: "Undo" }).click(),
+  );
+  await switchMode(page, "Top 10", "Blind");
+
+  expect(apiRequests).toEqual([]);
+});
+
+test("corrupt progress is preserved until Restart explicitly replaces it", async ({
+  page,
+}) => {
+  await page.addInitScript((key) => {
+    localStorage.setItem(key, "{broken");
+  }, SESSION_KEY);
+  await page.goto("/");
+
+  await expect(page.getByText(/invalid JSON/i)).toBeVisible();
+  expect(
+    await page.evaluate((key) => localStorage.getItem(key), SESSION_KEY),
+  ).toBe("{broken");
+
+  await page.getByRole("button", { name: "Restart" }).click();
+  await page
+    .getByRole("dialog", { name: "Restart" })
+    .getByRole("button", { name: "Restart ranking" })
+    .click();
+
+  await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+  expect((await storedSession(page)).preset).toBe("top_25");
+});
+
+test("a rejected storage write leaves the displayed comparison untouched", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+  const before = await storedSession(page);
+  const headingBefore = await page
+    .getByTestId("center-comparison-ledger")
+    .locator("thead")
+    .textContent();
+  await page.evaluate((key) => {
+    const original = window.localStorage.setItem.bind(
+      window.localStorage,
+    );
+    Storage.prototype.setItem = function setItem(
+      name: string,
+      value: string,
+    ): void {
+      if (name === key) {
+        throw new DOMException("Full", "QuotaExceededError");
+      }
+      original.call(this, name, value);
+    };
+  }, SESSION_KEY);
+
+  await page.getByRole("button", { name: "Player A", exact: true }).click();
+
+  await expect(page.getByRole("status")).toHaveText("Retry");
+  expect((await storedSession(page)).revision).toBe(before.revision);
+  expect(
+    await page
+      .getByTestId("center-comparison-ledger")
+      .locator("thead")
+      .textContent(),
+  ).toBe(headingBefore);
+});
+
+test("catalog loading failures keep Retry available", async ({ page }) => {
+  await page.route("**/data/current.json", (route) =>
+    route.fulfill({ status: 503, body: "Unavailable" }),
+  );
+  await page.goto("/");
+
+  await expect(page.getByText(/Unable to load catalog \(503\)/i)).toBeVisible();
+  await page.unroute("**/data/current.json");
+  await page.getByRole("button", { name: "Retry" }).click();
+
+  await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+});
+
 test("all preset and identity combinations switch safely", async ({
   page,
 }) => {
@@ -180,15 +284,13 @@ test("all preset and identity combinations switch safely", async ({
     ["Top 50", "Blind", 100, 50],
   ] as const;
   for (const [preset, identity, poolSize, targetSize] of combinations) {
-    const response = await switchMode(page, preset, identity);
-    expect(response.pool_size).toBe(poolSize);
-    expect(response.target_size).toBe(targetSize);
-    expect(response.identity_mode).toBe(identity.toLowerCase());
+    const session = await switchMode(page, preset, identity);
+    expect(session.playerOrder).toHaveLength(poolSize);
+    expect(targetSizeFor(session.preset)).toBe(targetSize);
+    expect(session.identityMode).toBe(identity.toLowerCase());
     if (identity === "Blind") {
       await expect(page.locator("main img")).toHaveCount(0);
-      expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
-        "image",
-      );
+      await expect(page.locator("main")).not.toContainText("Test Player");
     } else {
       await expect(page.locator("main img")).not.toHaveCount(0);
     }
@@ -220,16 +322,11 @@ test("the current ranking can be reviewed and resumed safely", async ({
     await undo.evaluate((button) => button.getBoundingClientRect().height),
   ).toBeGreaterThanOrEqual(24);
 
-  const blind = await switchMode(page, "Top 25", "Blind");
-  const preview = blind.ranking_preview as {
-    players: { code: string }[];
-  }[];
+  await switchMode(page, "Top 25", "Blind");
   await page.getByRole("button", { name: "Ranking" }).click();
-  await expect(page.getByText(preview[0].players[0].code)).toBeVisible();
+  await expect(page.getByText("#001")).toBeVisible();
   await expect(page.locator("main img")).toHaveCount(0);
-  expect(JSON.stringify(blind.ranking_preview).toLowerCase()).not.toContain(
-    "name",
-  );
+  await expect(page.locator("main")).not.toContainText("Test Player");
 });
 
 test("tablet result actions fill the bar in equal columns", async ({ page }) => {
@@ -260,11 +357,20 @@ test("tablet result actions fill the bar in equal columns", async ({ page }) => 
   expect(actionGeometry.widthDifference).toBeLessThanOrEqual(1);
 });
 
-test("share downloads a valid 1080 by 1350 PNG", async ({ page }) => {
+test("share delivers a valid 1080 by 1350 PNG", async ({
+  browserName,
+  page,
+}) => {
   test.setTimeout(90_000);
   await page.goto("/");
   await switchMode(page, "Top 10", "Normal");
   await finishWith(page, "Player B");
+
+  if (browserName === "webkit") {
+    await page.getByRole("button", { name: "Share" }).click();
+    await expect(page.getByRole("status")).toHaveText("Shared.");
+    return;
+  }
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Share" }).click();
@@ -290,13 +396,8 @@ test("every blind preset completes and reveals its result", async ({ page }) => 
     ["Top 50", 50],
   ] as const;
   for (const [preset, targetSize] of presets) {
-    const response = await switchMode(page, preset, "Blind");
-    expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
-      "name",
-    );
-    expect(JSON.stringify(response.comparison).toLowerCase()).not.toContain(
-      "image",
-    );
+    await switchMode(page, preset, "Blind");
+    await expect(page.locator("main")).not.toContainText("Test Player");
     await expect(page.locator("main img")).toHaveCount(0);
 
     await finishWith(page, "Tie");
@@ -318,23 +419,69 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
   await castVote(page, "Player A");
   await castVote(page, "Player B");
   await castVote(page, "Tie");
-  await Promise.all([
-    page.waitForResponse(
-      (response) =>
-        response.url().endsWith("/undo") && response.request().method() === "POST",
-    ),
-    page.getByRole("button", { name: "Undo" }).click(),
-  ]);
+  await mutateAndWait(
+    page,
+    () => page.getByRole("button", { name: "Undo" }).click(),
+  );
   await page.reload();
   await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
 
   const secondTab = await context.newPage();
   await secondTab.goto("/");
   await expect(secondTab.getByTestId("center-comparison-ledger")).toBeVisible();
+  const beforeConflict = await storedSession(page);
+  const heldLock = page.evaluate(async () => {
+    await navigator.locks.request(
+      "alltime25.ranking-session",
+      async () => {
+        (
+          window as typeof window & {
+            rankingTestLockHeld?: boolean;
+          }
+        ).rankingTestLockHeld = true;
+        await new Promise<void>((resolve) => {
+          (
+            window as typeof window & {
+              releaseRankingTestLock?: () => void;
+            }
+          ).releaseRankingTestLock = resolve;
+        });
+      },
+    );
+  });
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () =>
+          (
+            window as typeof window & {
+              rankingTestLockHeld?: boolean;
+            }
+          ).rankingTestLockHeld === true,
+      ),
+    )
+    .toBe(true);
   await Promise.all([
-    castVote(page, "Player A"),
-    castVote(secondTab, "Player B"),
+    page.getByRole("button", { name: "Player A", exact: true }).click(),
+    secondTab.getByRole("button", { name: "Player B", exact: true }).click(),
   ]);
+  await expect(
+    page.getByRole("button", { name: "Player A", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    secondTab.getByRole("button", { name: "Player B", exact: true }),
+  ).toBeDisabled();
+  await page.evaluate(() => {
+    (
+      window as typeof window & {
+        releaseRankingTestLock?: () => void;
+      }
+    ).releaseRankingTestLock?.();
+  });
+  await heldLock;
+  await expect
+    .poll(async () => (await storedSession(page)).revision)
+    .toBe(beforeConflict.revision + 1);
   await secondTab.close();
 
   await finishWith(page, "Player B");
@@ -357,14 +504,11 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
   await expect(page.getByRole("radio", { name: "Normal" })).toBeChecked();
   await page.getByRole("radio", { name: "Top 50" }).check();
 
-  await Promise.all([
-    page.waitForResponse(
-      (response) =>
-        response.url().endsWith("/sessions") &&
-        response.request().method() === "POST",
-    ),
-    page.getByRole("button", { name: "Restart ranking" }).click(),
-  ]);
+  const completedId = (await storedSession(page)).id;
+  await page.getByRole("button", { name: "Restart ranking" }).click();
+  await expect
+    .poll(async () => (await storedSession(page)).id)
+    .not.toBe(completedId);
   await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
 
   await finishWith(page, "Tie");
@@ -408,35 +552,29 @@ async function castVote(
   page: Page,
   label: "Player A" | "Player B" | "Tie",
 ): Promise<void> {
-  await Promise.all([
-    page.waitForResponse(
-      (response) =>
-        response.url().includes("/votes") &&
-        response.request().method() === "POST",
-    ),
-    page.getByRole("button", { name: label, exact: true }).click(),
-  ]);
+  await mutateAndWait(
+    page,
+    () => page.getByRole("button", { name: label, exact: true }).click(),
+  );
 }
 
 async function switchMode(
   page: Page,
   preset: "Top 10" | "Top 25" | "Top 50",
   identity: "Normal" | "Blind",
-): Promise<Record<string, unknown>> {
+): Promise<StoredSession> {
+  const currentId = (await waitForStoredSession(page)).id;
   await page.getByRole("button", { name: "Restart" }).click();
   const dialog = page.getByRole("dialog", { name: "Restart" });
   await expect(dialog).toBeVisible();
   await dialog.getByRole("radio", { name: preset }).check();
   await dialog.getByRole("radio", { name: identity }).check();
-  const responsePromise = page.waitForResponse(
-    (response) =>
-      response.url().endsWith("/sessions") &&
-      response.request().method() === "POST",
-  );
   await dialog.getByRole("button", { name: "Restart ranking" }).click();
-  const response = await responsePromise;
   await expect(dialog).toBeHidden();
-  return response.json() as Promise<Record<string, unknown>>;
+  await expect
+    .poll(async () => (await storedSession(page)).id)
+    .not.toBe(currentId);
+  return storedSession(page);
 }
 
 async function finishWith(
@@ -454,6 +592,45 @@ async function finishWith(
     await castVote(page, label);
   }
   throw new Error("Ranking did not complete within 1,000 votes.");
+}
+
+async function mutateAndWait(
+  page: Page,
+  action: () => Promise<unknown>,
+): Promise<void> {
+  const before = await storedSession(page);
+  await action();
+  await expect
+    .poll(async () => {
+      const after = await storedSession(page);
+      return after.id === before.id ? after.revision : -1;
+    })
+    .toBe(before.revision + 1);
+}
+
+async function storedSession(page: Page): Promise<StoredSession> {
+  return page.evaluate((key) => {
+    const raw = localStorage.getItem(key);
+    if (raw === null) throw new Error("Missing local ranking session.");
+    return JSON.parse(raw) as StoredSession;
+  }, SESSION_KEY);
+}
+
+async function waitForStoredSession(page: Page): Promise<StoredSession> {
+  await expect
+    .poll(() =>
+      page.evaluate((key) => localStorage.getItem(key) !== null, SESSION_KEY),
+    )
+    .toBe(true);
+  return storedSession(page);
+}
+
+function targetSizeFor(
+  preset: StoredSession["preset"],
+): 10 | 25 | 50 {
+  if (preset === "top_10") return 10;
+  if (preset === "top_25") return 25;
+  return 50;
 }
 
 async function centeredGeometry(page: Page): Promise<Record<string, number>> {

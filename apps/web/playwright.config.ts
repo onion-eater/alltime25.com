@@ -1,7 +1,6 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
-const apiPort = process.env.ALLTIME25_E2E_API_PORT ?? "8000";
-const webPort = process.env.ALLTIME25_E2E_WEB_PORT ?? "5173";
+const webPort = process.env.ALLTIME25_E2E_WEB_PORT ?? "4173";
 const webOrigin = `http://127.0.0.1:${webPort}`;
 
 export default defineConfig({
@@ -13,30 +12,29 @@ export default defineConfig({
   reporter: process.env.CI ? [["github"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: webOrigin,
-    browserName: "chromium",
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
   },
-  webServer: [
+  projects: [
     {
-      command:
-        "ALLTIME25_DATABASE_URL=sqlite:///./.playwright/e2e.sqlite3 " +
-        "ALLTIME25_CATALOG_ROOT=./.playwright/catalog " +
-        `ALLTIME25_ALLOWED_ORIGIN=${webOrigin} ` +
-        "apps/api/.venv/bin/python -m uvicorn alltime25.main:app " +
-        `--app-dir apps/api/src --host 127.0.0.1 --port ${apiPort}`,
-      cwd: "../..",
-      reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
-      url: `http://127.0.0.1:${apiPort}/api/v1/ready`,
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      command:
-        `npm --prefix apps/web run dev -- --host 127.0.0.1 --port ${webPort}`,
-      cwd: "../..",
-      reuseExistingServer: !process.env.CI,
-      timeout: 120_000,
-      url: webOrigin,
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+    },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
     },
   ],
+  webServer: {
+    command:
+      `npm --prefix apps/web run preview -- --host 127.0.0.1 --port ${webPort}`,
+    cwd: "../..",
+    reuseExistingServer: false,
+    timeout: 120_000,
+    url: webOrigin,
+  },
 });
