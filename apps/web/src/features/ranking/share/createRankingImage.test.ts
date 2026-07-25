@@ -47,7 +47,7 @@ describe("createRankingImage", () => {
     expect(dimensions).toEqual({ width: 1080, height: 1350 });
   });
 
-  it("draws the share wordmark as AllTime, the 25 mark, then .com", async () => {
+  it("draws the editorial wordmark and title without a ranking label", async () => {
     const context = mockContext();
     const blob = new Blob(["png"], { type: "image/png" });
     vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
@@ -57,12 +57,34 @@ describe("createRankingImage", () => {
     await createRankingImage(groups, 50);
 
     expect(context.fillText.mock.calls.slice(0, 4)).toEqual([
-      ["ALLTIME", 64, 81],
-      ["25", 233, 81],
-      [".COM", 284, 81],
-      ["MY NBA TOP 50", 64, 174],
+      ["ALLTIME", 64, 94],
+      ["25", 216, 94],
+      [".COM", 270, 94],
+      ["MY NBA TOP 50", 64, 218],
     ]);
+    expect(context.fillText).not.toHaveBeenCalledWith(
+      "FINAL RANKING",
+      expect.any(Number),
+      expect.any(Number),
+    );
     expect(context.font).toContain("Arial");
+  });
+
+  it("uses one paper field with rules instead of player panels", async () => {
+    const context = mockContext();
+    const blob = new Blob(["png"], { type: "image/png" });
+    vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
+      (callback) => callback(blob),
+    );
+
+    await createRankingImage(groups, 25);
+
+    expect(context.fillRect.mock.calls.slice(0, 3)).toEqual([
+      [0, 0, 1080, 1350],
+      [184, 62, 64, 64],
+      [64, 280, 952, 4],
+    ]);
+    expect(context.fillRect).toHaveBeenCalledTimes(28);
   });
 
   it("rejects when the browser cannot encode the PNG", async () => {

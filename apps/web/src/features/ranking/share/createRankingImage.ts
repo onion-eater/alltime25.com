@@ -13,7 +13,7 @@ const COLORS = {
   ink: "#101820",
   navy: "#15324a",
   orange: "#c84616",
-  line: "#1b2227",
+  muted: "#676b69",
   softLine: "#cec8bc",
 } as const;
 
@@ -23,6 +23,10 @@ interface ShareLayout {
   columnGap: number;
   rowHeight: number;
   rowsPerColumn: number;
+  rankWidth: number;
+  rankSize: number;
+  nameSize: number;
+  lineHeight: number;
 }
 
 export async function createRankingImage(
@@ -51,27 +55,39 @@ function layoutFor(targetSize: number): ShareLayout {
   if (targetSize === 10) {
     return {
       columns: 1,
-      contentTop: 240,
+      contentTop: 310,
       columnGap: 0,
-      rowHeight: 94,
+      rowHeight: 82,
       rowsPerColumn: 10,
+      rankWidth: 76,
+      rankSize: 28,
+      nameSize: 30,
+      lineHeight: 2,
     };
   }
   if (targetSize === 25) {
     return {
       columns: 2,
-      contentTop: 240,
-      columnGap: 28,
-      rowHeight: 72,
+      contentTop: 310,
+      columnGap: 42,
+      rowHeight: 68,
       rowsPerColumn: 13,
+      rankWidth: 62,
+      rankSize: 21,
+      nameSize: 22,
+      lineHeight: 2,
     };
   }
   return {
     columns: 2,
-    contentTop: 240,
-    columnGap: 28,
-    rowHeight: 38,
+    contentTop: 310,
+    columnGap: 42,
+    rowHeight: 36,
     rowsPerColumn: 25,
+    rankWidth: 50,
+    rankSize: 16,
+    nameSize: 17,
+    lineHeight: 1,
   };
 }
 
@@ -84,31 +100,31 @@ function drawHeader(
   context: CanvasRenderingContext2D,
   targetSize: number,
 ): void {
-  drawText(context, "ALLTIME", 64, 81, {
+  drawText(context, "ALLTIME", 64, 94, {
     color: COLORS.ink,
-    size: 25,
-    weight: 900,
-  });
-  context.fillStyle = COLORS.orange;
-  context.fillRect(200, 48, 66, 66);
-  drawText(context, "25", 233, 81, {
-    align: "center",
-    color: COLORS.surface,
     size: 27,
     weight: 900,
   });
-  drawText(context, ".COM", 284, 81, {
-    color: COLORS.ink,
-    size: 25,
+  context.fillStyle = COLORS.orange;
+  context.fillRect(184, 62, 64, 64);
+  drawText(context, "25", 216, 94, {
+    align: "center",
+    color: COLORS.surface,
+    size: 28,
     weight: 900,
   });
-  drawText(context, `MY NBA TOP ${targetSize}`, 64, 174, {
+  drawText(context, ".COM", 270, 94, {
     color: COLORS.ink,
-    size: 52,
+    size: 27,
+    weight: 900,
+  });
+  drawText(context, `MY NBA TOP ${targetSize}`, 64, 218, {
+    color: COLORS.ink,
+    size: 66,
     weight: 900,
   });
   context.fillStyle = COLORS.ink;
-  context.fillRect(64, 214, WIDTH - 128, 3);
+  context.fillRect(64, 280, WIDTH - 128, 4);
 }
 
 function drawRow(
@@ -126,28 +142,22 @@ function drawRow(
   const x = 64 + column * (columnWidth + layout.columnGap);
   const y = layout.contentTop + rowIndex * layout.rowHeight;
 
-  context.fillStyle = COLORS.surface;
-  context.fillRect(x, y, columnWidth, layout.rowHeight - 2);
   context.fillStyle = COLORS.softLine;
   context.fillRect(
     x,
-    y + layout.rowHeight - 2,
+    y + layout.rowHeight - layout.lineHeight,
     columnWidth,
-    2,
+    layout.lineHeight,
   );
 
-  const rankWidth = layout.columns === 1 ? 74 : 58;
-  context.fillStyle = COLORS.line;
-  context.fillRect(x + rankWidth, y, 2, layout.rowHeight - 2);
   drawText(
     context,
     row.rankLabel,
-    x + rankWidth / 2,
+    x,
     y + layout.rowHeight / 2,
     {
-      align: "center",
-      color: COLORS.ink,
-      size: layout.columns === 1 ? 27 : 20,
+      color: COLORS.navy,
+      size: layout.rankSize,
       weight: 900,
     },
   );
@@ -155,21 +165,19 @@ function drawRow(
   drawFittedText(
     context,
     row.player.name,
-    x + rankWidth + 18,
+    x + layout.rankWidth,
     y + layout.rowHeight / 2,
-    columnWidth - rankWidth - 34,
-    layout.columns === 1 ? 28 : 19,
+    columnWidth - layout.rankWidth,
+    layout.nameSize,
   );
 }
 
 function drawFooter(context: CanvasRenderingContext2D): void {
-  context.fillStyle = COLORS.ink;
-  context.fillRect(64, 1272, WIDTH - 128, 2);
-  drawText(context, "alltime25.com", WIDTH / 2, 1310, {
-    align: "center",
-    color: COLORS.ink,
-    size: 17,
-    weight: 700,
+  drawText(context, "alltime25.com", WIDTH - 64, 1301, {
+    align: "right",
+    color: COLORS.muted,
+    size: 18,
+    weight: 800,
   });
 }
 
