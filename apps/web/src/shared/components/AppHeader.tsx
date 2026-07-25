@@ -2,6 +2,7 @@ import wordmark from "@/assets/alltime25-wordmark.svg";
 import styles from "@/shared/components/AppHeader.module.css";
 
 interface AppHeaderProps {
+  activeTab: "ranking" | "vote" | null;
   onBrand: () => void;
   onHelp: () => void;
   onRestart: () => void;
@@ -10,6 +11,7 @@ interface AppHeaderProps {
 }
 
 export function AppHeader({
+  activeTab,
   onBrand,
   onHelp,
   onRestart,
@@ -40,6 +42,7 @@ export function AppHeader({
         >
           {onVote !== null ? (
             <button
+              aria-current={activeTab === "vote" ? "page" : undefined}
               className={`${styles.navButton} ${styles.voteButton}`}
               onClick={onVote}
               type="button"
@@ -55,6 +58,7 @@ export function AppHeader({
             Restart
           </button>
           <button
+            aria-current={activeTab === "ranking" ? "page" : undefined}
             className={`${styles.navButton} ${styles.rankingButton}`}
             onClick={onRanking}
             type="button"

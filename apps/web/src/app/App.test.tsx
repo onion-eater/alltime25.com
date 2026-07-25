@@ -364,16 +364,22 @@ describe("App dialogs", () => {
     expect(navigationButtons[1]).toHaveAccessibleName("Restart");
     expect(navigationButtons[2]).toHaveAccessibleName("Ranking");
     expect(navigationButtons[3]).toHaveAccessibleName("How to play");
+    expect(navigationButtons[0]).toHaveAttribute("aria-current", "page");
+    expect(navigationButtons[2]).not.toHaveAttribute("aria-current");
 
     fireEvent.click(screen.getByRole("button", { name: "Ranking" }));
     expect(
       screen.getByRole("heading", { name: "Your ranking so far." }),
     ).toBeVisible();
+    expect(navigationButtons[0]).not.toHaveAttribute("aria-current");
+    expect(navigationButtons[2]).toHaveAttribute("aria-current", "page");
 
     fireEvent.click(screen.getByRole("button", { name: "Vote" }));
     expect(
       screen.getByRole("heading", { name: "Greater career?" }),
     ).toBeVisible();
+    expect(navigationButtons[0]).toHaveAttribute("aria-current", "page");
+    expect(navigationButtons[2]).not.toHaveAttribute("aria-current");
   });
 
   it("hides Vote after the ranking is complete", () => {
@@ -393,6 +399,9 @@ describe("App dialogs", () => {
     expect(
       screen.queryByRole("button", { name: "Vote" }),
     ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Ranking" }),
+    ).toHaveAttribute("aria-current", "page");
   });
 
   it("keeps identities hidden in a blind ranking preview", () => {

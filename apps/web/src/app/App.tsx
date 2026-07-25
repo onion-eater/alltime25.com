@@ -50,6 +50,12 @@ export function App(): React.JSX.Element {
   );
   const [reviewView, setReviewView] = useState<ReviewView>(null);
   const isOnboarding = requiresOnboarding && session === null;
+  const activeTab =
+    session?.status === "complete" || reviewView === "ranking"
+      ? "ranking"
+      : session?.status === "active" && reviewView === null
+        ? "vote"
+        : null;
 
   const closeDialog = useCallback(() => setOpenDialog(null), []);
   const openRestartDialog = useCallback(
@@ -130,6 +136,7 @@ export function App(): React.JSX.Element {
         inert={hasOpenDialog}
       >
         <AppHeader
+          activeTab={activeTab}
           onBrand={showMain}
           onHelp={() => setOpenDialog("help")}
           onRestart={openRestartDialog}

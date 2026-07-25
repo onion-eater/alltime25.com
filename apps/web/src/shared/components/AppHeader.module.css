@@ -50,7 +50,8 @@
   text-transform: uppercase;
 }
 
-.navButton:focus-visible {
+.navButton:focus-visible,
+.navButton[aria-current="page"] {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
