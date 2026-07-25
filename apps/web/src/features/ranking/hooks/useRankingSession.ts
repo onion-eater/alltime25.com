@@ -48,7 +48,14 @@ export interface RankingSessionController {
   retry: () => void;
 }
 
-export function useRankingSession(): RankingSessionController {
+interface UseRankingSessionOptions {
+  deferInitialCreation?: boolean;
+}
+
+export function useRankingSession(
+  options: UseRankingSessionOptions = {},
+): RankingSessionController {
+  const { deferInitialCreation = false } = options;
   const [session, setSession] = useState<RankingSessionView | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -142,6 +149,13 @@ export function useRankingSession(): RankingSessionController {
       try {
         clearLegacySessionKeys();
         const raw = readPersistedSessionRaw();
+        if (raw === null && deferInitialCreation) {
+          persistedRef.current = null;
+          corruptRawRef.current = null;
+          setSession(null);
+          setStatusMessage("Choose a mode");
+          return;
+        }
         let loaded: PersistedRankingSessionV1;
         let created = false;
         if (raw === null) {
@@ -187,7 +201,7 @@ export function useRankingSession(): RankingSessionController {
     return () => {
       cancelled = true;
     };
-  }, [adoptPersistedSession, loadAttempt]);
+  }, [adoptPersistedSession, deferInitialCreation, loadAttempt]);
 
   useEffect(() => {
     let cancelled = false;

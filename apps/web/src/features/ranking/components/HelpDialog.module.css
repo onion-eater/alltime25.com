@@ -48,6 +48,14 @@
   padding: 0 20px 20px;
 }
 
+.error {
+  margin: 0 0 10px;
+  color: var(--color-orange);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .start {
   width: 100%;
   min-height: 54px;

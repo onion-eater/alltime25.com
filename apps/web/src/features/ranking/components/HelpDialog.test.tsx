@@ -90,6 +90,23 @@ describe("HelpDialog", () => {
     ).toBeDisabled();
   });
 
+  it("shows a first-run creation error without hiding the mode controls", () => {
+    render(
+      <HelpDialog
+        error="Progress could not be saved."
+        isOpen
+        mode="onboarding"
+        onClose={vi.fn()}
+        onStart={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Progress could not be saved.",
+    );
+    expect(screen.getByRole("radio", { name: "Top 25" })).toBeChecked();
+  });
+
   it("closes on Escape", () => {
     const onClose = vi.fn();
     render(

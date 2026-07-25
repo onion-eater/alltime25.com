@@ -22,6 +22,7 @@ interface InstructionsHelpDialogProps extends BaseHelpDialogProps {
 }
 
 interface OnboardingHelpDialogProps extends BaseHelpDialogProps {
+  error?: string | null;
   isSubmitting?: boolean;
   mode: "onboarding";
   onStart: (selection: RankingSelection) => void | Promise<void>;
@@ -128,6 +129,14 @@ function OpenHelpDialog(
                 />
               </div>
               <footer className={styles.footer}>
+                {props.error ? (
+                  <p
+                    className={styles.error}
+                    role="alert"
+                  >
+                    {props.error}
+                  </p>
+                ) : null}
                 <button
                   className={styles.start}
                   disabled={props.isSubmitting}

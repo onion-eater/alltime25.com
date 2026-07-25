@@ -8,6 +8,7 @@ import { RankingsScreen } from "@/features/ranking/components/RankingsScreen";
 import { RestartDialog } from "@/features/ranking/components/RestartDialog";
 import { useRankingSession } from "@/features/ranking/hooks/useRankingSession";
 import { DEFAULT_RANKING_SELECTION } from "@/features/ranking/model/rankingSelection";
+import { SESSION_STORAGE_KEY } from "@/features/ranking/persistence/persistedSession";
 import { AppHeader } from "@/shared/components/AppHeader";
 import { Footer } from "@/shared/components/Footer";
 import {
@@ -20,6 +21,13 @@ type OpenDialog = "help" | "restart" | null;
 type ReviewView = "progress" | "ranking" | null;
 
 export function App(): React.JSX.Element {
+  const [deferInitialCreation] = useState(
+    () =>
+      storageGet(HELP_KEY) !== "1" &&
+      storageGet(SESSION_STORAGE_KEY) === null,
+  );
+  const [requiresOnboarding, setRequiresOnboarding] =
+    useState(deferInitialCreation);
   const {
     session,
     isLoading,
@@ -30,7 +38,9 @@ export function App(): React.JSX.Element {
     undo,
     startNewRanking,
     retry,
-  } = useRankingSession();
+  } = useRankingSession({
+    deferInitialCreation,
+  });
   const [openDialog, setOpenDialog] = useState<OpenDialog>(
     () => (storageGet(HELP_KEY) !== "1" ? "help" : null),
   );
@@ -124,14 +134,33 @@ export function App(): React.JSX.Element {
         <main className={styles.viewport}>{content}</main>
         <Footer />
       </div>
-      <HelpDialog
-        identityMode={
-          session?.identityMode ??
-          DEFAULT_RANKING_SELECTION.identityMode
-        }
-        isOpen={openDialog === "help"}
-        onClose={dismissHelp}
-      />
+      {requiresOnboarding ? (
+        <HelpDialog
+          error={error}
+          isOpen={openDialog === "help"}
+          isSubmitting={isSubmitting}
+          mode="onboarding"
+          onClose={dismissHelp}
+          onStart={async (selection) => {
+            const created = await startNewRanking(selection);
+            if (created) {
+              storageSet(HELP_KEY, "1");
+              setOpenDialog(null);
+              setRequiresOnboarding(false);
+              setReviewView(null);
+            }
+          }}
+        />
+      ) : (
+        <HelpDialog
+          identityMode={
+            session?.identityMode ??
+            DEFAULT_RANKING_SELECTION.identityMode
+          }
+          isOpen={openDialog === "help"}
+          onClose={dismissHelp}
+        />
+      )}
       <RestartDialog
         isOpen={openDialog === "restart"}
         isSubmitting={isSubmitting}

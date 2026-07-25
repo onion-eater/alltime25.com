@@ -61,6 +61,19 @@ describe("useRankingSession", () => {
     expect(readPersistedSession()?.playerOrder).toHaveLength(50);
   });
 
+  it("waits for first-run mode selection before creating a ranking", async () => {
+    const { result } = renderHook(() =>
+      useRankingSession({ deferInitialCreation: true }),
+    );
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current.error).toBeNull();
+    expect(result.current.session).toBeNull();
+    expect(readPersistedSession()).toBeNull();
+    expect(catalogMocks.loadCurrentCatalog).not.toHaveBeenCalled();
+  });
+
   it("restores the exact stored catalog, mode, order, and vote history", async () => {
     const stored = applySessionVote(
       createRankingSession(catalog(), {

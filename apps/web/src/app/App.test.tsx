@@ -15,6 +15,7 @@ import {
 
 import { App } from "@/app/App";
 import { useRankingSession } from "@/features/ranking/hooks/useRankingSession";
+import { SESSION_STORAGE_KEY } from "@/features/ranking/persistence/persistedSession";
 import {
   activeSession,
   blindSession,
@@ -72,21 +73,78 @@ describe("App dialogs", () => {
     );
   });
 
-  it("remembers when the first-visit instructions are dismissed", () => {
+  it("requires a mode choice before creating the first ranking", async () => {
     window.localStorage.removeItem("alltime25.help_seen");
-    const { unmount } = render(<App />);
+    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    startNewRanking.mockResolvedValue(true);
+    render(<App />);
 
     expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
+    expect(useRankingSession).toHaveBeenCalledWith({
+      deferInitialCreation: true,
+    });
+    expect(
+      screen.queryByRole("button", { name: "Close instructions" }),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("radio", { name: "Top 10" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Blind" }));
     fireEvent.click(
-      screen.getByRole("button", { name: "Close instructions" }),
+      screen.getByRole("button", { name: "Start ranking" }),
     );
 
+    await waitFor(() => {
+      expect(startNewRanking).toHaveBeenCalledWith({
+        preset: "top_10",
+        identityMode: "blind",
+      });
+      expect(
+        screen.queryByRole("dialog", { name: "How it works" }),
+      ).not.toBeInTheDocument();
+    });
     expect(window.localStorage.getItem("alltime25.help_seen")).toBe("1");
-    unmount();
-    render(<App />);
+
+    fireEvent.click(screen.getByRole("button", { name: "How to play" }));
     expect(
-      screen.queryByRole("dialog", { name: "How it works" }),
-    ).not.toBeInTheDocument();
+      screen.getByRole("button", { name: "Close instructions" }),
+    ).toBeVisible();
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+  });
+
+  it("keeps first-run mode selection open when creation fails", async () => {
+    window.localStorage.removeItem("alltime25.help_seen");
+    window.localStorage.removeItem(SESSION_STORAGE_KEY);
+    startNewRanking.mockResolvedValue(false);
+    render(<App />);
+
+    fireEvent.click(screen.getByRole("radio", { name: "Top 50" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Blind" }));
+    fireEvent.click(
+      screen.getByRole("button", { name: "Start ranking" }),
+    );
+
+    await waitFor(() => {
+      expect(startNewRanking).toHaveBeenCalled();
+    });
+    expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
+    expect(screen.getByRole("radio", { name: "Top 50" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Blind" })).toBeChecked();
+    expect(window.localStorage.getItem("alltime25.help_seen")).toBeNull();
+  });
+
+  it("preserves an existing ranking when the help preference is absent", () => {
+    window.localStorage.removeItem("alltime25.help_seen");
+    window.localStorage.setItem(SESSION_STORAGE_KEY, "{}");
+    render(<App />);
+
+    expect(useRankingSession).toHaveBeenCalledWith({
+      deferInitialCreation: false,
+    });
+    expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
+    expect(
+      screen.getByRole("button", { name: "Close instructions" }),
+    ).toBeVisible();
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
   });
 
   it("defaults Restart to Top 25 and Normal", async () => {
