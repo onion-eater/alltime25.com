@@ -37,6 +37,33 @@ describe("CompareScreen", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("hides the idle Saved label but keeps active status feedback", () => {
+    const { rerender } = render(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting={false}
+        statusMessage="Saved"
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    expect(screen.queryByText("Saved")).not.toBeInTheDocument();
+
+    rerender(
+      <CompareScreen
+        session={activeSession()}
+        isSubmitting
+        statusMessage="Saved"
+        onUndo={vi.fn()}
+        onVote={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole("status")).toHaveTextContent("Saving");
+  });
+
   it("maps the three buttons to ranking-domain vote outcomes", () => {
     const onVote = vi.fn();
 

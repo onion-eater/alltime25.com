@@ -34,6 +34,11 @@ export function CompareScreen({
     comparison.playerA,
     comparison.playerB,
   );
+  const visibleStatus = isSubmitting
+    ? "Saving"
+    : statusMessage === "Saved"
+      ? ""
+      : (statusMessage ?? "");
 
   return (
     <section className={styles.screen}>
@@ -123,7 +128,7 @@ export function CompareScreen({
             aria-live="polite"
             role="status"
           >
-            {statusMessage ?? (isSubmitting ? "Saving" : "Saved")}
+            {visibleStatus}
           </span>
         </div>
       </div>
