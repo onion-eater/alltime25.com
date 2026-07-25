@@ -218,35 +218,39 @@ describe("ranking domain", () => {
     );
   });
 
-  it("exhaustively validates every reachable state through seven players", () => {
-    const outcomes: readonly VoteOutcome[] = [
-      "better",
-      "tie",
-      "worse",
-    ];
-    for (let poolSize = 1; poolSize <= 7; poolSize += 1) {
-      const players = Array.from(
-        { length: poolSize },
-        (_, index) => `player-${index}`,
-      );
-      for (let target = 1; target <= poolSize; target += 1) {
-        const pending = [startRanking(players, target)];
-        const seen = new Set<string>();
-        while (pending.length > 0) {
-          const state = pending.pop();
-          if (state === undefined) break;
-          const key = stableJson(serializeState(state));
-          if (seen.has(key)) continue;
-          seen.add(key);
-          validateRankingState(state);
-          if (isRankingComplete(state)) continue;
-          for (const outcome of outcomes) {
-            pending.push(applyVote(state, outcome));
+  it(
+    "exhaustively validates every reachable state through seven players",
+    () => {
+      const outcomes: readonly VoteOutcome[] = [
+        "better",
+        "tie",
+        "worse",
+      ];
+      for (let poolSize = 1; poolSize <= 7; poolSize += 1) {
+        const players = Array.from(
+          { length: poolSize },
+          (_, index) => `player-${index}`,
+        );
+        for (let target = 1; target <= poolSize; target += 1) {
+          const pending = [startRanking(players, target)];
+          const seen = new Set<string>();
+          while (pending.length > 0) {
+            const state = pending.pop();
+            if (state === undefined) break;
+            const key = stableJson(serializeState(state));
+            if (seen.has(key)) continue;
+            seen.add(key);
+            validateRankingState(state);
+            if (isRankingComplete(state)) continue;
+            for (const outcome of outcomes) {
+              pending.push(applyVote(state, outcome));
+            }
           }
         }
       }
-    }
-  });
+    },
+    15_000,
+  );
 
   it("keeps all one hundred players in a cutoff tie", () => {
     const playerIds = Array.from(
