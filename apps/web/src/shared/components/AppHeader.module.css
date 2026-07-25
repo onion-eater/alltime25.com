@@ -40,6 +40,7 @@
 
 .navButton {
   padding: 6px 0;
+  color: var(--color-ink);
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -47,6 +48,11 @@
   font-weight: 900;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.navButton:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .help {
@@ -59,6 +65,13 @@
   cursor: pointer;
   font-family: var(--font-display);
   font-size: 16px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navButton:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
 }
 
 @media (max-width: 560px) {

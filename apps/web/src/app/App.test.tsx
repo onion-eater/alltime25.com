@@ -83,6 +83,9 @@ describe("App dialogs", () => {
     ).toBeVisible();
     expect(footer).not.toHaveTextContent("NBA.com data");
     expect(footer).not.toHaveTextContent("Frozen 2026-06-30");
+    expect(
+      within(footer).queryByRole("button", { name: "How it works" }),
+    ).not.toBeInTheDocument();
 
     fireEvent.click(within(footer).getByRole("button", { name: "Data" }));
     expect(screen.getByRole("dialog", { name: "Data" })).toBeVisible();
@@ -110,11 +113,6 @@ describe("App dialogs", () => {
     expect(
       screen.queryByRole("dialog", { name: "Privacy" }),
     ).not.toBeInTheDocument();
-
-    fireEvent.click(
-      within(footer).getByRole("button", { name: "How it works" }),
-    );
-    expect(screen.getByRole("dialog", { name: "How it works" })).toBeVisible();
   });
 
   it("requires a mode choice before creating the first ranking", async () => {

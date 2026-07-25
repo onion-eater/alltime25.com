@@ -2,13 +2,11 @@ import styles from "@/shared/components/Footer.module.css";
 
 interface FooterProps {
   onData: () => void;
-  onHowItWorks: () => void;
   onPrivacy: () => void;
 }
 
 export function Footer({
   onData,
-  onHowItWorks,
   onPrivacy,
 }: FooterProps): React.JSX.Element {
   return (
@@ -21,10 +19,6 @@ export function Footer({
         aria-label="Footer navigation"
         className={styles.links}
       >
-        <button onClick={onHowItWorks} type="button">
-          How it works
-        </button>
-        <span aria-hidden="true">·</span>
         <button onClick={onData} type="button">
           Data
         </button>

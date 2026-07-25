@@ -139,7 +139,6 @@ export function App(): React.JSX.Element {
         <main className={styles.viewport}>{content}</main>
         <Footer
           onData={() => setOpenDialog("data")}
-          onHowItWorks={() => setOpenDialog("help")}
           onPrivacy={() => setOpenDialog("privacy")}
         />
       </div>
