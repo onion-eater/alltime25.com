@@ -42,11 +42,74 @@ const VIEWPORTS = [
   { width: 1920, height: 1080 },
 ] as const;
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.tags.includes("@first-run")) return;
   await page.addInitScript(() => {
     localStorage.setItem("alltime25.help_seen", "1");
   });
 });
+
+test(
+  "first visit chooses a mode before any ranking is created",
+  { tag: "@first-run" },
+  async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto("/");
+
+    const dialog = page.getByRole("dialog", { name: "How it works" });
+    await expect(dialog).toBeVisible();
+    expect(
+      await page.evaluate((key) => localStorage.getItem(key), SESSION_KEY),
+    ).toBeNull();
+    await expect(
+      dialog.getByRole("button", { name: "Close instructions" }),
+    ).toHaveCount(0);
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("radio", { name: "Top 25" })).toBeChecked();
+    await expect(dialog.getByRole("radio", { name: "Normal" })).toBeChecked();
+
+    const onboardingA11y = await new AxeBuilder({ page }).analyze();
+    expect(onboardingA11y.violations).toEqual([]);
+
+    await dialog.getByRole("radio", { name: "Top 10" }).check();
+    await dialog.getByRole("radio", { name: "Blind" }).check();
+    await expect(dialog.getByText("Compare blind résumés")).toBeVisible();
+    const start = dialog.getByRole("button", { name: "Start ranking" });
+    await start.scrollIntoViewIfNeeded();
+    const dialogBounds = await dialog.boundingBox();
+    const startBounds = await start.boundingBox();
+    if (dialogBounds === null || startBounds === null) {
+      throw new Error("Missing onboarding geometry.");
+    }
+    expect(dialogBounds.y).toBeGreaterThanOrEqual(17);
+    expect(dialogBounds.y + dialogBounds.height).toBeLessThanOrEqual(551);
+    expect(startBounds.y + startBounds.height).toBeLessThanOrEqual(
+      dialogBounds.y + dialogBounds.height,
+    );
+    await start.click();
+
+    await expect(dialog).toBeHidden();
+    await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+    const created = await storedSession(page);
+    expect(created.preset).toBe("top_10");
+    expect(created.identityMode).toBe("blind");
+    await expect(page.locator("main img")).toHaveCount(0);
+    await expect(page.locator("main")).not.toContainText("Test Player");
+
+    await page.reload();
+    await expect(page.getByTestId("center-comparison-ledger")).toBeVisible();
+    expect((await storedSession(page)).id).toBe(created.id);
+    await expect(page.locator("main img")).toHaveCount(0);
+
+    await page.getByRole("button", { name: "How to play" }).click();
+    const laterHelp = page.getByRole("dialog", { name: "How it works" });
+    await expect(
+      laterHelp.getByRole("button", { name: "Close instructions" }),
+    ).toBeVisible();
+    await expect(laterHelp.getByRole("radio")).toHaveCount(0);
+  },
+);
 
 test("comparison stays clean and centered at every required viewport", async ({
   page,
