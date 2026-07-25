@@ -2,17 +2,18 @@
   min-height: 0;
   display: flex;
   justify-content: center;
-  flex: 1;
+  flex: 0 1 auto;
   overflow: hidden;
+  outline: var(--border-strong);
+  outline-offset: -2px;
 }
 
 .table {
   width: 100%;
-  height: 100%;
   table-layout: fixed;
   border-collapse: collapse;
   background: var(--color-surface);
-  border: var(--border-strong);
+  border: 0;
 }
 
 .playerColumn {

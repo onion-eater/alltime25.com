@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 import styles from "@/features/ranking/components/CenterComparisonLedger.module.css";
 import { PlayerLedgerHeader } from "@/features/ranking/components/PlayerLedgerHeader";
 import type { ComparisonSection } from "@/features/ranking/model/comparisonRows";
@@ -62,33 +64,35 @@ export function CenterComparisonLedger({
             </th>
           </tr>
         </thead>
-        {sections.map((section) => (
-          <tbody key={section.label}>
-            <tr className={styles.sectionRow}>
-              <th
-                colSpan={3}
-                scope="colgroup"
-              >
-                {section.label}
-              </th>
-            </tr>
-            {section.rows.map((row) => (
-              <tr
-                className={styles.statRow}
-                key={`${section.label}-${row.label}`}
-              >
-                <td className={styles.value}>{row.valueA}</td>
+        <tbody>
+          {sections.map((section) => (
+            <Fragment key={section.label}>
+              <tr className={styles.sectionRow}>
                 <th
-                  className={styles.label}
-                  scope="row"
+                  colSpan={3}
+                  scope="colgroup"
                 >
-                  {row.label}
+                  {section.label}
                 </th>
-                <td className={styles.value}>{row.valueB}</td>
               </tr>
-            ))}
-          </tbody>
-        ))}
+              {section.rows.map((row) => (
+                <tr
+                  className={styles.statRow}
+                  key={`${section.label}-${row.label}`}
+                >
+                  <td className={styles.value}>{row.valueA}</td>
+                  <th
+                    className={styles.label}
+                    scope="row"
+                  >
+                    {row.label}
+                  </th>
+                  <td className={styles.value}>{row.valueB}</td>
+                </tr>
+              ))}
+            </Fragment>
+          ))}
+        </tbody>
       </table>
     </div>
   );

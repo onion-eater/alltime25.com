@@ -164,7 +164,7 @@ test("comparison stays clean and centered at every required viewport", async ({
   expect(
     await page
       .getByTestId("center-comparison-ledger")
-      .locator("tbody > tr:first-child th")
+      .locator('tbody > tr > th[scope="colgroup"]')
       .allTextContents(),
   ).toEqual(["Career", "Honors", "Regular Season", "Playoffs"]);
 
