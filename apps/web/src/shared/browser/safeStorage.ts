@@ -19,6 +19,6 @@ export function storageRemove(key: string): void {
   try {
     window.localStorage.removeItem(key);
   } catch {
-    // Storage is optional; server state remains authoritative.
+    // Optional preferences must not prevent the ranking UI from loading.
   }
 }

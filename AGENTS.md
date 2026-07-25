@@ -59,8 +59,8 @@ Run all checks before handoff:
 
 ```bash
 uv sync --frozen --group dev
-uv run ruff check scripts tests
-uv run ruff format --check scripts tests
+uv run ruff check .
+uv run ruff format --check .
 uv run python -m pytest -W error
 uv run python scripts/check_architecture.py
 

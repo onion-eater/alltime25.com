@@ -49,7 +49,7 @@ them into `pools.json`. Top 10 uses the 25-player pool, Top 25 uses the
 50-player pool, and Top 50 uses the full 100-player pool.
 
 Provider caches, API keys, written license documents, and source paths are
-import-only material. They must remain outside the repository and container.
-Publication may contain only normalized catalog data, the public rights
+import-only material. They must remain outside the repository and deployed
+site. Publication may contain only normalized catalog data, the public rights
 reference recorded by the manifest, review CSV, hashes, and local WebP
 portraits.

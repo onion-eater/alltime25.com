@@ -1,7 +1,7 @@
 # Catalog release pipeline
 
 The catalog scripts publish one immutable AllTime 25 catalog. They run only
-offline and never in the web container.
+offline and are never included in the deployed site.
 
 ## Public NBA.com import
 
@@ -14,7 +14,7 @@ Wikimedia Commons replacements.
 Run from the repository root:
 
 ```bash
-uv run --project apps/api python scripts/catalog/fetch_public_nba_catalog.py \
+uv run python scripts/catalog/fetch_public_nba_catalog.py \
   --catalog-id nba-public-2025-26-r2 \
   --as-of 2026-06-30 \
   --license-reference "Project owner-approved public-source catalog." \
@@ -45,7 +45,7 @@ The staged JSON must contain:
 Example:
 
 ```bash
-uv run --project apps/api python scripts/catalog/build_catalog.py \
+uv run python scripts/catalog/build_catalog.py \
   --input /secure/import/sportsdataio-export.json \
   --catalog-id beta-2025-26 \
   --as-of 2026-06-30 \
