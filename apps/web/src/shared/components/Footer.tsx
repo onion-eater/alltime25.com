@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+
 import styles from "@/shared/components/Footer.module.css";
 
 interface FooterProps {
@@ -19,15 +21,39 @@ export function Footer({
         aria-label="Footer navigation"
         className={styles.links}
       >
-        <button onClick={onData} type="button">
+        <a
+          aria-haspopup="dialog"
+          href="/data/"
+          onClick={(event) => openDialog(event, onData)}
+        >
           Data
-        </button>
+        </a>
         <span aria-hidden="true">·</span>
-        <button onClick={onPrivacy} type="button">
+        <a
+          aria-haspopup="dialog"
+          href="/privacy/"
+          onClick={(event) => openDialog(event, onPrivacy)}
+        >
           Privacy
-        </button>
+        </a>
       </nav>
       <span className={styles.disclaimer}>Not affiliated with the NBA</span>
     </footer>
   );
+}
+
+function openDialog(
+  event: MouseEvent<HTMLAnchorElement>,
+  open: () => void,
+): void {
+  if (
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+  event.preventDefault();
+  open();
 }

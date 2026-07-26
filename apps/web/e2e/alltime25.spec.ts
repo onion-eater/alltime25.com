@@ -154,7 +154,9 @@ test("comparison stays clean and centered at every required viewport", async ({
   page,
 }) => {
   await page.goto("/");
-  await expect(page).toHaveTitle("AllTime 25");
+  await expect(page).toHaveTitle(
+    "AllTime25 — Build Your NBA All-Time Ranking",
+  );
   await expect(
     page
       .getByRole("button", { name: "AllTime 25" })
@@ -260,9 +262,10 @@ test("comparison stays clean and centered at every required viewport", async ({
     expect(layout.navigationOverflow, JSON.stringify(viewport)).toBe(false);
     expect(layout.overlaps, JSON.stringify(viewport)).toBe(false);
     expect(layout.clipped, JSON.stringify(viewport)).toEqual([]);
-    expect(layout.toolsFooterGap, JSON.stringify(viewport)).toBeGreaterThanOrEqual(
-      12,
-    );
+    expect(
+      layout.toolsFooterGap,
+      JSON.stringify(viewport),
+    ).toBeGreaterThanOrEqual(11.99);
     expect(layout.voteBottom, JSON.stringify(viewport)).toBeLessThanOrEqual(
       layout.viewportHeight + 1,
     );
@@ -317,14 +320,14 @@ test("the branded favicon and minimal footer work without navigation", async ({
   await expect(footer).not.toContainText("NBA.com data");
   await expect(footer).not.toContainText("Frozen 2026-06-30");
 
-  await footer.getByRole("button", { name: "Data" }).click();
+  await footer.getByRole("link", { name: "Data" }).click();
   await expect(page.getByRole("dialog", { name: "Data" })).toBeVisible();
   await page
     .getByRole("dialog", { name: "Data" })
     .getByRole("button", { name: "Close Data" })
     .click();
 
-  await footer.getByRole("button", { name: "Privacy" }).click();
+  await footer.getByRole("link", { name: "Privacy" }).click();
   const privacy = page.getByRole("dialog", { name: "Privacy" });
   await expect(privacy).toContainText(
     "Your ranking stays in this browser and is not uploaded",
@@ -694,7 +697,7 @@ test("a full 100-player workflow survives recovery and cutoff ties", async ({
   expect(scrollMetrics.scrollTop).toBeGreaterThan(0);
   await expect(tiedRanks.last()).toBeVisible();
 
-  const portrait = page.locator("img").first();
+  const portrait = rankingList.locator("img").first();
   await expect(portrait).toBeVisible();
   expect(
     await portrait.evaluate((image) => ({

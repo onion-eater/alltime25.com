@@ -3,15 +3,127 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e7" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large"
+    />
     <meta
       name="description"
-      content="Build your NBA career ranking from blind statistical comparisons."
+      content="Compare NBA legends head-to-head and build your personal Top 10, Top 25, or Top 50 ranking in Normal or Blind mode."
     />
+    <link rel="canonical" href="https://alltime25.com/" />
     <link rel="icon" type="image/svg+xml" href="/src/assets/alltime25-mark.svg" />
-    <title>AllTime 25</title>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="AllTime25" />
+    <meta property="og:title" content="Build your NBA all-time ranking" />
+    <meta
+      property="og:description"
+      content="Compare NBA legends head-to-head in Normal or Blind mode."
+    />
+    <meta property="og:url" content="https://alltime25.com/" />
+    <meta
+      property="og:image"
+      content="https://alltime25.com/social/alltime25-preview.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="AllTime25 NBA player ranking comparison"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Build your NBA all-time ranking"
+    />
+    <meta
+      name="twitter:description"
+      content="Compare NBA legends and create your personal all-time ranking."
+    />
+    <meta
+      name="twitter:image"
+      content="https://alltime25.com/social/alltime25-preview.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="AllTime25 NBA player ranking comparison"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "AllTime25",
+        "alternateName": "alltime25.com",
+        "url": "https://alltime25.com/"
+      }
+    </script>
+    <style>
+      .static-introduction {
+        min-height: 100vh;
+        display: grid;
+        align-content: center;
+        gap: 18px;
+        max-width: 720px;
+        padding: 32px;
+        margin: auto;
+        color: #101820;
+        background: #f4f0e7;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .static-introduction h1,
+      .static-introduction p {
+        margin: 0;
+      }
+
+      .static-introduction h1 {
+        font-family: "Arial Black", Arial, sans-serif;
+        font-size: clamp(32px, 6vw, 64px);
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .static-introduction p {
+        max-width: 60ch;
+        line-height: 1.5;
+      }
+
+      .static-introduction nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .static-introduction a {
+        color: inherit;
+        font-weight: 700;
+      }
+    </style>
+    <title>AllTime25 — Build Your NBA All-Time Ranking</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="static-introduction">
+        <h1>Build your NBA all-time ranking</h1>
+        <p>
+          Compare NBA legends head-to-head and create your personal Top 10,
+          Top 25, or Top 50. Play with names and portraits, or rank blind
+          using career statistics and honors.
+        </p>
+        <nav aria-label="About AllTime25">
+          <a href="/how-it-works/">How it works</a>
+          <a href="/data/">Data</a>
+          <a href="/privacy/">Privacy</a>
+        </nav>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

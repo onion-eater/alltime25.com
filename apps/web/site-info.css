@@ -1,0 +1,141 @@
+:root {
+  color: #101820;
+  background: #f4f0e7;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: #f4f0e7;
+}
+
+.header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  padding-inline: max(28px, calc((100% - 960px) / 2));
+  background: #fbfaf6;
+  border-bottom: 2px solid #101820;
+}
+
+.header img {
+  width: auto;
+  height: 42px;
+}
+
+.page {
+  width: min(calc(100% - 56px), 960px);
+  min-height: calc(100vh - 146px);
+  margin-inline: auto;
+  padding-block: 72px;
+}
+
+.eyebrow,
+h1 {
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  color: #c84616;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+h1 {
+  max-width: 760px;
+  margin: 0 0 24px;
+  font-family: "Arial Black", Arial, sans-serif;
+  font-size: clamp(36px, 7vw, 72px);
+  line-height: 0.95;
+}
+
+.intro {
+  max-width: 660px;
+  margin: 0 0 38px;
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.details {
+  max-width: 760px;
+  background: #fbfaf6;
+  border: 2px solid #101820;
+}
+
+.details section {
+  padding: 22px 24px;
+  border-bottom: 1px solid #cec8bc;
+}
+
+.details section:last-child {
+  border-bottom: 0;
+}
+
+.details h2,
+.details p {
+  margin: 0;
+}
+
+.details h2 {
+  margin-bottom: 8px;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.details p {
+  line-height: 1.5;
+}
+
+.footer {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-inline: max(28px, calc((100% - 960px) / 2));
+  color: #676b69;
+  background: #fbfaf6;
+  border-top: 2px solid #101820;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+a:hover,
+a:focus-visible {
+  color: #101820;
+}
+
+@media (max-width: 560px) {
+  .header {
+    height: 64px;
+    padding-inline: 14px;
+  }
+
+  .page {
+    width: calc(100% - 28px);
+    min-height: calc(100vh - 134px);
+    padding-block: 42px;
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+
+  .footer {
+    min-height: 70px;
+    padding: 14px;
+  }
+}

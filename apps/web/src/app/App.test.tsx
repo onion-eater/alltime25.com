@@ -87,7 +87,7 @@ describe("App dialogs", () => {
       within(footer).queryByRole("button", { name: "How it works" }),
     ).not.toBeInTheDocument();
 
-    fireEvent.click(within(footer).getByRole("button", { name: "Data" }));
+    fireEvent.click(within(footer).getByRole("link", { name: "Data" }));
     expect(screen.getByRole("dialog", { name: "Data" })).toBeVisible();
     expect(
       screen.getByText("Regular season and playoffs"),
@@ -98,7 +98,7 @@ describe("App dialogs", () => {
     fireEvent.click(screen.getByRole("button", { name: "Close Data" }));
 
     fireEvent.click(
-      within(footer).getByRole("button", { name: "Privacy" }),
+      within(footer).getByRole("link", { name: "Privacy" }),
     );
     expect(screen.getByRole("dialog", { name: "Privacy" })).toBeVisible();
     expect(
