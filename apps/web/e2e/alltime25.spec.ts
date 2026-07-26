@@ -23,6 +23,8 @@ const VIEWPORTS = [
   { width: 375, height: 667 },
   { width: 390, height: 844 },
   { width: 430, height: 932 },
+  { width: 440, height: 760 },
+  { width: 440, height: 956 },
   { width: 568, height: 320 },
   { width: 700, height: 900 },
   { width: 701, height: 900 },
@@ -282,6 +284,30 @@ test("comparison stays clean and centered at every required viewport", async ({
       expect(geometry.voteWidthDifference, JSON.stringify(viewport)).toBeLessThanOrEqual(1);
     }
   }
+});
+
+test("constrained iPhone viewport never clips the final stat row", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 440, height: 540 });
+  await page.goto("/");
+
+  const geometry = await page
+    .getByTestId("center-comparison-ledger")
+    .evaluate((ledger) => {
+      const lastRow = ledger.querySelector("tbody tr:last-child");
+      if (!(lastRow instanceof HTMLElement)) {
+        throw new Error("Missing final comparison row");
+      }
+      return {
+        ledgerBottom: ledger.getBoundingClientRect().bottom,
+        lastRowBottom: lastRow.getBoundingClientRect().bottom,
+      };
+    });
+
+  expect(geometry.lastRowBottom).toBeLessThanOrEqual(
+    geometry.ledgerBottom + 1,
+  );
 });
 
 test("comparison and dialogs pass automated accessibility checks", async ({
