@@ -58,10 +58,15 @@ describe("createRankingImage", () => {
 
     expect(context.fillText.mock.calls.slice(0, 4)).toEqual([
       ["ALLTIME", 64, 94],
-      ["25", 216, 94],
-      [".COM", 270, 94],
+      ["25", 198, 94],
+      [".COM", 248, 94],
       ["MY NBA TOP 50", 64, 218],
     ]);
+    const markX = context.fillRect.mock.calls[1][0] as number;
+    const dotComX = context.fillText.mock.calls[2][1] as number;
+    const alltimeRight =
+      64 + context.measureText("ALLTIME").width;
+    expect(markX - alltimeRight).toBe(dotComX - (markX + 64));
     expect(context.fillText).not.toHaveBeenCalledWith(
       "FINAL RANKING",
       expect.any(Number),
@@ -81,7 +86,7 @@ describe("createRankingImage", () => {
 
     expect(context.fillRect.mock.calls.slice(0, 3)).toEqual([
       [0, 0, 1080, 1350],
-      [184, 62, 64, 64],
+      [166, 62, 64, 64],
       [64, 280, 952, 4],
     ]);
     expect(context.fillRect).toHaveBeenCalledTimes(28);
@@ -98,22 +103,14 @@ describe("createRankingImage", () => {
     );
   });
 
-  it("does not load player portraits for any share size", async () => {
-    mockContext();
+  it("keeps every share-image size portrait-free", async () => {
+    const context = mockContext();
     const imageConstructor = vi.fn();
     vi.stubGlobal(
       "Image",
       class {
-        decoding = "auto";
-        onerror: (() => void) | null = null;
-        onload: (() => void) | null = null;
-
         constructor() {
           imageConstructor();
-        }
-
-        set src(_source: string) {
-          this.onerror?.();
         }
       },
     );
@@ -127,6 +124,22 @@ describe("createRankingImage", () => {
     }
 
     expect(imageConstructor).not.toHaveBeenCalled();
+    expect(context.drawImage).not.toHaveBeenCalled();
+  });
+
+  it("uses three columns for the Top 50 layout", async () => {
+    const context = mockContext();
+    const blob = new Blob(["png"], { type: "image/png" });
+    vi.spyOn(HTMLCanvasElement.prototype, "toBlob").mockImplementation(
+      (callback) => callback(blob),
+    );
+
+    await createRankingImage(groups, 50);
+
+    const rankPositions = context.fillText.mock.calls
+      .filter(([text]) => text === "T-1")
+      .map(([, x]) => Number(x));
+    expect(new Set(rankPositions).size).toBe(3);
   });
 });
 

@@ -57,9 +57,9 @@ function layoutFor(targetSize: number): ShareLayout {
       columns: 1,
       contentTop: 310,
       columnGap: 0,
-      rowHeight: 82,
+      rowHeight: 96,
       rowsPerColumn: 10,
-      rankWidth: 76,
+      rankWidth: 62,
       rankSize: 28,
       nameSize: 30,
       lineHeight: 2,
@@ -70,23 +70,23 @@ function layoutFor(targetSize: number): ShareLayout {
       columns: 2,
       contentTop: 310,
       columnGap: 42,
-      rowHeight: 68,
+      rowHeight: 72,
       rowsPerColumn: 13,
-      rankWidth: 62,
+      rankWidth: 52,
       rankSize: 21,
       nameSize: 22,
       lineHeight: 2,
     };
   }
   return {
-    columns: 2,
+    columns: 3,
     contentTop: 310,
-    columnGap: 42,
-    rowHeight: 36,
-    rowsPerColumn: 25,
-    rankWidth: 50,
+    columnGap: 28,
+    rowHeight: 55,
+    rowsPerColumn: 17,
+    rankWidth: 44,
     rankSize: 16,
-    nameSize: 17,
+    nameSize: 18,
     lineHeight: 1,
   };
 }
@@ -100,24 +100,39 @@ function drawHeader(
   context: CanvasRenderingContext2D,
   targetSize: number,
 ): void {
-  drawText(context, "ALLTIME", 64, 94, {
+  const wordmarkX = 64;
+  const wordmarkY = 94;
+  const wordmarkSize = 27;
+  const wordmarkWeight = 900;
+  const markSize = 64;
+  const wordmarkGap = 18;
+
+  drawText(context, "ALLTIME", wordmarkX, wordmarkY, {
     color: COLORS.ink,
-    size: 27,
-    weight: 900,
+    size: wordmarkSize,
+    weight: wordmarkWeight,
   });
+  const markX =
+    wordmarkX + context.measureText("ALLTIME").width + wordmarkGap;
   context.fillStyle = COLORS.orange;
-  context.fillRect(184, 62, 64, 64);
-  drawText(context, "25", 216, 94, {
+  context.fillRect(markX, 62, markSize, markSize);
+  drawText(context, "25", markX + markSize / 2, wordmarkY, {
     align: "center",
     color: COLORS.surface,
     size: 28,
     weight: 900,
   });
-  drawText(context, ".COM", 270, 94, {
-    color: COLORS.ink,
-    size: 27,
-    weight: 900,
-  });
+  drawText(
+    context,
+    ".COM",
+    markX + markSize + wordmarkGap,
+    wordmarkY,
+    {
+      color: COLORS.ink,
+      size: wordmarkSize,
+      weight: wordmarkWeight,
+    },
+  );
   drawText(context, `MY NBA TOP ${targetSize}`, 64, 218, {
     color: COLORS.ink,
     size: 66,
